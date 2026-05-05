@@ -1,0 +1,28 @@
+% !TEX root = paper-2026-agentic-automl.tex
+
+\begin{table}[t]
+    \centering
+    \caption{
+        Overview of the benchmark datasets used in the experimental evaluation.
+        The datasets cover both classification (C) and regression (R) tasks and include a diverse set of domains such as remote sensing, human activity recognition, image classification, tabular census data, and structured regression problems.
+        We report the total number of features, number of instances, and the breakdown between numerical and categorical attributes after preprocessing.
+    }
+    \label{tab:datasets}
+    \resizebox{\linewidth}{!}{
+        \begin{tabular}{lcccccc}
+        \hline
+        Dataset & Problem & Features & Instances & Numeric & Discrete \\
+        \hline
+        Wilt & C & 5 & 4839 & 5 & 0 \\
+        Texture & C & 40 & 5500 & 40 & 0 \\
+        Madelon & C & 500 & 2600 & 500 & 0 \\
+        HAR & C & 561 & 10299 & 561 & 0 \\
+        Adult & C & 14 & 48842 & 6 & 8 \\
+        MNIST\_784 & C & 784 & 70000 & 784 & 0 \\
+        Ames Housing & R & 80 & 2930 & 37 & 43 \\
+        California Housing & R & 8 & 20640 & 8 & 0 \\
+        Auto MPG & R & 7 & 398 & 6 & 1 \\
+        \hline
+        \end{tabular}
+    }
+\end{table}

@@ -1,0 +1,27 @@
+constraints:
+  - if: 
+      step: classification
+    forbid: [regression]
+  - if:
+      step:
+        classification: knn
+    require: [normalization, features]
+  - if:
+      step:
+        regression: nn
+    require: [normalization]
+    forbid: [discretization]
+  - if:
+      dataset:
+        has_feature:
+          named_like: [class, target]
+          is_target: true
+          data_type: [categorical, integer]
+    require: [classification]
+  - if:
+      dataset:
+        feature:
+          is_target: true
+          data_type: [float, integer]
+          cardinality: high
+    require: [regression]

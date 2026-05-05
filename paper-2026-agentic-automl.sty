@@ -1,0 +1,44 @@
+%% For including figures, graphicx.sty has been loaded in
+%% elsarticle.cls. If you prefer to use the old commands
+%% please give \RequirePackage{epsfig}
+
+%% The amssymb package provides various useful mathematical symbols
+\RequirePackage{amssymb}
+%% The amsmath package provides various useful equation environments.
+\RequirePackage{amsmath}
+%% The amsthm package provides extended theorem environments
+%% \RequirePackage{amsthm}
+\RequirePackage{stmaryrd}
+\RequirePackage[inline]{enumitem}
+\RequirePackage{hyperref}
+\RequirePackage{listings}
+\RequirePackage{color}
+\RequirePackage{myacronyms}
+\RequirePackage{booktabs}
+\RequirePackage{subcaption}
+\usepackage{xspace}
+\RequirePackage{cleveref} % import this as the last one!
+\RequirePackage{./code-listings}
+
+\journal{Future Generation Computer Systems}
+
+% Custom environments
+\newenvironment{inlinelist}{\begin{enumerate*}[label=\emph{(\roman*)}]}{\end{enumerate*}}
+
+%%%%%%% FIX CLEVEREF/ACRONYM https://tex.stackexchange.com/questions/735500/problem-with-amsmath-cleveref-acronym
+\makeatletter
+\AtBeginDocument
+ {
+   \def\ltx@label#1{\cref@label{#1}}%add braces
+   \def\label@in@display@noarg#1{\cref@old@label@in@display{#1}}%remove braces
+\def\label@in@mmeasure@noarg#1{%
+    \begingroup%
+      \measuring@false%
+      \cref@old@label@in@display{#1}%remove braces for multline, see https://tex.stackexchange.com/q/737204/2388
+    \endgroup}%
+ } %
+\makeatother
+%%%%%%% END FIX CLEVEREF/ACRONYM
+
+\newcommand{\ourapproach}[0]{\textsc{AGE-ML}}
+\newcommand{\paperTitle}{\ourapproach: A Data-Centric, Specification-Driven Architecture for Agentic \acs{AutoML}}

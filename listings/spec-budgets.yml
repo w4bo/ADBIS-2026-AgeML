@@ -1,0 +1,5 @@
+budgets:
+  pipelines: 5
+  workers: 5
+  generation_attempts: 10
+  time: {hours: 2, minutes: 5, seconds: 30}

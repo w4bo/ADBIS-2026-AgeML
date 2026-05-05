@@ -1,0 +1,38 @@
+% !TEX root = paper-2026-agentic-automl.tex
+
+\newcommand{\Yes}{{\color{green}\checkmark}}
+\newcommand{\No}{{\color{red}$\times$}}
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\begin{tabular}{l|cc|cccc}
+\hline
+& \multicolumn{2}{c}{Non-LLM-based} 
+& \multicolumn{3}{c}{LLM-based} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-7}
+Feature
+                        & HAMLET \cite{FranciaGP23} & FLAML~\cite{DBLP:conf/kdd/0001W0Q22} & DS-Agent \cite{DBLP:conf/icml/GuoD0C0024} & AutoML-Agent \cite{DBLP:conf/icml/TriratJH25} & MLZero \cite{DBLP:journals/corr/abs-2505-13941} & \ourapproach \\
+\hline
+End-to-end pipeline     & \Yes                                           & \No                                  & \Yes                                       & \Yes                                           & \Yes                         & \Yes \\
+Human-centered design   & \Yes                                           & \No                                  & \No                                        & \No                                            & \No                          & \Yes \\
+Constrained generation  & \Yes                                           & \Yes                                 & \No                                        & \No                                            & \No                          & \Yes \\
+Pipeline validation     & \Yes                                           & \No                                  & \Yes                                       & \Yes                                           & \Yes                         & \Yes \\
+Interpretable pipeline  & \No                                            & \No                                  & \Yes                                       & \Yes                                           & \Yes                         & \Yes \\
+Zero-data cold start    & \Yes                                           & \Yes                                 & \No                                        & \No                                            & \No                          & \Yes \\
+MLOps oriented          & \No                                            & \No                                  & \No                                        & \No                                            & \No                          & \Yes \\
+\hline
+\end{tabular}
+\caption{
+    Detailed comparison of recent \ac{AutoML} non-\ac{LLM} and \ac{LLM}-based approaches 
+    by analyzing key features such as end-to-end pipeline construction, 
+    human-centered design, 
+    constrained generation of the pipelines, 
+    pipeline validation and error checks, 
+    interpretability, 
+    and 
+    cold-start capabilities 
+    (i.e., the possibility to work without mandatory a-priori knowledge or external information).
+}
+\label{tbl:automl_papers}
+\end{table*}

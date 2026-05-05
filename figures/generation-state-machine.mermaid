@@ -1,0 +1,25 @@
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph LR;
+ __start__([<p>__start__</p>]):::first
+ load_info(load_info)
+ generate_pipeline_code(generate_pipeline_code)
+ validate_code_compliance(validate_code_compliance)
+ execute_code(execute_code)
+ explain_pipeline(explain_pipeline)
+ __end__([<p>__end__</p>]):::last
+ __start__ --> load_info;
+ execute_code -.-> explain_pipeline;
+ execute_code -.-> generate_pipeline_code;
+ generate_pipeline_code --> validate_code_compliance;
+ load_info --> generate_pipeline_code;
+ validate_code_compliance -.-> __end__;
+ validate_code_compliance -.-> execute_code;
+ validate_code_compliance -.-> generate_pipeline_code;
+ explain_pipeline --> __end__;
+ classDef default fill:#f2f0ff,line-height:1.2
+ classDef first fill-opacity:0
+ classDef last fill:#bfb6fc
