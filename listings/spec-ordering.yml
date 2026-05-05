@@ -1,4 +1,29 @@
+pipeline:
+  steps:
+    normalization:
+      candidates:
+        min-max:
+          params:
+            feature_range: [0, 1]
+    classification:
+      mandatory: true
+      candidates:
+        knn:
+          params:
+            n_neighbors: [5, 11]
+            weights: [uniform, distance]
 ordering:
   - sequence: [imputation, normalization, features]
   - {before: features, after: classification}
-  - {before: features, after: regression}
+constraints:
+  - if:
+      step:
+        classification: knn
+    require: [normalization, features]
+  - if:
+      dataset:
+        has_feature:
+          named_like: [class, target]
+          is_target: true
+          data_type: [categorical, integer]
+    require: [classification]
