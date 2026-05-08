@@ -1323,7 +1323,7 @@ The supplementary materials include examples of generated explanations.
 
 All execution artefacts are tracked in the data catalog,
 currently implemented with \texttt{MLflow}~\cite{zaharia2018accelerating},
-in a hierarchical way\footnote{\texttt{MLflows} acts as a model/pipeline registry that treats AI models as cataloged assets with governed access, auditing, and lineage}.
+in a hierarchical way\footnote{\texttt{MLflows} acts as a model/pipeline registry that treats AI models as cataloged assets with governed access, auditing, and lineage.}.
 %
 The logged structure mirrors the 3-level hierarchy of the exploration process,
 as shown in \cref{fig:logging-hierarchy}.
@@ -1383,6 +1383,7 @@ the evaluator traverses the aforementioned hierarchy of logged artefacts
 (see \cref{fig:logging-hierarchy})
 from the leaves to the root,
 assessing the performance metrics of the trained models and propagating the best values up to the experiment level.
+\malasidenote{forse è utile ribadire che viene fatto sul test-set}
 %
 The particular performance metric to be optimised is specified as a launch parameter of the system.
 
@@ -1483,9 +1484,9 @@ along with automation scripts for reproducing our experiments,
 are publicly available on GitHub\footnote{\label{url:repo}\url{https://github.com/Mala1180/age-ml}},
 under an open-source license.
 
+\malasidenote{più che experimental `design' direi più `setup'}
 \paragraph{Experimental design.}
 \label{subsec:experimental-design}
-
 % Our experimental evaluation is designed to assess the effectiveness of \ourapproach{} along two complementary axes:
 % \begin{inlinelist}
 %     \item predictive performance of the automatically generated machine learning pipelines, and
@@ -1572,7 +1573,14 @@ with varying dimensionality and feature types.
 
 \paragraph{Language models and prompts.}
 %
-The experimental evaluation relies on \acp{LLM} to support code generation, validation, and explanation within the executor agents.
+The experimental evaluation relies on \acp{LLM} to support
+\begin{inlinelist}
+    \item semantic constraints' translation,
+    \item code generation,
+    \item validation, and
+    \item explanation
+\end{inlinelist}
+within the executor agents.
 %
 In particular,
 we employ two models from the Gemini family,
@@ -1752,7 +1760,7 @@ This results in comparable or higher overall costs for \textit{Gemini 2.5 Flash}
 % while effectively balancing exploration, computational efficiency,
 % and correctness through the agentic loop.
 
-\paragraph{Discussion}
+\paragraph{Discussion.}
 
 The results show that the proposed approach generalises well across heterogeneous datasets,
 including low-dimensional tabular data,
