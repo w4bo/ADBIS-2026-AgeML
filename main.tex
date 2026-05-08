@@ -44,20 +44,20 @@
 % Custom environments
 \newenvironment{inlinelist}{\begin{enumerate*}[label=\emph{(\roman*)}]}{\end{enumerate*}}
 
-% %%%%%%% FIX CLEVEREF/ACRONYM https://tex.stackexchange.com/questions/735500/% problem-with-amsmath-cleveref-acronym
-% \makeatletter
-% \AtBeginDocument
-%  {
-%    \def\ltx@label#1{\Cref@label{#1}}%add braces
-%    \def\label@in@display@noarg#1{\Cref@old@label@in@display{#1}}%remove braces
-% \def\label@in@mmeasure@noarg#1{%
-%     \begingroup%
-%       \measuring@false%
-%       \Cref@old@label@in@display{#1}%remove braces for multline, see https://% tex.stackexchange.com/q/737204/2388
-%     \endgroup}%
-%  } %
-% \makeatother
-% %%%%%%% END FIX CLEVEREF/ACRONYM
+%%%%%%% FIX CLEVEREF/ACRONYM https://tex.stackexchange.com/questions/735500/% problem-with-amsmath-cleveref-acronym
+\makeatletter
+\AtBeginDocument
+ {
+   \def\ltx@label#1{\cref@label{#1}}%add braces
+   \def\label@in@display@noarg#1{\cref@old@label@in@display{#1}}%remove braces
+\def\label@in@mmeasure@noarg#1{%
+    \begingroup%
+      \measuring@false%
+      \cref@old@label@in@display{#1}%remove braces for multline, see https://% tex.stackexchange.com/q/737204/2388
+    \endgroup}%
+ } %
+\makeatother
+%%%%%%% END FIX CLEVEREF/ACRONYM
 
 \newcommand{\ourapproach}[0]{\textsc{AGE-ML}}
 
@@ -94,19 +94,15 @@ Department of Computer Science, Faculty of Science, Technology and Medicine, Uni
 Data-Centric \ac{AI} focuses on improving data quality and curation as the main driver of machine learning performance.
 %
 Although \ac{AutoML} has reduced the cost of model selection and hyperparameter tuning,
-most systems remain model-centric and poorly aligned with \ac{MLOps} requirements such as controllability, traceability, and explainability.
+most systems remain model-centric and poorly aligned with \ac{MLOps} requirements such as controllability, traceability, and explainability: automated choices about preprocessing, pipeline structure, and validation are often opaque and difficult to revise, despite their strong influence on model behaviour.
 %
-Automated choices about preprocessing, pipeline structure, and validation are often opaque and difficult to revise, despite their strong influence on model behaviour.
-%
-We propose \ourapproach{}, a specification-driven, Data-Centric \textit{Agentic} \ac{AI} architecture.
+We propose \ourapproach{}, a specification-driven, \textit{agentic} architecture for Data-Centric AI.
 %
 A human-readable specification language enables data scientists to encode assumptions, constraints, evaluation criteria, and design preferences across the pipeline.
 %
 \acp{LLM} operate within a controlled agent loop to interpret specifications, generate and validate execution plans, synthesize pipeline code, and produce structured explanations.
 %
 Algorithmic optimization remains separate from \ac{LLM}-based reasoning to ensure reproducibility and controlled automation.
-%
-We present the architecture, a prototype, and an empirical evaluation on heterogeneous datasets.
 %
 Results show improved transparency, iterative pipeline refinement, and stronger integration with \ac{MLOps} practices such as experiment tracking and reproducibility.
 %
@@ -128,8 +124,7 @@ LLMs}
   \caption{
     % \emph{Research line overview:}
     %
-    \ourapproach{} assumes
-    data scientists encode their \ac{ML} knowledge in a structured specification.
+    \ourapproach{}: data scientists encode their \ac{ML} knowledge in a structured specification.
     %
     Then, it lets
     agents (green) generate end-to-end \ac{ML} code leveraging well-known \ac{ML} libraries as tools.
@@ -196,9 +191,9 @@ it overlooks the iterative and data-focused processes that characterise real-wor
 
 % \paragraph{Contribution}
 
-In this paper we propose \ourapproach{}, an \emph{agentic} approach to automatic \emph{end-to-end} pipeline generation and execution that aligns with data-centric \ac{AI} principles.
+In this paper we propose \ourapproach{}, an \emph{agentic} architecture for automatic \emph{end-to-end} pipeline generation and execution that aligns with data-centric \ac{AI} principles.
 %
-Thanks to \ac{LLM}-based intelligent agents, it
+Thanks to \ac{LLM}-based intelligent agents, \ourapproach{}
 \begin{inlinelist}
     \item enables structured integration of expert knowledge into automated processes
     (e.g., via natural language),
@@ -212,7 +207,7 @@ Thanks to \ac{LLM}-based intelligent agents, it
     (data scientists' knowledge can be encoded, extended, and shared over time).
 \end{inlinelist}
 \ourapproach{}
-(\Cref{fig:research-line})
+(\cref{fig:research-line})
 delegates \ac{ML} pipelines' design and implementation to a \ac{MAS} where agents interleave
 symbolic reasoning,
 intuitive reasoning and text generation
@@ -236,9 +231,9 @@ and aligned with domain requirements.
 
 
 The remainder of the paper is organised as follows.
-\Cref{sec:background-and-motivation} provides background on data-centric \ac{AI}, \ac{AutoML}, and agentic \ac{AI}.
-\Cref{sec:agentic-architecture-for-specification-driven-automl} introduces the architecture of \ourapproach{} and \Cref{sec:experimental-evaluation} evaluates it also against state-of-the-art approaches.
-\Cref{sec:conclusion} concludes the paper also with a discussion on future works.
+\cref{sec:background-and-motivation} provides background on data-centric \ac{AI}, \ac{AutoML}, and agentic \ac{AI}.
+\cref{sec:agentic-architecture-for-specification-driven-automl} introduces the architecture of \ourapproach{} and \cref{sec:experimental-evaluation} evaluates it also against state-of-the-art approaches.
+\cref{sec:conclusion} concludes the paper also with a discussion on future works.
 
 \section{Related Works}
 \label{sec:background-and-motivation}
@@ -251,12 +246,12 @@ treating high-quality data as a powerful lever for improving system performance.
 For example,
 consider a classification task predicting loan approval/denial.
 %
-Suppose \ac{DT} classifiers are trained on past application data.
+Suppose a \ac{DT} classifier is trained on past application data.
 %
 In a \emph{model}-centric approach,
 if the \ac{DT} yields unsatisfactory accuracy,
 we might increase its depth,
-try \acp{RF},
+try random forests,
 switch to gradient boosting,
 or tune hyperparameters,
 so to increase accuracy.
@@ -355,11 +350,11 @@ A detailed comparison of older contributions can be found in \cite{DBLP:conf/icm
 
 % \input{tables/feature_comparison.tex}
 
-% \Cref{tbl:automl_papers} highlights the distinguishing characteristics of recent \ac{AutoML} approaches,
+% \cref{tbl:automl_papers} highlights the distinguishing characteristics of recent \ac{AutoML} approaches,
 % positioning \ourapproach{} with respect to both non-\ac{LLM} and \ac{LLM}-based frameworks.
 %
 Non-\ac{LLM} approaches such as HAMLET and FLAML provide constrained generation and hot-start capabilities,
-although only HAMLET supports end-to-end automation, with a largely black-box optimisation process.
+although only HAMLET supports end-to-end automation with a largely black-box optimisation process.
 %
 Existing \ac{LLM}-based systems enable flexible end-to-end pipeline construction and often include validation mechanisms,
 but they typically lack explicit constraints, reducing reliability and reproducibility.
@@ -481,7 +476,7 @@ while still supporting adoption through default specifications alone.
 % \subsection{Research Line Overview}
 % \label{subsec:overview-of-the-research-line}
 
-% \Cref{fig:research-line} summarises the research line through which we address the problems above and,
+% \cref{fig:research-line} summarises the research line through which we address the problems above and,
 % in the longer term,
 % the broader vision of data-centric \ac{AutoML}.
 
@@ -489,7 +484,7 @@ while still supporting adoption through default specifications alone.
 % encoding methodological knowledge about \ac{ML} workflows,
 % thereby addressing problem \ref{prob:knowledge-encoding}.
 % %
-% As detailed in \Cref{sec:specification-language},
+% As detailed in \cref{sec:specification-language},
 % the specification acts as a declarative interface between human expertise and automated execution:
 % practitioners encode data-science practices in a structured form,
 % while software agents interpret and apply them to concrete datasets and predictive goals.
@@ -562,7 +557,7 @@ while still supporting adoption through default specifications alone.
 % and
 % \texttt{budgets},
 % each one described in the following.
-% % \Cref{lst:spec-stub} shows the overall structure.
+% % \cref{lst:spec-stub} shows the overall structure.
 
 % % \listingFromFile{yaml}{lst:spec-stub}{spec-stub.yml}{
 % %   Overall structure of the specification language, highlighting the main sections of a specification file.
@@ -581,7 +576,7 @@ while still supporting adoption through default specifications alone.
 % such as \texttt{imputation}, \texttt{normalisation}, or \texttt{classification}.
 % %
 % The \texttt{pipeline} section defines such steps as first-level keys,
-% as shown in \Cref{lst:spec-steps}.
+% as shown in \cref{lst:spec-steps}.
 % %
 % A step may be marked as \texttt{mandatory},
 % thereby contributing to the set $\mathcal{M} \subseteq \mathcal{S}$ of steps that must occur in every admissible pipeline.
@@ -644,7 +639,7 @@ while still supporting adoption through default specifications alone.
 % if a non-mandatory step is absent from a generated pipeline,
 % all precedence constraints involving that step become irrelevant for that pipeline.
 % %
-% This keeps specifications compact (see \Cref{lst:spec-ordering}),
+% This keeps specifications compact (see \cref{lst:spec-ordering}),
 % but also requires enough ordering constraints to avoid an unnecessarily large generation space.
 % %
 % % A complete discussion of order-completion strategies may be moved to the appendix if space becomes tight.
@@ -689,7 +684,7 @@ while still supporting adoption through default specifications alone.
 % %
 % In concrete syntax,
 % constraints are YAML blocks of the form
-% \texttt{\{if: $k_c$, require: $k_r$, forbid: $k_f$\}} (see \Cref{lst:spec-constraints}).
+% \texttt{\{if: $k_c$, require: $k_r$, forbid: $k_f$\}} (see \cref{lst:spec-constraints}).
 
 % Conditions may refer either to the candidate pipeline or to the dataset.
 % %
@@ -740,7 +735,7 @@ while still supporting adoption through default specifications alone.
 % % where $\mathcal{R}_{\mathrm{src}}$ denotes resource names and $\mathbb{N}$ their admissible upper bounds.
 % budgets are key--value pairs where keys denote resource types and values denote their upper bounds.
 % %
-% The current syntax (see \Cref{lst:spec-budgets}) supports limits on
+% The current syntax (see \cref{lst:spec-budgets}) supports limits on
 % \begin{inlinelist}
 %   \item the maximum number of generated or evaluated pipelines,
 %   \item the number of parallel workers,
@@ -753,14 +748,14 @@ while still supporting adoption through default specifications alone.
 
 % \subsection{Working example}
 
-% \Cref{lst:spec-ordering} describes the execution order of steps.
+% \cref{lst:spec-ordering} describes the execution order of steps.
 % It specifies that the pipeline must first perform \textit{imputation} to handle missing data, then apply \textit{normalisation} to scale the features, and afterward execute the \textit{features} step for feature engineering or feature selection.
 % The configuration also enforces that the \textit{features} step must occur before either a \textit{classification} or a \textit{regression} model is applied.
-% \Cref{lst:spec-constraints} defines the constraints for constructing pipelines.
+% \cref{lst:spec-constraints} defines the constraints for constructing pipelines.
 % The first rule states that if a \textit{classification} step is present, then a \textit{regression} step is forbidden, ensuring that the pipeline performs only one predictive task type.
 % The second rule specifies that when the classification algorithm is \textit{KNN}, the pipeline must include both \textit{normalisation} and \textit{features} steps, since KNN is sensitive to feature scaling and often benefits from feature preparation.
 % The last two remaining rules define dataset-driven constraints: if the dataset contains a target feature whose name resembles \textit{class} or \textit{target} and whose data type is categorical or integer, then the pipeline must use \textit{classification}.
-% Finally, \Cref{lst:spec-budgets} defines execution budgets and resource limits for an automated search process, such as that at most five candidate pipelines may be evaluated and 10 number of attempts can be used to generate valid pipeline configurations.
+% Finally, \cref{lst:spec-budgets} defines execution budgets and resource limits for an automated search process, such as that at most five candidate pipelines may be evaluated and 10 number of attempts can be used to generate valid pipeline configurations.
 
 \section{Agentic Architecture for Specification-Driven AutoML}
 \label{sec:agentic-architecture-for-specification-driven-automl}
@@ -775,12 +770,12 @@ while still supporting adoption through default specifications alone.
   \label{fig:layered-architecture}
 \end{figure*}
 
-\Cref{fig:layered-architecture} shows the proposed architecture for specification-driven \ac{AutoML}.
+\cref{fig:layered-architecture} shows the proposed architecture for specification-driven \ac{AutoML}.
 %
 The system consumes as input:
 \begin{inlinelist}
   \item a dataset,
-  \item a \textbf{specification}, % compliant with \Cref{sec:specification-language},
+  \item a \textbf{specification}, % compliant with \cref{sec:specification-language},
   and
   \item a computational budget
 \end{inlinelist}
@@ -838,13 +833,20 @@ The file comprises four main sections:
 \texttt{constraints},
 and
 \texttt{budgets}.
-\Cref{lst:spec-ordering} shows an excerpt of specification.
 % \listingFromFile{yaml}{lst:spec-stub}{spec-stub.yml}{
 %   Overall structure of the specification language, highlighting the main sections of a specification file.
 % }
 \listingFromFile{yaml}{lst:spec-ordering}{spec-ordering.yml}{
   Excerpt of specification.
 }
+\cref{lst:spec-ordering} shows an excerpt of specification.
+\texttt{pipeline} specificies the admissible steps, their candidate implementations, and their hyper-parameter domains.
+\texttt{ordering} specifies that the pipeline must first perform \textit{imputation} to handle missing data, then apply \textit{normalisation} to scale the features, and afterward execute the \textit{features} step for feature engineering or feature selection.
+\texttt{constraints} states that when the classification algorithm is KNN, the pipeline must include both \textit{normalisation} and \textit{features} steps, since KNN is sensitive to feature scaling and often benefits from feature preparation.
+Additionally, if the dataset contains a target feature whose name resembles \textit{class} or \textit{target} and whose data type is categorical or integer, then the pipeline must use \textit{classification}.
+\texttt{budgets} defines execution budgets and resource limits for an automated search process, such as that at most 5 candidate pipelines may be evaluated and 10 number of attempts can be used to generate valid pipeline configurations.
+
+
 \subsection{Pipeline planner}
 \label{subsec:pipeline-planning}
 
@@ -864,7 +866,7 @@ Informally,
 we refer to this set as the ``pipeline execution plan'',
 because it contains the pipelines that will be executed in the next phases.
 
-\paragraph{Pipeline admissibility}
+\subsubsection{Pipeline admissibility}
 %
 A pipeline is admissible when it is compatible with the data-science knowledge encoded in the specification:
 it contains all mandatory steps,
@@ -896,7 +898,7 @@ and with which candidate implementations.
 %
 Hyper-parameter optimisation is then delegated to pipeline executor agent.
 
-\paragraph{Finding admissible pipelines via \acs{CSP}}
+\subsubsection{Finding admissible pipelines via \acs{CSP}}
 
 The planner models ``admissibility'' as a finite-domain \ac{CSP}
 tailored on the specification YAML file in input.
@@ -973,7 +975,7 @@ which generates and runs the corresponding code.
 % or small data samples as evidence.
 % %
 % For example,
-% a specification may contain a rule such as (cf. \Cref{lst:spec-constraints}):
+% a specification may contain a rule such as (cf. \cref{lst:spec-constraints}):
 % %
 % \begin{quote}\itshape
 %   if the input dataset has an \emph{output} feature named like ``class'' or ``target'' and that feature is categorical,
@@ -1042,7 +1044,7 @@ so that the pipeline can be re-executed multiple times with different hyper-para
 % and returns the trained model object,
 % there including the fitted preprocessing and feature-engineering stages whenever present.
 %
-% An example of generated script is reported in \Cref{lst:generated-pipeline},
+% An example of generated script is reported in \cref{lst:generated-pipeline},
 % which shows a Python function implementing one admissible pipeline via \texttt{scikit-learn}.
 %
 % In particular,
@@ -1075,7 +1077,7 @@ so that the pipeline can be re-executed multiple times with different hyper-para
   \label{fig:executor-state-machine}
 \end{figure}
 
-\Cref{fig:executor-state-machine} depicts the state machine governing behaviour of executor agents.
+\cref{fig:executor-state-machine} depicts the state machine governing behaviour of executor agents.
 %
 The figure highlights that code generation is not treated as a single-shot translation problem,
 but rather as an iterative synthesis procedure in which generation,
@@ -1167,7 +1169,7 @@ and to contain one parameter for each hyper-parameter associated with the candid
 %
 The executor then attempts to run the script on the input dataset.
 %
-As shown in \Cref{fig:executor-state-machine},
+As shown in \cref{fig:executor-state-machine},
 execution is still part of the agentic control loop:
 runtime failures are not treated as terminal errors by default,
 but as feedback for the executor agent.
@@ -1323,7 +1325,7 @@ currently implemented with \texttt{MLflow}~\cite{zaharia2018accelerating},
 in a hierarchical way\footnote{\texttt{MLflows} acts as a model/pipeline registry that treats AI models as cataloged assets with governed access, auditing, and lineage}.
 %
 The logged structure mirrors the 3-level hierarchy of the exploration process,
-as shown in \Cref{fig:logging-hierarchy}.
+as shown in \cref{fig:logging-hierarchy}.
 %
 At the first level,
 one experiment corresponds to the \ac{AutoML} problem instance,
@@ -1377,7 +1379,7 @@ w.r.t. the runs completed for the current \ac{AutoML} problem instance%,
 
 To this end,
 the evaluator traverses the aforementioned hierarchy of logged artefacts
-(see \Cref{fig:logging-hierarchy})
+(see \cref{fig:logging-hierarchy})
 from the leaves to the root,
 assessing the performance metrics of the trained models and propagating the best values up to the experiment level.
 %
@@ -1421,7 +1423,7 @@ The particular performance metric to be optimised is specified as a launch param
 % To do so,
 % it assesses these pipeline-wise best models on the held-out test set,
 % which was separated initially
-% (cf. \Cref{par:test-set-separation}),
+% (cf. \cref{par:test-set-separation}),
 % and updates the metadata of the first-level experiment entry accordingly.
 
 % This bottom-up update of the logging hierarchy makes model selection explicit and inspectable.
@@ -1437,7 +1439,7 @@ The particular performance metric to be optimised is specified as a launch param
 % for the sake of inspectability and human supervision.
 % %
 % The use of a backend equipped with a graphical interface
-% -- such as \texttt{MLflow} in our implementation.%, as shown in \Cref{fig:mlflow-nested-runs} --,
+% -- such as \texttt{MLflow} in our implementation.%, as shown in \cref{fig:mlflow-nested-runs} --,
 % therefore allows users not only to retrieve the automatically selected model,
 % but also to inspect any intermediate model,
 % compare alternative pipelines or hyper-parameter assignments,
@@ -1473,7 +1475,7 @@ exploiting \texttt{LangChain}~\cite{Mavroudis2024}\footnote{\url{https://www.lan
 \texttt{scikit-learn} as the \ac{ML} library for generated pipelines,
 and
 of course our implementations of the pipeline planner, pipeline executor, and evaluator agents,
-in compliance with the architecture from \Cref{sec:agentic-architecture-for-specification-driven-automl}.
+in compliance with the architecture from \cref{sec:agentic-architecture-for-specification-driven-automl}.
 %
 The source code of \ourapproach{},
 along with automation scripts for reproducing our experiments,
@@ -1489,7 +1491,7 @@ under an open-source license.
 %     \item quality and utility of the explanations produced during the pipeline generation and execution process.
 % \end{inlinelist}
 
-% To this end, we define a single unified experimental setup applied consistently across all datasets described in \Cref{subsubsec:datasets}.
+% To this end, we define a single unified experimental setup applied consistently across all datasets described in \cref{subsubsec:datasets}.
 %
 % All experiments follow the same execution protocol and computational budget,
 % while the analysis of results is subsequently decomposed into two distinct perspectives:
@@ -1565,7 +1567,7 @@ with varying dimensionality and feature types.
 % %
 % It contains both numerical and categorical features and was introduced by Quinlan~\cite{quinlan1993c45}.
 %
-\Cref{tab:datasets} summarises the main characteristics of each dataset, including the number of instances, features, and the type of task.
+\cref{tab:datasets} summarises the main characteristics of each dataset, including the number of instances, features, and the type of task.
 
 \paragraph{Language models and prompts}
 %
@@ -1663,7 +1665,7 @@ and in the supplementary materials.
 %     \label{fig:gemini-time-breakdown}
 % \end{figure}
 
-\Cref{tab:gemini_3_1_flash_lite_results,tab:gemini_2_5_flash_results} report
+\cref{tab:gemini_3_1_flash_lite_results,tab:gemini_2_5_flash_results} report
 the results obtained with \textit{Gemini 3.1 Flash Lite} and \textit{Gemini 2.5 Flash},
 respectively,
 across the six classification and three regression datasets.
@@ -1722,7 +1724,7 @@ while \textit{Gemini 2.5 Flash} tends to spend a significantly larger fraction o
 %
 This suggests that the former achieves a more effective integration between the agentic loop and the underlying \ac{AutoML} components.
 %
-% \Cref{fig:gemini-time-breakdown} provides a detailed breakdown of the runtime for both models across datasets,
+% \cref{fig:gemini-time-breakdown} provides a detailed breakdown of the runtime for both models across datasets,
 % highlighting the differences in their computational profiles.
 
 Token consumption further highlights this trade-off.

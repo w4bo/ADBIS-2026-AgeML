@@ -3,8 +3,7 @@ pipeline:
     normalization:
       candidates:
         min-max:
-          params:
-            feature_range: [0, 1]
+          params: {feature_range: [[0, 1]]}
     classification:
       mandatory: true
       candidates:
@@ -16,14 +15,15 @@ ordering:
   - sequence: [imputation, normalization, features]
   - {before: features, after: classification}
 constraints:
-  - if:
-      step:
-        classification: knn
+  - if: {step: {classification: knn}}
     require: [normalization, features]
   - if:
       dataset:
         has_feature:
           named_like: [class, target]
-          is_target: true
           data_type: [categorical, integer]
     require: [classification]
+budgets:
+  pipelines: 5
+  generation_attempts: 10
+  time: {hours: 2, minutes: 5, seconds: 30}
