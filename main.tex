@@ -103,7 +103,8 @@ A human-readable specification language enables data scientists to encode assump
 %
 \acp{LLM} operate within a controlled agent loop to interpret specifications, generate and validate execution plans, synthesize pipeline code, and produce structured explanations.
 %
-Algorithmic optimization remains separate from \ac{LLM}-based reasoning to ensure reproducibility and controlled automation.
+Algorithmic optimisation remains separate from \ac{LLM}-based reasoning to ensure reproducibility and controlled automation.
+\malasidenote{quale algorithmic optimisation? immagino la parte di planning, ma non è chiaro}
 %
 Results show improved transparency, iterative pipeline refinement, and stronger integration with \ac{MLOps} practices such as experiment tracking and reproducibility.
 %
@@ -232,9 +233,9 @@ and aligned with domain requirements.
 
 
 The remainder of the paper is organised as follows.
-\cref{sec:background-and-motivation} provides background on data-centric \ac{AI}, \ac{AutoML}, and agentic \ac{AI}.
-\cref{sec:agentic-architecture-for-specification-driven-automl} introduces the architecture of \ourapproach{} and \cref{sec:experimental-evaluation} evaluates it also against state-of-the-art approaches.
-\cref{sec:conclusion} concludes the paper also with a discussion on future works.
+\Cref{sec:background-and-motivation} provides background on data-centric \ac{AI}, \ac{AutoML}, and agentic \ac{AI}.
+\Cref{sec:agentic-architecture-for-specification-driven-automl} introduces the architecture of \ourapproach{} and \cref{sec:experimental-evaluation} evaluates it also against state-of-the-art approaches.
+\Cref{sec:conclusion} concludes the paper and discusses future works.
 
 \section{Related Works}
 \label{sec:background-and-motivation}
@@ -347,7 +348,7 @@ motivating the need for more explainable and data-centric \ac{AutoML} solutions.
 %
 A detailed comparison of older contributions can be found in \cite{DBLP:conf/icml/TriratJH25}.
 
-\paragraph{Distinguishing features of \ourapproach{}}
+\paragraph{Distinguishing features of \ourapproach{}.}
 
 % \input{tables/feature_comparison.tex}
 
@@ -369,7 +370,7 @@ while resulting pipelines are often neither interpretable nor searchable.
 %
 Unlike prior \ac{LLM}-based methods,
 it introduces \emph{constrained generation} to improve robustness and enforce well-defined rules,
-while preserving full end-to-end automation and integrating \emph{human-centred design}.
+while preserving full end-to-end automation and integrating \emph{human-centered design}.
 %
 It also supports \emph{interpretable pipelines},
 \emph{pipeline validation},
@@ -766,12 +767,12 @@ while still supporting adoption through default specifications alone.
   \includegraphics[width=\linewidth]{figures/agents-io.png}
   \caption{
     Overview of the agentic architecture for specification-driven \ac{AutoML}.
-    Androids represent agents and dashed arrows denote interactions with \acp{LLM}.
+    Androids represent agents and open-headed dashed arrows denote interactions with \acp{LLM}.
   }
   \label{fig:layered-architecture}
 \end{figure*}
 
-\cref{fig:layered-architecture} shows the proposed architecture for specification-driven \ac{AutoML}.
+\Cref{fig:layered-architecture} shows the proposed architecture for specification-driven \ac{AutoML}.
 %
 The system consumes as input:
 \begin{inlinelist}
@@ -840,12 +841,12 @@ and
 \listingFromFile{yaml}{lst:spec-ordering}{spec-ordering.yml}{
   Excerpt of specification.
 }
-\cref{lst:spec-ordering} shows an excerpt of specification.
+\Cref{lst:spec-ordering} shows an excerpt of specification.
 \texttt{pipeline} specificies the admissible steps, their candidate implementations, and their hyper-parameter domains.
 \texttt{ordering} specifies that the pipeline must first perform \textit{imputation} to handle missing data, then apply \textit{normalisation} to scale the features, and afterward execute the \textit{features} step for feature engineering or feature selection.
 \texttt{constraints} states that when the classification algorithm is KNN, the pipeline must include both \textit{normalisation} and \textit{features} steps, since KNN is sensitive to feature scaling and often benefits from feature preparation.
 Additionally, if the dataset contains a target feature whose name resembles \textit{class} or \textit{target} and whose data type is categorical or integer, then the pipeline must use \textit{classification}.
-\texttt{budgets} defines execution budgets and resource limits for an automated search process, such as that at most 5 candidate pipelines may be evaluated and 10 number of attempts can be used to generate valid pipeline configurations.
+\texttt{budgets} defines execution budgets and resource limits for an automated search process, such as that at most 5 candidate pipelines may be evaluated and 10 number of attempts can be used to generate valid pipeline code.
 
 
 \subsection{Pipeline planner}
@@ -1018,9 +1019,9 @@ Code generation aims to bridge the gap between the symbolic representation of a 
 and a concrete training procedure that can be executed on actual data.
 %
 Given an admissible pipeline
-the executor agent produces a Python program implementing exactly the candidate algorithms in the prescribed order,
+the executor agent produces a Python script implementing exactly the candidate algorithms in the prescribed order,
 without having to re-check admissibility,
-% \malasidenote{in realtà c'è comunque lo step di validate\_code\_compliance}
+\malasidenote{in realtà c'è comunque lo step di validate\_code\_compliance come anche in fig 3}
 which is already guaranteed by the pipeline planner.
 
 The generated script is parametric with respect to the hyper-parameters
@@ -1078,7 +1079,7 @@ so that the pipeline can be re-executed multiple times with different hyper-para
   \label{fig:executor-state-machine}
 \end{figure}
 
-\cref{fig:executor-state-machine} depicts the state machine governing behaviour of executor agents.
+\Cref{fig:executor-state-machine} depicts the state machine governing behaviour of executor agents.
 %
 The figure highlights that code generation is not treated as a single-shot translation problem,
 but rather as an iterative synthesis procedure in which generation,
@@ -1094,11 +1095,10 @@ This includes:
   \item the parsed specification
   (which includes budget constraints,
   e.g. on the amount of retries allowed in the generation process,
-  as well as token or time limitations),
+  as well as time limitations),
   \item the admissible pipeline selected by the planner,
-  \item the target feature,
   and
-  \item the validation metric to be optimised.
+  \item the target feature.
 \end{inlinelist}
 %
 Such information is used by executor agents to build the prompt context for some underlying \ac{LLM},
@@ -1244,7 +1244,7 @@ unless the retry budget has already been exhausted.
 % whereas the execution phase materialises that implementation into several trained models,
 % one for each explored assignment of the involved hyper-parameters.
 
-\paragraph{Parallelism}
+\paragraph{Parallelism.}
 
 The execution process is parallelised at the pipeline level.
 %
@@ -1265,7 +1265,7 @@ while the global budget bounds the number of pipelines,
 generation retries,
 and executions that may be attempted.
 
-\paragraph{Explanation generation}
+\paragraph{Explanation generation.}
 
 % As the executor agent iteratively generates,
 % validates,
@@ -1458,7 +1458,7 @@ The particular performance metric to be optimised is specified as a launch param
 %     \label{fig:mlflow-nested-runs}
 % \end{figure}
 
-\section{Experimental Evaluation}
+\section{Experimental evaluation.}
 \label{sec:experimental-evaluation}
 
 We empirically evaluate \ourapproach{} implementation,
@@ -1483,7 +1483,7 @@ along with automation scripts for reproducing our experiments,
 are publicly available on GitHub\footnote{\label{url:repo}\url{https://github.com/Mala1180/age-ml}},
 under an open-source license.
 
-\paragraph{Experimental design}
+\paragraph{Experimental design.}
 \label{subsec:experimental-design}
 
 % Our experimental evaluation is designed to assess the effectiveness of \ourapproach{} along two complementary axes:
@@ -1508,7 +1508,7 @@ All executions are fully tracked using a data catalog (based on MLflow in the im
 enabling reproducibility and post-hoc analysis of both predictive outcomes and explanation artefacts.
 Balanced accuracy is used for classification tasks and RMSE for regression tasks.
 
-\paragraph{Datasets}
+\paragraph{Datasets.}
 \label{subsubsec:datasets}
 
 \input{tables/datasets}
@@ -1568,9 +1568,9 @@ with varying dimensionality and feature types.
 % %
 % It contains both numerical and categorical features and was introduced by Quinlan~\cite{quinlan1993c45}.
 %
-\cref{tab:datasets} summarises the main characteristics of each dataset, including the number of instances, features, and the type of task.
+\Cref{tab:datasets} summarises the main characteristics of each dataset, including the number of instances, features, and the type of task.
 
-\paragraph{Language models and prompts}
+\paragraph{Language models and prompts.}
 %
 The experimental evaluation relies on \acp{LLM} to support code generation, validation, and explanation within the executor agents.
 %
@@ -1640,7 +1640,7 @@ and in the supplementary materials.
 % For ease of analysis,
 % we show one example of generated explanation for a successful pipeline.
 
-\paragraph{Results}
+\paragraph{Results.}
 \label{subsec:results}
 
 \input{tables/gemini-3_1-flash-lite-table}
@@ -1666,7 +1666,7 @@ and in the supplementary materials.
 %     \label{fig:gemini-time-breakdown}
 % \end{figure}
 
-\cref{tab:gemini_3_1_flash_lite_results,tab:gemini_2_5_flash_results} report
+\Cref{tab:gemini_3_1_flash_lite_results,tab:gemini_2_5_flash_results} report
 the results obtained with \textit{Gemini 3.1 Flash Lite} and \textit{Gemini 2.5 Flash},
 respectively,
 across the six classification and three regression datasets.
