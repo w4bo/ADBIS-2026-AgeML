@@ -101,10 +101,9 @@ We propose \ourapproach{}, a specification-driven, \textit{agentic} architecture
 %
 A human-readable specification language enables data scientists to encode assumptions, constraints, evaluation criteria, and design preferences across the pipeline.
 %
-\acp{LLM} operate within a controlled agent loop to interpret specifications, generate and validate execution plans, synthesize pipeline code, and produce structured explanations.
+Out of the specification, a search space for pipeline generation is algorithmically constructed and explored to ensure reproducibility and controlled automation.
 %
-Algorithmic optimisation remains separate from \ac{LLM}-based reasoning to ensure reproducibility and controlled automation.
-\malasidenote{quale algorithmic optimisation? immagino la parte di planning, ma non è chiaro}
+Then, \acp{LLM} operate within a controlled agent loop to interpret specifications, generate, validate, and produce structured explanations for generated pipelines.
 %
 Results show improved transparency, iterative pipeline refinement, and stronger integration with \ac{MLOps} practices such as experiment tracking and reproducibility.
 %
@@ -1006,9 +1005,9 @@ which generates and runs the corresponding code.
 
 \subsection{Pipeline executor}
 \label{subsec:pipeline-execution}
+The pipeline executor is responsible for synthesizing and executing pipelines.
 
 \subsubsection{Code Generation}
-% \malasidenote{si potrebbero rimuovere gli import per guadagnare spazio}
 
 % Code generation is the process of translating an admissible pipeline
 % produced by the planner into an executable and parametric Python script.
@@ -1019,11 +1018,8 @@ Code generation aims to bridge the gap between the symbolic representation of a 
 and a concrete training procedure that can be executed on actual data.
 %
 Given an admissible pipeline
-the executor agent produces a Python script implementing exactly the candidate algorithms in the prescribed order,
-without having to re-check admissibility,
-\malasidenote{in realtà c'è comunque lo step di validate\_code\_compliance come anche in fig 3}
-which is already guaranteed by the pipeline planner.
-
+the executor agent produces a Python script implementing exactly the candidate algorithms in the prescribed order.
+%
 The generated script is parametric with respect to the hyper-parameters
 associated with the candidates appearing in the target pipeline in the user-provided specification.
 %
@@ -1382,82 +1378,9 @@ To this end,
 the evaluator traverses the aforementioned hierarchy of logged artefacts
 (see \cref{fig:logging-hierarchy})
 from the leaves to the root,
-assessing the performance metrics of the trained models and propagating the best values up to the experiment level.
-\malasidenote{forse è utile ribadire che viene fatto sul test-set}
+assessing the performance metrics of the trained models on the test set and propagating the best values up to the experiment level.
 %
 The particular performance metric to be optimised is specified as a launch parameter of the system.
-
-% At the third level,
-% % each logged entry corresponds to one concrete run of a generated pipeline script,
-% % under a specific hyper-parameter assignment.
-% % %
-% the evaluator loads the trained model of each run,
-% and computes its predictive performance on a validation set.
-% %
-% Such validation set is assumed to be split by executor agent,
-% before any execution starts for the a given pipeline,
-% by further splitting that pipeline's training data.
-% %
-% In this way,
-% the evaluator can compare
-% different runs of the same pipeline
-% on the same pipeline-specific validation set.
-% %
-% The first step in this process,
-% is therefore assessing the performance of all runs of a given pipeline,
-% updating their third-level entries with the corresponding validation scores.
-
-% The evaluator then aggregates performance results at the pipeline level,
-% by identifying the best model among all runs of the same pipeline,
-% and therefore the best run.
-% %
-% Accordingly,
-% each second-level entry is enriched with summary metadata,
-% including the identifier of the -- pipeline-wise -- best run,
-% the associated best model and its hyper-parameters,
-% and the achieved validation performance.
-
-% Finally,
-% for each second-level entry
-% -- namely, for each admissible pipeline explored by the system --,
-% the evaluator then identifies the (experiment-wise) best run among all pipeline-wise best ones.
-% %
-% To do so,
-% it assesses these pipeline-wise best models on the held-out test set,
-% which was separated initially
-% (cf. \cref{par:test-set-separation}),
-% and updates the metadata of the first-level experiment entry accordingly.
-
-% This bottom-up update of the logging hierarchy makes model selection explicit and inspectable.
-% %
-% At the end of the process,
-% the experiment-level entry contains the final outcome of the \ac{AutoML} process,
-% % \malasidenote{falso, ma si può implementare}
-% % GC: allora implementiamolo
-% while pipeline-level entries preserve the best empirical configuration found for each explored workflow.
-% %
-% At the same time,
-% all intermediate evaluations remain available in the data catalog
-% for the sake of inspectability and human supervision.
-% %
-% The use of a backend equipped with a graphical interface
-% -- such as \texttt{MLflow} in our implementation.%, as shown in \cref{fig:mlflow-nested-runs} --,
-% therefore allows users not only to retrieve the automatically selected model,
-% but also to inspect any intermediate model,
-% compare alternative pipelines or hyper-parameter assignments,
-% and manually override the automatic selection when domain-specific considerations suggest doing so.
-
-% \begin{figure}[t]
-%     \centering
-%     \includegraphics[width=\linewidth]{figures/mlflow/nested-runs.png}
-%     \caption{
-%         MLflow interface showing the hierarchical structure of nested runs with associated metadata.
-%         At the top level, one experiment corresponds to one \ac{AutoML} problem instance.
-%         At the second level, one entry corresponds to one admissible pipeline selected by the planner.
-%         At the third level, one entry corresponds to one run of a generated pipeline script under a specific hyper-parameter assignment.
-%     }
-%     \label{fig:mlflow-nested-runs}
-% \end{figure}
 
 \section{Experimental evaluation.}
 \label{sec:experimental-evaluation}
@@ -1480,25 +1403,13 @@ of course our implementations of the pipeline planner, pipeline executor, and ev
 in compliance with the architecture from \cref{sec:agentic-architecture-for-specification-driven-automl}.
 %
 The source code of \ourapproach{},
-along with automation scripts for reproducing our experiments,
+along with specification and automation scripts for reproducing our experiments,
 are publicly available on GitHub\footnote{\label{url:repo}\url{https://github.com/Mala1180/age-ml}},
 under an open-source license.
 
-\malasidenote{più che experimental `design' direi più `setup'}
-\paragraph{Experimental design.}
+\paragraph{Experimental setup.}
 \label{subsec:experimental-design}
-% Our experimental evaluation is designed to assess the effectiveness of \ourapproach{} along two complementary axes:
-% \begin{inlinelist}
-%     \item predictive performance of the automatically generated machine learning pipelines, and
-%     \item quality and utility of the explanations produced during the pipeline generation and execution process.
-% \end{inlinelist}
 
-% To this end, we define a single unified experimental setup applied consistently across all datasets described in \cref{subsubsec:datasets}.
-%
-% All experiments follow the same execution protocol and computational budget,
-% while the analysis of results is subsequently decomposed into two distinct perspectives:
-% performance analysis and explainability analysis.
-%
 The system is evaluated under a fixed computational budget defined in the experimental configuration, including:
 a maximum of 30 pipelines to explore,
 up to 8 parallel workers,
