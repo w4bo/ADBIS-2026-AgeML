@@ -1702,13 +1702,11 @@ and
 Future work will explore several directions to enhance the system's capabilities and applicability.
 
 \begin{itemize}
-\item Enhancing the process of writing specification files by introducing agents capable of generating specifications from natural-language sources such as documentation, web resources, and expert comments.
-This would improve accessibility for non-experts and reduce the effort required from experienced practitioners.
+\item Enhancing the process of writing specification files by introducing agents capable of generating specifications from natural-language sources such as documentation, web resources, and expert comments, while also supporting modular, reusable, and priority-aware specification components.
 \item A direct next step is to support human editing of generated pipeline scripts and selective re-execution of only the affected runs, while preserving provenance in the data catalog.
-\item Investigating more efficient heuristic-based search strategies to improve exploration diversity.
-\item Extending evaluation across multiple \acp{LLM}, since the architecture already supports the easy integration of new providers but the current evaluation relies on a single provider (Google) and a limited set of models.
-\item Optimising token usage by redesigning prompts and reducing redundant conversational context, while preserving pipeline quality.
-\item An empirical analysis of the variability of generated code and selected pipelines across repeated executions is left to future work.
+\item Future work will also analyse the variability of generated pipelines and code across repeated executions, study the effect of pipeline, retry, and time budgets, and extend the evaluation across multiple \acp{LLM}.
+\item Reducing latency and token usage through prompt compression, caching, and stronger deterministic validation remains an important engineering target.
+\item Retaining \ac{CSP}-based admissibility while using heuristic or diversity-aware strategies to rank valid pipelines under budget constraints is another direct line of work.
 \item Direct evaluation of data-quality improvement, cleaning effectiveness, and bias mitigation is left to future work.
 \end{itemize}
 
