@@ -34,7 +34,7 @@ Department of Computer Science, Faculty of Science, Technology and Medicine, Uni
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
-Data-Centric \ac{AI} focuses on improving data quality and curation as the main driver of machine learning performance.
+Data-Centric \ac{AI} focuses on improving data quality and curation as the main driver of machine learning (ML) performance.
 %
 Although \ac{AutoML} has reduced the cost of model selection and hyper-parameter tuning,
 most systems remain model-centric and poorly aligned with \ac{MLOps} requirements such as controllability, traceability, and process-level explainability: automated choices about preprocessing, pipeline structure, and validation are often opaque and difficult to revise, despite their strong influence on model behaviour.
@@ -65,17 +65,18 @@ LLMs}
 
 \begin{figure*}%[t]
   \centering
-  \includegraphics[width=\linewidth]{figures/agentic-automl-research-line.png}
+  \includegraphics[width=.94\linewidth]{figures/agentic-automl-research-line.png}
   \caption{
     % \emph{Research line overview:}
     %
     \ourapproach{}: data scientists encode their \ac{ML} knowledge in a structured specification.
     %
-    It lets agents (green) generate end-to-end \ac{ML} code leveraging well-known \ac{ML} libraries as tools.
+    It lets agents (green) generate end-to-end \ac{ML} code through well-known \ac{ML} libraries.
     %
-    \Acp{LLM} are used by agents as a service in order to generate code and reason about the data.
+    \Acp{LLM} support code generation and reasoning about the data.
     %
     Generated code is automatically run on actual datasets to produce predictions.
+    Solid arrows denote data/control flow; open-headed dashed arrows denote \ac{LLM}-mediated interactions.
     %
     % \emph{Future work:}
     % (currently not supported by \ourapproach{})
@@ -709,7 +710,7 @@ while still supporting adoption through default specifications alone.
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=\linewidth]{figures/agents-io.png}
+  \includegraphics[width=.94\linewidth]{figures/agents-io.png}
   \caption{
     Overview of the agentic architecture for specification-driven \ac{AutoML}.
     Androids represent agents and open-headed dashed arrows denote interactions with \acp{LLM}.
@@ -1008,7 +1009,7 @@ so that the pipeline can be re-executed multiple times with different hyper-para
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\linewidth]{figures/executor-state-machine.png}
+  \includegraphics[width=.9\linewidth]{figures/executor-state-machine.png}
   \caption{
   State machine governing the behavior of executor agents.
     Starting from an admissible pipeline for the dataset at hand,
@@ -1260,7 +1261,7 @@ Examples of generated explanations are available in the project repository.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\linewidth]{figures/hierarchy.png}
+  \includegraphics[width=.72\linewidth]{figures/hierarchy.png}
   \caption{
     Hierarchical logging scheme for the execution artefacts produced during specification-driven \ac{AutoML}.
     Dotted arrows denote metadata associations for entries at different levels of the hierarchy.

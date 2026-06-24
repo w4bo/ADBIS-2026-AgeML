@@ -20,6 +20,12 @@
 \RequirePackage{cleveref} % import this as the last one!
 \RequirePackage{./code-listings}
 
+% Compact float spacing for the camera-ready page limit.
+\setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+\captionsetup{skip=4pt}
+
 % Custom environments
 \newenvironment{inlinelist}{\begin{enumerate*}[label=\emph{(\roman*)}]}{\end{enumerate*}}
 
