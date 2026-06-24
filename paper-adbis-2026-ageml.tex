@@ -129,14 +129,19 @@ it overlooks the iterative and data-focused processes that characterise real-wor
 
 % \paragraph{Contribution.}
 
-In this paper we propose \ourapproach{}, an \emph{agentic} architecture for automatic \emph{end-to-end} pipeline generation and execution that aligns with data-centric \ac{AI} principles.
+In this paper,
+we propose \ourapproach{}, 
+an \emph{agentic} architecture for automatic \emph{end-to-end} pipeline generation and execution that aligns with data-centric \ac{AI} principles.
 %
-Here, ``data-centric'' means that pipeline construction is conditioned on the data at hand, including preprocessing, feature handling, rebalancing, and other data-preparation steps required by dataset properties and by the selected estimators.
+Here, 
+``data-centric'' means that pipeline construction is tailored on the data at hand, 
+including preprocessing, feature handling, rebalancing, and other data-preparation steps 
+required by dataset properties and by the selected estimators.
 %
 Thanks to \ac{LLM}-based intelligent agents, \ourapproach{}
 \begin{inlinelist}
     \item enables structured integration of expert knowledge into automated processes
-    (e.g., via natural language),
+    (e.g., via YAML plus natural language),
     %
     \item reduces operational load for data scientists
     (by automating generation and execution of low-level coding and tuning tasks),
@@ -146,9 +151,9 @@ Thanks to \ac{LLM}-based intelligent agents, \ourapproach{}
     \item supports modularity and reusability of knowledge
     (data scientists' knowledge can be encoded, extended, and shared over time).
 \end{inlinelist}
-\ourapproach{}
-(\cref{fig:research-line})
-delegates the design and implementation of \ac{ML} pipelines to a \ac{MAS}
+
+In particular, 
+\ourapproach{} (\cref{fig:research-line}) delegates the design and implementation of \ac{ML} pipelines to a \ac{MAS}
 where agents interleave symbolic reasoning, intuitive reasoning, text generation
 (as provided by \acp{LLM}),
 and execution of generated code
@@ -158,19 +163,14 @@ Crucially,
 \ourapproach{} enables structured human knowledge injection during pipeline creation,
 via an \emph{ad-hoc} specification language.
 %
-In this work, explainability refers to the traceability and natural-language documentation of the pipeline-generation process, rather than to post-hoc explanation of individual model predictions.
-%
 Domain experts can constrain search spaces,
 define preferred preprocessing strategies,
 or
 embed domain rules directly into their specification file.
-AGE-ML currently assumes that experts collaborate before execution to produce a coherent and consistent specification; supporting independently authored, reusable, or partially conflicting specification modules would require additional language mechanisms for decomposition, abstraction, priority, and conflict handling, which we leave to future engineering work.
 %
-This paradigm combines automated optimisation of AutoML with guided expertise,
+This paradigm combines automated optimisation of \ac{AutoML} with guided expertise,
 producing pipelines that are not only performant but also inspectable, well-documented, adaptable,
 and aligned with domain requirements.
-
-
 
 The remainder of the paper is organised as follows.
 \Cref{sec:background-and-motivation} provides background on data-centric \ac{AI}, \ac{AutoML}, and agentic \ac{AI}.
@@ -185,19 +185,24 @@ Data-centric \ac{AI} prioritises improving data quality and representativeness o
 It shifts the main optimisation target from model design to data quality,
 treating high-quality data as a powerful lever for improving system performance.
 %
-In this perspective, practitioners may keep the model family fixed while revising preprocessing, feature handling, labeling assumptions, or sampling choices in response to dataset properties.
+In this perspective, 
+practitioners may keep the model family fixed while revising preprocessing, feature handling, labeling assumptions, or sampling choices in response to dataset properties.
 
-In this context, \Ac{AutoML} reduces the manual effort of building and tuning \ac{ML} models by automating parts of the development process.
+In this context, 
+\Ac{AutoML} reduces the manual effort of building and tuning \ac{ML} models by automating parts of the development process.
 %
-However, most approaches focus primarily on \ac{HPO} and model selection,
+However, 
+most approaches focus primarily on \ac{HPO} and model selection,
 improving predictive performance through the exploration of model families, preprocessing strategies, and hyper-parameters.
 %
 While effective, this remains largely model-centric and does not explicitly address reproducibility, auditability, or controllability across the broader \ac{ML} lifecycle.
 %
-Moreover, \ac{AutoML} rarely incorporates knowledge about data semantics, provenance, or quality,
+Moreover, 
+\ac{AutoML} rarely incorporates knowledge about data semantics, provenance, or quality,
 often treating datasets as static and reliable inputs.
 %
-As a result, it struggles to support data-centric refinement and reasoning about the suitability of the data itself.
+As a result, 
+it struggles to support data-centric refinement and reasoning about the suitability of the data itself.
 %
 Existing \ac{AutoML} systems rely on structured algorithmic search spaces,
 which provide reproducibility and computational efficiency.
@@ -226,7 +231,6 @@ FLAML~\cite{DBLP:conf/kdd/0001W0Q22} has outperformed the above-mentioned approa
 Newer \ac{AutoML} frameworks also focus on end-to-end automation,
 such as~\cite{FranciaGP23} and~\cite{DBLP:conf/pakdd/FranciaGG24}
 which formalised and introduced \ac{AutoML} for end-to-end pipelines.
-
 
 Other recent frameworks address end-to-end machine learning pipelines through \ac{LLM}-driven and multi-agent approaches.
 %
@@ -279,7 +283,8 @@ although only HAMLET supports end-to-end automation with a largely black-box opt
 Existing \ac{LLM}-based systems enable flexible end-to-end pipeline construction and often include validation mechanisms,
 but they typically lack explicit constraints, reducing reliability and reproducibility.
 %
-Moreover, data scientists usually provide only the initial task specification,
+Moreover, 
+data scientists usually provide only the initial task specification,
 with limited involvement in later optimisation and refinement stages,
 while resulting pipeline-generation processes are often neither well documented nor searchable.
 
@@ -294,9 +299,18 @@ It also supports \emph{inspectable pipeline construction},
 \emph{pipeline validation},
 and \emph{searchability} through the data catalog.
 %
-Finally, its \emph{zero-data cold start capabilities} enable reuse of prior knowledge when available,
+Finally, 
+its \emph{zero-data cold start capabilities} enable reuse of prior knowledge when available,
 while still supporting adoption through default specifications alone.
 
+Another distinguishing feature of \ourapproach{} is explainability.
+%
+In this work, 
+explainability refers to the traceability and natural-language documentation of the pipeline-generation process, 
+rather than to post-hoc explanation of individual model predictions.
+%
+This is a key aspect of \ourapproach{}'s design,
+allowing data scientists to understand and audit automated \ac{ML} processes.
 
 % \section{Problem Statement and Formalisation}
 % \label{sec:problem-statement-and-assumptions}
@@ -753,20 +767,37 @@ The file comprises four main sections:
 \texttt{constraints},
 and
 \texttt{budgets}.
-Listing~\ref{lst:spec-ordering} reports only the core constructs needed to understand the architecture; a complete account of the syntax and formal semantics of the specification language is omitted for space reasons and delegated to an extended version of this work.
+%
+Listing~\ref{lst:spec-ordering} reports only the core constructs needed to understand the architecture; 
+a complete account of the syntax and formal semantics of the specification language is omitted for space reasons 
+and delegated to an extended version of this work.
 % \listingFromFile{yaml}{lst:spec-stub}{spec-stub.yml}{
 %   Overall structure of the specification language, highlighting the main sections of a specification file.
 % }
 \listingFromFile{yaml}{lst:spec-ordering}{spec-ordering.yml}{
   Excerpt from specification.
 }
+%
 \Cref{lst:spec-ordering} shows an excerpt from the specification.
-\texttt{pipeline} specifies the admissible steps, their candidate implementations, and their hyper-parameter domains.
-\texttt{ordering} specifies that the pipeline must first perform \textit{imputation} to handle missing data, then apply \textit{normalisation} to scale the features, and afterward execute the \textit{features} step for feature engineering or feature selection.
-\texttt{constraints} states that when the classification algorithm is KNN, the pipeline must include both \textit{normalisation} and \textit{features} steps, since KNN is sensitive to feature scaling and often benefits from feature preparation.
-Additionally, if the dataset contains a target feature whose name resembles \textit{class} or \textit{target} and whose data type is categorical or integer, then the pipeline must use \textit{classification}.
-\texttt{budgets} defines execution budgets and resource limits for an automated search process, allowing at most 5 candidate pipelines to be evaluated, and up to 10 attempts to generate valid pipeline code.
+%
+The \texttt{pipeline} block specifies the admissible steps, their candidate implementations, and their hyper-parameter domains.
+%
+The \texttt{ordering} block specifies that the pipeline must first perform \textit{imputation} to handle missing data, 
+then apply \textit{normalisation} to scale the features, 
+and afterward execute the \textit{features} step for feature engineering or feature selection.
+%
+The \texttt{constraints} block states that when the classification algorithm is KNN, 
+the pipeline must include both \textit{normalisation} and \textit{features} steps, 
+since KNN is sensitive to feature scaling and often benefits from feature preparation.
+%
+Additionally, 
+if the dataset contains a target feature whose name resembles \textit{class} or \textit{target} and whose data type is categorical or integer, then the pipeline must use \textit{classification}.
+%
+The \texttt{budgets} block defines execution budgets and resource limits for an automated search process, allowing at most 5 candidate pipelines to be evaluated, and up to 10 attempts to generate valid pipeline code.
 
+\ourapproach{} currently assumes that experts collaborate to produce a \emph{single}, \emph{coherent}, and \emph{consistent} specification.
+%
+Supporting independently authored, reusable, or partially conflicting specification modules would require additional language mechanisms for decomposition, abstraction, priority, and conflict handling, which we leave to future engineering work.
 
 \subsection{Pipeline planner}
 \label{subsec:pipeline-planning}
@@ -804,7 +835,7 @@ and candidate algorithms.
 The planner resolves these requirements before execution,
 so that downstream components receive only pipelines that are structurally valid with respect to the specification.
 
-A pipeline can still be seen as a finite sequence of step\textendash{}candidate pairs:
+A pipeline can still be seen as a finite sequence of step--candidate pairs:
 where each step denotes a phase of the workflow
 and each candidate denotes the concrete algorithm or operation selected for that phase.
 %
@@ -921,8 +952,6 @@ which generates and runs the corresponding code.
 % asks the \ac{LLM} to assess whether the scale mismatch is relevant,
 % and then activates or deactivates the corresponding planning constraint.
 
-
-
 \subsection{Pipeline executor}
 \label{subsec:pipeline-execution}
 The pipeline executor is responsible for synthesizing and executing pipelines.
@@ -983,7 +1012,7 @@ so that the pipeline can be re-executed multiple times with different hyper-para
   \centering
   \includegraphics[width=.9\linewidth]{figures/executor-state-machine.png}
   \caption{
-  State machine governing the behavior of executor agents.
+    State machine governing the behavior of executor agents.
     Starting from an admissible pipeline for the dataset at hand,
     the agent iteratively generates Python code,
     validates its compliance w.r.t. the pipeline,
@@ -995,8 +1024,9 @@ so that the pipeline can be re-executed multiple times with different hyper-para
   \label{fig:executor-state-machine}
 \end{figure}
 
-\Cref{fig:executor-state-machine} depicts the state machine governing the behaviour of executor agents.
-Figure~\ref{fig:executor-state-machine} describes the control loop of an executor agent, not the whole multi-agent architecture.
+\Cref{fig:executor-state-machine} depicts the state machine governing the behaviour of executor agents,
+focussing on the control loop of an executor agent, 
+not the whole multi-agent architecture.
 %
 The figure highlights that code generation is not treated as a single-shot translation problem,
 but rather as an iterative synthesis procedure in which generation,
@@ -1017,7 +1047,10 @@ This includes:
   and
   \item the target feature.
 \end{inlinelist}
-The compact dataset description is computed from deterministic metadata and summary statistics, such as column names, inferred types, cardinalities, missingness, and small samples; \acp{LLM} are used only to interpret semantic predicates when needed.
+%
+The compact dataset description is computed from deterministic metadata and summary statistics, 
+such as column names, inferred types, cardinalities, missingness, and small samples; 
+\acp{LLM} are used only to interpret semantic predicates when needed.
 %
 Such information is used by executor agents to build the prompt context for some underlying \ac{LLM},
 which is then asked to produce Python code,
@@ -1068,8 +1101,9 @@ Whenever any of these checks fail,
 the feedback is injected back into the conversational context,
 and a new generation attempt is performed,
 until the retry limit is reached.
-%
-Reproducibility is addressed at the artefact and execution level rather than by assuming deterministic \ac{LLM} behaviour: \ourapproach{} constrains code generation through explicit prompts, fixed interfaces, automated validation, runtime testing, and complete logging of generated code, hyper-parameters, metrics, and artefacts.
+
+Reproducibility is addressed at the artefact and execution level rather than by assuming deterministic \ac{LLM} behaviour: 
+\ourapproach{} constrains code generation through explicit prompts, fixed interfaces, automated validation, runtime testing, and complete logging of generated code, hyper-parameters, metrics, and artefacts.
 
 % Successfully validated code is then executed by the executor agent
 % (see next subsection)
@@ -1243,7 +1277,11 @@ Examples of generated explanations are available in the project repository.
 
 All execution artefacts are tracked in the data catalog,
 currently implemented using \texttt{MLflow}~\cite{zaharia2018accelerating},
-in a hierarchical way\footnote{\texttt{MLflow} acts as a model/pipeline registry that treats AI models as cataloged assets with governed access, auditing, and lineage.}.
+in a hierarchical way\footnotemark.
+%
+\footnotetext{
+  \texttt{MLflow} acts as a model/pipeline registry that treats \ac{AI} models as tracked assets with governed access, auditing, and lineage.
+}
 %
 The logged structure mirrors the 3-level hierarchy of the exploration process,
 as shown in \cref{fig:logging-hierarchy}.
@@ -1296,7 +1334,7 @@ This selection is empirical:
 the chosen solution is the one that performs best
 w.r.t. the runs completed for the current \ac{AutoML} problem instance%,
 % rather than with respect to the entire space of theoretically admissible pipelines.
-\textemdash{}in compliance with budget limitations.
+---in compliance with budget limitations.
 
 To this end,
 the evaluator traverses the aforementioned hierarchy of logged artefacts
@@ -1311,14 +1349,17 @@ The particular performance metric to be optimised is specified as a launch param
 
 We empirically evaluate the implementation of \ourapproach{},
 both in \emph{absolute} terms
--- by assessing the predictive performance achieved by \ourapproach{} on a collection of well-known benchmark datasets \textendash{},
+-- by assessing the predictive performance achieved by \ourapproach{} on a collection of well-known benchmark datasets --,
 and in \emph{relative} terms%
 \textemdash{}by comparing the performance of \ourapproach{} against a state-of-the-art \ac{AutoML} system
 (HAMLET~\cite{FranciaGP23}).
 
 In particular,
 \ourapproach{} consists of a Python system,
-exploiting \texttt{LangChain}~\cite{Mavroudis2024}\footnote{\url{https://www.langchain.com}} and \texttt{LangGraph}\footnote{\url{https://www.langchain.com/langgraph}} for agent orchestration,
+exploiting 
+\texttt{LangChain}~\cite{Mavroudis2024}\footnote{\url{https://www.langchain.com}} 
+and 
+\texttt{LangGraph}\footnote{\url{https://www.langchain.com/langgraph}} for agent orchestration,
 \texttt{Z3} for \ac{CSP} solving,
 \texttt{MLflow} as the data catalog,
 \texttt{scikit-learn} as the \ac{ML} library for generated pipelines,
@@ -1509,7 +1550,14 @@ the results obtained with \textit{Gemini 3.1 Flash Lite} and \textit{Gemini 2.5 
 respectively,
 across six classification and three regression datasets.
 %
-Balanced accuracy is used for classification tasks, where higher is better, whereas RMSE is used for regression tasks, where lower is better. \ourapproach{} / Best Score denotes the best score obtained by \ourapproach{} on the dataset, Baseline reports the comparison system, \texttt{Actual P.} denotes the number of pipelines successfully generated, validated, and executed within the budget, token columns report aggregate \ac{LLM} usage, and putative cost is estimated from token usage.
+Balanced accuracy is used for classification tasks, where higher is better, 
+whereas RMSE is used for regression tasks, where lower is better. 
+%
+Column `\ourapproach{}' reports the best score obtained by \ourapproach{} on the dataset, 
+column `Baseline' reports the comparison system, 
+column `Actual P.' denotes the number of pipelines successfully generated, validated, and executed within the budget, 
+whereas columns `* Token' report aggregate \ac{LLM} usage, 
+while `Putative Cost' is estimated from token usage times the per-token cost of the underlying \ac{LLM} API.
 %
 %For the baseline,
 %we report the performance of HAMLET~\cite{FranciaGP23} for classification
@@ -1615,8 +1663,6 @@ but also as a key enabler of effective search.
 % even under the same configuration.
 % %
 % While experiment tracking mitigates this issue, it does not fully guarantee determinism.
-
-
 
 \section{Conclusion and Future Work}
 \label{sec:conclusion}
