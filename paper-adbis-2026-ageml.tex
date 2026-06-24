@@ -34,12 +34,12 @@ Department of Computer Science, Faculty of Science, Technology and Medicine, Uni
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
-Data-Centric \ac{AI} focuses on improving data quality and curation as the main driver of machine learning (ML) performance.
+Data-Centric \ac{AI} focuses on improving data quality and curation as the main driver of \ac{ML} performance.
 %
 Although \ac{AutoML} has reduced the cost of model selection and hyper-parameter tuning,
 most systems remain model-centric and poorly aligned with \ac{MLOps} requirements such as controllability, traceability, and process-level explainability: automated choices about preprocessing, pipeline structure, and validation are often opaque and difficult to revise, despite their strong influence on model behaviour.
 %
-We propose \ourapproach{}, a specification-driven, \textit{agentic} architecture for Data-Centric AI.
+We propose \ourapproach{}, a specification-driven, \textit{agentic} architecture for Data-Centric \ac{AI}.
 %
 \ourapproach{} is data-centric in the sense that pipeline construction is conditioned on the data at hand: the selected workflow may include preprocessing, feature handling, rebalancing, and other data-preparation steps required by the dataset properties and by the selected estimators.
 %
@@ -53,11 +53,11 @@ Results show improved traceability of pipeline generation, iterative pipeline re
 %
 Finally, we discuss limitations and future directions for \ourapproach{}.
 
-\keywords{MLOps \and
-Data-centric AI\and
-Agentic AI\and
-AutoML\and
-LLMs}
+\keywords{\ac{MLOps} \and
+Data-centric \ac{AI}\and
+Agentic \ac{AI}\and
+\ac{AutoML}\and
+\acp{LLM}}
 \end{abstract}
 %
 %
@@ -691,7 +691,7 @@ allowing data scientists to understand and audit automated \ac{ML} processes.
 % The last two remaining rules define dataset-driven constraints: if the dataset contains a target feature whose name resembles \textit{class} or \textit{target} and whose data type is categorical or integer, then the pipeline must use \textit{classification}.
 % Finally, \cref{lst:spec-budgets} defines execution budgets and resource limits for an automated search process, such as that at most five candidate pipelines may be evaluated and 10 number of attempts can be used to generate valid pipeline configurations.
 
-\section{Agentic Architecture for Specification-Driven AutoML}
+\section{Agentic Architecture for Specification-Driven \ac{AutoML}}
 \label{sec:agentic-architecture-for-specification-driven-automl}
 
 \begin{figure*}[t]
@@ -1471,7 +1471,7 @@ In particular:
 \begin{inlinelist}
   \item a code-generation prompt instructs the model to produce executable Python code implementing a given pipeline with a fixed interface,
   %
-  \item a validation prompt frames the task as a compliance check between the intended pipeline and the generated code (LLM-as-a-judge), and
+  \item a validation prompt frames the task as a compliance check between the intended pipeline and the generated code (\ac{LLM}-as-a-judge), and
   %
   \item an explanation prompt requires the model to produce a structured,
 human-readable description of the final pipeline and its design rationale.
@@ -1557,7 +1557,7 @@ Column `\ourapproach{}' reports the best score obtained by \ourapproach{} on the
 column `Baseline' reports the comparison system, 
 column `Actual P.' denotes the number of pipelines successfully generated, validated, and executed within the budget, 
 whereas columns `* Token' report aggregate \ac{LLM} usage, 
-while `Putative Cost' is estimated from token usage times the per-token cost of the underlying \ac{LLM} API.
+while `Putative Cost' is estimated from token usage times the per-token cost of the underlying \ac{LLM} \ac{API}.
 %
 %For the baseline,
 %we report the performance of HAMLET~\cite{FranciaGP23} for classification
@@ -1579,7 +1579,7 @@ for California Housing we report Ahmed Mahmoud's notebook%
 
 Both models generate competitive pipelines under a constrained computational budget and without task-specific tuning.
 %
-Across classification tasks, \textit{Gemini 3.1 Flash Lite} improves over the baseline on \textit{Wilt}, \textit{HAR}, and \textit{Adult}, while \textit{Gemini 2.5 Flash} improves on \textit{HAR} and \textit{Adult} and remains competitive elsewhere.
+Across classification tasks, \textit{Gemini 3.1 Flash Lite} improves over the baseline on \textit{Wilt}, \textit{\acs{HAR}}, and \textit{Adult}, while \textit{Gemini 2.5 Flash} improves on \textit{\acs{HAR}} and \textit{Adult} and remains competitive elsewhere.
 %
 On regression tasks, both models improve over the baseline on \textit{California Housing} and \textit{Auto MPG}, whereas \textit{Ames Housing} remains more challenging.
 
@@ -1588,7 +1588,7 @@ A key difference between the two models lies in their ability to explore the sea
 \textit{Gemini 3.1 Flash Lite} consistently executes the full pipeline budget
 (30 pipelines in almost all datasets),
 whereas \textit{Gemini 2.5 Flash} often fails to reach the maximum number of valid pipelines
-(e.g., 12 on \textit{HAR} and 11 on \textit{MNIST\_784}).
+(e.g., 12 on \textit{\acs{HAR}} and 11 on \textit{MNIST\_784}).
 The number of actually executed pipelines depends not only on the nominal exploration budget, but also on whether generated code passes semantic validation and runtime tests within the retry budget.
 %
 This reduced exploration may directly affect performance on more complex datasets.
@@ -1619,7 +1619,7 @@ Token usage shows the same trade-off: \textit{Gemini 3.1 Flash Lite} generally u
 
 \paragraph{Discussion.}
 
-The results show that the proposed approach generalises across heterogeneous datasets, with particularly clear gains in scenarios requiring coordinated preprocessing steps such as \textit{Adult} and \textit{HAR}.
+The results show that the proposed approach generalises across heterogeneous datasets, with particularly clear gains in scenarios requiring coordinated preprocessing steps such as \textit{Adult} and \textit{\acs{HAR}}.
 %
 % In contrast,
 % slightly weaker performance on datasets such as \textit{Madelon} and \textit{MNIST\_784}
@@ -1628,9 +1628,9 @@ The results show that the proposed approach generalises across heterogeneous dat
 An important factor affecting performance is the number of successfully executed pipelines.
 %
 Datasets where fewer valid pipelines are generated
-(e.g., \textit{HAR} and \textit{MNIST\_784} with \textit{Gemini 2.5 Flash})
+(e.g., \textit{\acs{HAR}} and \textit{MNIST\_784} with \textit{Gemini 2.5 Flash})
 exhibit lower performance,
-indicating that pipeline validity and executability are critical bottlenecks in LLM-driven \ac{AutoML}.
+indicating that pipeline validity and executability are critical bottlenecks in \ac{LLM}-driven \ac{AutoML}.
 %
 This highlights the importance of the validation loop not only as a correctness mechanism,
 but also as a key enabler of effective search.
