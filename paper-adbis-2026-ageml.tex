@@ -588,7 +588,7 @@ while still supporting adoption through default specifications alone.
 % This keeps specifications compact (see \cref{lst:spec-ordering}),
 % but also requires enough ordering constraints to avoid an unnecessarily large generation space.
 % %
-% % A complete discussion of order-completion strategies may be moved to the appendix if space becomes tight.
+% % A complete discussion of order-completion strategies may be moved to an extended version if space becomes tight.
 
 % \subsection{Declarative Constraints}
 % \label{sec:specification-language-syntax:constraints}
@@ -662,7 +662,7 @@ while still supporting adoption through default specifications alone.
 % Thus,
 % constraints provide the main interface for injecting domain knowledge into the generation and pruning of candidate pipelines.
 % %
-% % GC: If the final version needs to save space, examples of concrete constraints can be moved to an appendix while keeping the formal definition here.
+% % GC: If the final version needs to save space, examples of concrete constraints can be moved to an extended version while keeping the formal definition here.
 % %
 % % \gcsidenote{Strictly speaking, this remains less expressive than a full defeasible logic. This is intentional for the first prototype, but it should not preclude later compilation into Arg2P-style rules.}
 
@@ -853,7 +853,7 @@ It then leverages a \ac{CSP} solver
 -- currently, the Z3 theorem prover~\cite{DBLP:conf/tacas/MouraB08} --
 to compute admissible pipelines efficiently.
 
-The full \ac{CSP} model is reported in the supplementary materials,
+Additional implementation details on the \ac{CSP} encoding are available in the project repository,
 here we provide only an informal sketch of its main components and constraints.
 %
 For each possible step,
@@ -1249,7 +1249,7 @@ and the variations across generation attempts.
 %   along with the corresponding solution.
 % \end{inlinelist}
 
-The supplementary materials include examples of generated explanations.
+Examples of generated explanations are available in the project repository.
 
 \subsection{Data catalog}
 \label{subsec:logging}
@@ -1465,7 +1465,7 @@ Prompts are intentionally kept simple and consistent across experiments,
 relying on the surrounding agentic loop to enforce correctness through iterative validation and feedback.
 %
 Full prompt definitions and implementation details are available on the repository\textsuperscript{\ref{url:repo}}
-and in the supplementary materials.
+.
 
 % \subsection{Performance analysis}
 % \label{subsec:performance-analysis}
@@ -1611,7 +1611,7 @@ This results in comparable or higher overall costs for \textit{Gemini 2.5 Flash}
 % such pipelines are not generated in a single step but emerge through iterative refinement,
 % where issues such as categorical feature handling and label encoding inconsistencies are progressively resolved.
 % %
-% The full explanation is reported in supplementary materials.
+% The full explanation is reported in the project repository.
 
 % Overall,
 % these results demonstrate that the proposed framework is capable of autonomously generating competitive machine learning pipelines,
