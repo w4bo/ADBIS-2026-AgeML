@@ -1583,6 +1583,7 @@ A key difference between the two models lies in their ability to explore the sea
 (30 pipelines in almost all datasets),
 whereas \textit{Gemini 2.5 Flash} often fails to reach the maximum number of valid pipelines
 (e.g., 12 on \textit{HAR} and 11 on \textit{MNIST\_784}).
+The number of actually executed pipelines depends not only on the nominal exploration budget, but also on whether generated code passes semantic validation and runtime tests within the retry budget.
 %
 This reduced exploration may directly impact performance,
 particularly on more complex datasets.
