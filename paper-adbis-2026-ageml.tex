@@ -1043,6 +1043,7 @@ This includes:
   and
   \item the target feature.
 \end{inlinelist}
+The compact dataset description is computed from deterministic metadata and summary statistics, such as column names, inferred types, cardinalities, missingness, and small samples; \acp{LLM} are used only to interpret semantic predicates when needed.
 %
 Such information is used by executor agents to build the prompt context for some underlying \ac{LLM},
 which is then asked to produce Python code,
