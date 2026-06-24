@@ -52,14 +52,14 @@ jobs:
           fi
 
       - name: Build peer review paper
-        uses: xu-cheng/latex-action@v3
+        uses: xu-cheng/latex-action@v4
         with:
           root_file: ${{ env.PAPER_BASE_NAME }}.tex
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode -shell-escape
 
       - name: Build camera ready paper
         if: steps.check_ack.outputs.ack_ok == 'true'
-        uses: xu-cheng/latex-action@v3
+        uses: xu-cheng/latex-action@v4
         with:
           root_file: ${{ env.PAPER_BASE_NAME }}-camera-ready.tex
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode -shell-escape
