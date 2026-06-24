@@ -41,6 +41,8 @@ most systems remain model-centric and poorly aligned with \ac{MLOps} requirement
 %
 We propose \ourapproach{}, a specification-driven, \textit{agentic} architecture for Data-Centric AI.
 %
+\ourapproach{} is data-centric in the sense that pipeline construction is conditioned on the data at hand: the selected workflow may include preprocessing, feature handling, rebalancing, and other data-preparation steps required by the dataset properties and by the selected estimators.
+%
 A human-readable specification language enables data scientists to encode assumptions, constraints, evaluation criteria, and design preferences across the pipeline.
 %
 From the specification, a search space for pipeline generation is algorithmically constructed and explored to ensure reproducibility and controlled automation.
@@ -133,6 +135,8 @@ it overlooks the iterative and data-focused processes that characterise real-wor
 % \paragraph{Contribution.}
 
 In this paper we propose \ourapproach{}, an \emph{agentic} architecture for automatic \emph{end-to-end} pipeline generation and execution that aligns with data-centric \ac{AI} principles.
+%
+Here, ``data-centric'' means that pipeline construction is conditioned on the data at hand, including preprocessing, feature handling, rebalancing, and other data-preparation steps required by dataset properties and by the selected estimators.
 %
 Thanks to \ac{LLM}-based intelligent agents, \ourapproach{}
 \begin{inlinelist}
@@ -1702,6 +1706,7 @@ Adding this feature would provide greater human involvement and iterative refine
 \item Investigating more efficient heuristic-based search strategies to improve exploration diversity.
 \item Extending evaluation across multiple \acp{LLM}, since the architecture already supports the easy integration of new providers but the current evaluation relies on a single provider (Google) and a limited set of models.
 \item Optimising token usage by redesigning prompts and reducing redundant conversational context, while preserving pipeline quality.
+\item Direct evaluation of data-quality improvement, cleaning effectiveness, and bias mitigation is left to future work.
 \end{itemize}
 
 
