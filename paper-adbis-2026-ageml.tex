@@ -1,83 +1,25 @@
-% This is samplepaper.tex, a sample chapter demonstrating the
-% LLNCS macro package for Springer Computer Science proceedings;
-% Version 2.21 of 2022/01/12
-%
 \documentclass[runningheads]{llncs}
-
-
-\usepackage{graphicx}
-\usepackage{amssymb}
-\usepackage{amsmath}
-\usepackage{stmaryrd}
-\usepackage[hyphens]{url}
-\usepackage[inline]{enumitem}
-\usepackage{hyperref}
-\usepackage{listings}
-\usepackage{color}
-\usepackage{myacronyms}
-\usepackage{booktabs}
-\usepackage{subcaption}
-\usepackage{xspace}
-\usepackage{cleveref} % import this as the last one!
-\usepackage{./code-listings}
-\usepackage{todonotes}
-
-\newcommand{\sidenote}[3]{\todo[linecolor=#1,backgroundcolor=#1!25,bordercolor=#1,size=\tiny]{\textbf{#2:} #3}}
-\renewcommand{\note}[3]{\todo[inline,linecolor=#1,backgroundcolor=#1!25,bordercolor=#1]{\textbf{#2:} #3}}
-
-\newcommand{\aonote}[1]{\note{red}{AO}{#1}}
-\newcommand{\aosidenote}[1]{\sidenote{red}{AO}{#1}}
-
-\newcommand{\malanote}[1]{\note{violet}{Mattia}{#1}}
-\newcommand{\malasidenote}[1]{\sidenote{violet}{Mattia}{#1}}
-
-\newcommand{\mmnote}[1]{\note{yellow}{Matteo}{#1}}
-\newcommand{\mmsidenote}[1]{\sidenote{yellow}{Matteo}{#1}}
-
-\newcommand{\teonote}[1]{\note{cyan}{Teo}{#1}}
-\newcommand{\teosidenote}[1]{\sidenote{cyan}{Teo}{#1}}
-
-\newcommand{\gcnote}[1]{\note{green}{Gio}{#1}}
-\newcommand{\gcsidenote}[1]{\sidenote{green}{Gio}{#1}}
-
-\newcommand{\missingref}[1][{add some ref here}]{\sidenote{orange}{TODO}{#1}}
-
-% Custom environments
-\newenvironment{inlinelist}{\begin{enumerate*}[label=\emph{(\roman*)}]}{\end{enumerate*}}
-
-%%%%%%% FIX CLEVEREF/ACRONYM https://tex.stackexchange.com/questions/735500/% problem-with-amsmath-cleveref-acronym
-\makeatletter
-\AtBeginDocument
- {
-   \def\ltx@label#1{\cref@label{#1}}%add braces
-   \def\label@in@display@noarg#1{\cref@old@label@in@display{#1}}%remove braces
-\def\label@in@mmeasure@noarg#1{%
-    \begingroup%
-      \measuring@false%
-      \cref@old@label@in@display{#1}%remove braces for multline, see https://% tex.stackexchange.com/q/737204/2388
-    \endgroup}%
- } %
-\makeatother
-%%%%%%% END FIX CLEVEREF/ACRONYM
-
-\newcommand{\ourapproach}[0]{\textsc{AGE-ML}}
-
+\usepackage{./paper-adbis-2026-ageml}
 
 \begin{document}
 \sloppy
 %
-\title{Agentic Architecture for Data-Centric \acs{AutoML}}
+\title{\paperTitle}
 %
 %\titlerunning{Abbreviated paper title}
 % If the paper title is too long for the running head, you can set
 % an abbreviated paper title here
 %
 \author{
-Mattia Matteini\inst{1}\orcidID{0009-0007-4474-8431} \and
-Matteo Magnini\inst{2}\orcidID{0000-0001-9990-420X} \and
-Matteo Francia\inst{1}\orcidID{0000-0002-0805-1051} \and
-Giovanni Ciatto\inst{1}\orcidID{0000-0002-1841-8996} \and
-Andrea Omicini\inst{1}\orcidID{0000-0002-6655-3869}
+  Mattia Matteini\inst{1}\orcidID{0009-0007-4474-8431} 
+  \and
+  Matteo Magnini\inst{2}\orcidID{0000-0001-9990-420X} 
+  \and
+  Matteo Francia\inst{1}\orcidID{0000-0002-0805-1051} 
+  \and
+  Giovanni Ciatto\inst{1}\orcidID{0000-0002-1841-8996} 
+  \and
+  Andrea Omicini\inst{1}\orcidID{0000-0002-6655-3869}
 }
 %
 \authorrunning{M. Matteini et al.}
