@@ -1643,18 +1643,23 @@ and
 \end{inlinelist}
 
 
-Future work will explore several directions to enhance the system's capabilities and applicability.
+Future work will explore several directions to enhance the system's capabilities and applicability,
+including (in chornological order of execution):
+%
+\begin{inlinelist}
+\item agent-assisted authoring of modular, reusable, and priority-aware specifications from natural-language sources;
+\item support for human editing of generated pipeline scripts and selective re-execution of only the affected runs, 
+while preserving provenance in the data catalog;
+\item analysing repeated-run variability and budget sensitivity, 
+extending the evaluation across multiple \acp{LLM}, 
+reducing latency and token usage through prompt compression and caching, 
+and ranking admissible pipelines with heuristic or diversity-aware search;
+\item direct evaluation of data-quality improvement, cleaning effectiveness, and bias mitigation.
+\end{inlinelist}
 
-\begin{itemize}
-\item Future work includes agent-assisted authoring of modular, reusable, and priority-aware specifications from natural-language sources.
-\item A direct next step is to support human editing of generated pipeline scripts and selective re-execution of only the affected runs, while preserving provenance in the data catalog.
-\item Other priorities are analysing repeated-run variability and budget sensitivity, extending the evaluation across multiple \acp{LLM}, reducing latency and token usage through prompt compression and caching, and ranking admissible pipelines with heuristic or diversity-aware search.
-\item Direct evaluation of data-quality improvement, cleaning effectiveness, and bias mitigation is left to future work.
-\end{itemize}
 
 
-
-\section*{Acknowledgements}
+\subsubsection*{Acknowledgements.}
 
 Matteo Magnini was supported by the Luxembourg National Research Fund (FNR)
 through the project ``A DJ for Machine Ethics: the Dialogue Jiminy'' (O24/18989918/DJ4ME).
