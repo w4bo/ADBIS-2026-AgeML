@@ -45,7 +45,7 @@ We propose \ourapproach{}, a specification-driven, \textit{agentic} architecture
 %
 A human-readable specification language enables data scientists to encode assumptions, constraints, evaluation criteria, and design preferences across the pipeline.
 %
-From the specification, a search space for pipeline generation is algorithmically constructed and explored to ensure reproducibility and controlled automation.
+From the specification, a search space for pipeline generation is algorithmically constructed and explored to support controlled automation and reproducible execution traces.
 %
 Then, \acp{LLM} operate within a controlled agent loop to interpret specifications, generate and validate pipelines, and produce structured explanations for them.
 %
@@ -1091,6 +1091,8 @@ Whenever any of these checks fail,
 the feedback is injected back into the conversational context,
 and a new generation attempt is performed,
 until the retry limit is reached.
+%
+Reproducibility is addressed at the artefact and execution level rather than by assuming deterministic \ac{LLM} behaviour: \ourapproach{} constrains code generation through explicit prompts, fixed interfaces, automated validation, runtime testing, and complete logging of generated code, hyper-parameters, metrics, and artefacts.
 
 % Successfully validated code is then executed by the executor agent
 % (see next subsection)
@@ -1293,7 +1295,7 @@ and their training statistics and performance.
 This hierarchical logging scheme serves two purposes.
 %
 First,
-it makes the exploration reproducible:
+it makes the resulting executions reproducible at the artefact level:
 for each trained model,
 one can recover the dataset split,
 the generating script,
@@ -1361,7 +1363,7 @@ a maximum of 10 generation attempts per pipeline,
 and a total time budget of 2 hours per run.
 %
 All executions are fully tracked using a data catalog (based on MLflow in the implementation),
-enabling reproducibility and post-hoc analysis of both predictive outcomes and explanation artefacts.
+enabling artefact-level reproducibility and post-hoc analysis of both predictive outcomes and explanation artefacts.
 Balanced accuracy is used for classification tasks and RMSE for regression tasks.
 
 \paragraph{Datasets.}
@@ -1706,6 +1708,7 @@ Adding this feature would provide greater human involvement and iterative refine
 \item Investigating more efficient heuristic-based search strategies to improve exploration diversity.
 \item Extending evaluation across multiple \acp{LLM}, since the architecture already supports the easy integration of new providers but the current evaluation relies on a single provider (Google) and a limited set of models.
 \item Optimising token usage by redesigning prompts and reducing redundant conversational context, while preserving pipeline quality.
+\item An empirical analysis of the variability of generated code and selected pipelines across repeated executions is left to future work.
 \item Direct evaluation of data-quality improvement, cleaning effectiveness, and bias mitigation is left to future work.
 \end{itemize}
 
