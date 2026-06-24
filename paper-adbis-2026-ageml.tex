@@ -108,15 +108,9 @@ On the other hand,
 the increasing scale and velocity of data demand \emph{automation} to ensure efficiency, reproducibility, and scalability~\cite{he2021automl}.
 
 In this context,
-our perspective is to reposition human effort toward high-value tasks
-(as observed in practices such as vibe coding~\cite{welsh2022end})
-rather than low-level coding,
-repetitive experimentation,
-and manual orchestration of workflow components\textemdash{}all tasks that could be automated by coding frameworks
-(such as \texttt{MLflow}~\cite{zaharia2018accelerating} and \texttt{auto-scikit-learn}~\cite{DBLP:journals/jmlr/FeurerEFLH22} pipelines).
+our perspective is to reposition human effort toward high-value tasks rather than low-level coding, repetitive experimentation, and manual orchestration of workflow components.
 %
-Automation should act as an amplifier of expertise,
-handling execution and optimisation while preserving meaningful human control over the structure and logic of the pipeline.
+Automation should amplify expertise while preserving meaningful human control over the structure and logic of the pipeline.
 %
 Despite their empirical effectiveness, many \ac{AutoML} systems~\cite{zha2025data} exhibit a mismatch with data-centric \ac{AI} principles.
 %
@@ -191,29 +185,7 @@ Data-centric \ac{AI} prioritises improving data quality and representativeness o
 It shifts the main optimisation target from model design to data quality,
 treating high-quality data as a powerful lever for improving system performance.
 %
-For example,
-consider a classification task predicting loan approval/denial.
-%
-Suppose a \ac{DT} classifier is trained on past application data.
-%
-In a \emph{model}-centric approach,
-if the \ac{DT} yields unsatisfactory accuracy,
-we might increase its depth,
-try random forests,
-switch to gradient boosting,
-or tune hyper-parameters,
-in order to increase accuracy.
-%
-In a \emph{data}-centric approach,
-we keep the \ac{DT} fixed and inspect the dataset instead.
-%
-There we may spot data quality issues,
-e.g. mislabeled examples,
-or distributional biases.
-%
-After correcting these issues via ad-hoc data cleaning, %and retraining the same decision tree,
-%performance could improve because the training data would better reflect the true decision patterns.
-re-training the same \ac{DT} (i.e., with the same hyper-parameters) may yield better performance.
+In this perspective, practitioners may keep the model family fixed while revising preprocessing, feature handling, labeling assumptions, or sampling choices in response to dataset properties.
 
 In this context, \Ac{AutoML} reduces the manual effort of building and tuning \ac{ML} models by automating parts of the development process.
 %
@@ -1557,22 +1529,11 @@ for Auto MPG we use Ertu\u{g}rul Demir's work%
 for California Housing we report Ahmed Mahmoud's notebook%
 \footnote{\url{https://www.kaggle.com/code/ahmedmahmoud16/california-housing-prices}}.
 
-Both models generate pipelines that achieve competitive performance compared with the baselines,
-often matching or surpassing them despite operating under a constrained computational budget and without task-specific tuning.
+Both models generate competitive pipelines under a constrained computational budget and without task-specific tuning.
 %
-Across classification tasks,
-\textit{Gemini 3.1 Flash Lite} outperforms the baseline in 3 out of 6 datasets (\textit{Wilt}, \textit{HAR}, \textit{Adult}),
-matches or remains close in others,
-and shows only marginal degradation on more challenging benchmarks such as \textit{Madelon} and \textit{MNIST\_784}.
+Across classification tasks, \textit{Gemini 3.1 Flash Lite} improves over the baseline on \textit{Wilt}, \textit{HAR}, and \textit{Adult}, while \textit{Gemini 2.5 Flash} improves on \textit{HAR} and \textit{Adult} and remains competitive elsewhere.
 %
-Similarly,
-\textit{Gemini 2.5 Flash} achieves improvements over the baseline in 2 out of 6 datasets,
-while remaining competitive in the remaining cases.
-%
-On regression tasks, both models demonstrate strong performance.
-\textit{Gemini 3.1 Flash Lite} improves over the baseline in 2 out of 3 datasets (\textit{California Housing} and \textit{Auto MPG}),
-while \textit{Gemini 2.5 Flash} also achieves improvements in 2 out of 3 datasets,
-although with slightly higher variance and a more noticeable performance degradation on \textit{Ames Housing}.
+On regression tasks, both models improve over the baseline on \textit{California Housing} and \textit{Auto MPG}, whereas \textit{Ames Housing} remains more challenging.
 
 A key difference between the two models lies in their ability to explore the search space.
 %
@@ -1582,23 +1543,14 @@ whereas \textit{Gemini 2.5 Flash} often fails to reach the maximum number of val
 (e.g., 12 on \textit{HAR} and 11 on \textit{MNIST\_784}).
 The number of actually executed pipelines depends not only on the nominal exploration budget, but also on whether generated code passes semantic validation and runtime tests within the retry budget.
 %
-This reduced exploration may directly impact performance,
-particularly on more complex datasets.
-
-From an efficiency perspective,
-the two models exhibit distinct computational profiles.
+This reduced exploration may directly affect performance on more complex datasets.
 %
 \textit{Gemini 3.1 Flash Lite} reaches the pipeline budget more consistently while producing fewer output tokens than \textit{Gemini 2.5 Flash} in our runs.
 %
 % \cref{fig:gemini-time-breakdown} provides a detailed breakdown of the runtime for both models across datasets,
 % highlighting the differences in their computational profiles.
 
-Token consumption further highlights this trade-off.
-%
-While \textit{Gemini 3.1 Flash Lite} generally uses more input tokens due to broader exploration,
-\textit{Gemini 2.5 Flash} produces substantially more output tokens, indicating longer or less concise generations.
-%
-This results in comparable or higher overall costs for \textit{Gemini 2.5 Flash} despite exploring fewer pipelines.
+Token usage shows the same trade-off: \textit{Gemini 3.1 Flash Lite} generally uses more input tokens due to broader exploration, whereas \textit{Gemini 2.5 Flash} produces substantially more output tokens, leading to comparable or higher overall costs despite exploring fewer pipelines.
 
 % A qualitative inspection of the generated pipelines confirms that the system constructs semantically coherent and non-trivial workflows.
 % %
@@ -1619,14 +1571,7 @@ This results in comparable or higher overall costs for \textit{Gemini 2.5 Flash}
 
 \paragraph{Discussion.}
 
-The results show that the proposed approach generalises well across heterogeneous datasets,
-including low-dimensional tabular data,
-high-dimensional feature selection benchmarks,
-and moderately complex image-derived representations.
-%
-Performance gains are particularly evident in scenarios requiring coordinated preprocessing steps
-(e.g., \textit{Adult} and \textit{HAR}),
-where the agentic loop successfully composes multiple transformations.
+The results show that the proposed approach generalises across heterogeneous datasets, with particularly clear gains in scenarios requiring coordinated preprocessing steps such as \textit{Adult} and \textit{HAR}.
 %
 % In contrast,
 % slightly weaker performance on datasets such as \textit{Madelon} and \textit{MNIST\_784}
@@ -1701,11 +1646,9 @@ and
 Future work will explore several directions to enhance the system's capabilities and applicability.
 
 \begin{itemize}
-\item Enhancing the process of writing specification files by introducing agents capable of generating specifications from natural-language sources such as documentation, web resources, and expert comments, while also supporting modular, reusable, and priority-aware specification components.
+\item Future work includes agent-assisted authoring of modular, reusable, and priority-aware specifications from natural-language sources.
 \item A direct next step is to support human editing of generated pipeline scripts and selective re-execution of only the affected runs, while preserving provenance in the data catalog.
-\item Future work will also analyse the variability of generated pipelines and code across repeated executions, study the effect of pipeline, retry, and time budgets, and extend the evaluation across multiple \acp{LLM}.
-\item Reducing latency and token usage through prompt compression, caching, and stronger deterministic validation remains an important engineering target.
-\item Retaining \ac{CSP}-based admissibility while using heuristic or diversity-aware strategies to rank valid pipelines under budget constraints is another direct line of work.
+\item Other priorities are analysing repeated-run variability and budget sensitivity, extending the evaluation across multiple \acp{LLM}, reducing latency and token usage through prompt compression and caching, and ranking admissible pipelines with heuristic or diversity-aware search.
 \item Direct evaluation of data-quality improvement, cleaning effectiveness, and bias mitigation is left to future work.
 \end{itemize}
 
