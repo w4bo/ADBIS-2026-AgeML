@@ -1365,6 +1365,7 @@ and a total time budget of 2 hours per run.
 All executions are fully tracked using a data catalog (based on MLflow in the implementation),
 enabling artefact-level reproducibility and post-hoc analysis of both predictive outcomes and explanation artefacts.
 Balanced accuracy is used for classification tasks and RMSE for regression tasks.
+Although several examples focus on classification for brevity, \ourapproach{} is not restricted to classifiers: in practice, any estimator following the scikit-learn fitting interface can be used as a candidate, and our experiments cover classification and regression as common and easily interpretable use cases.
 
 \paragraph{Datasets.}
 \label{subsubsec:datasets}
