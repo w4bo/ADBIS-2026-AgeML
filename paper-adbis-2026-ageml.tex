@@ -96,7 +96,7 @@ the role of the data scientist extends beyond model selection and hyper-paramete
 Injecting domain knowledge and a-priori experience into \ac{ML} pipelines is therefore essential.
 %
 However,
-modern \ac{ML} systems are characterised by a fundamental duality between integrating human expertise and automation.
+modern \ac{ML} systems are characterised by a fundamental tension between integrating human expertise and automation.
 %
 On one hand,
 data scientists possess domain knowledge,
@@ -114,7 +114,7 @@ Automation should amplify expertise while preserving meaningful human control ov
 %
 Despite their empirical effectiveness, many \ac{AutoML} systems~\cite{zha2025data} exhibit a mismatch with data-centric \ac{AI} principles.
 %
-Traditional \ac{AutoML} approaches primarily concentrate on model selection and hyper-parameter optimisation,
+Traditional \ac{AutoML} approaches primarily focus on model selection and hyper-parameter optimisation,
 often treating the dataset as fixed and immutable.
 %
 While this strategy can yield strong benchmark results,
@@ -134,7 +134,7 @@ we propose \ourapproach{},
 an \emph{agentic} architecture for automatic \emph{end-to-end} pipeline generation and execution that aligns with data-centric \ac{AI} principles.
 %
 Here, 
-``data-centric'' means that pipeline construction is tailored on the data at hand, 
+``data-centric'' means that pipeline construction is tailored to the data at hand, 
 including preprocessing, feature handling, rebalancing, and other data-preparation steps 
 required by dataset properties and by the selected estimators.
 %
@@ -156,8 +156,8 @@ In particular,
 \ourapproach{} (\cref{fig:research-line}) delegates the design and implementation of \ac{ML} pipelines to a \ac{MAS}
 where agents interleave symbolic reasoning, intuitive reasoning, text generation
 (as provided by \acp{LLM}),
-and execution of generated code
-to automatise and document \ac{ML} pipeline construction.
+and the execution of generated code
+to automate and document \ac{ML} pipeline construction.
 %
 Crucially,
 \ourapproach{} enables structured human knowledge injection during pipeline creation,
@@ -168,7 +168,7 @@ define preferred preprocessing strategies,
 or
 embed domain rules directly into their specification file.
 %
-This paradigm combines automated optimisation of \ac{AutoML} with guided expertise,
+This paradigm combines the automated optimisation capabilities of \ac{AutoML} with guided expertise,
 producing pipelines that are not only performant but also inspectable, well-documented, adaptable,
 and aligned with domain requirements.
 
@@ -186,7 +186,7 @@ It shifts the main optimisation target from model design to data quality,
 treating high-quality data as a powerful lever for improving system performance.
 %
 In this perspective, 
-practitioners may keep the model family fixed while revising preprocessing, feature handling, labeling assumptions, or sampling choices in response to dataset properties.
+practitioners may keep the model family fixed while revising preprocessing, feature handling, labelling assumptions, or sampling choices in response to dataset properties.
 
 In this context, 
 \Ac{AutoML} reduces the manual effort of building and tuning \ac{ML} models by automating parts of the development process.
@@ -219,7 +219,7 @@ are built on top of the \ac{CASH} problem,
 which extends both the `Algorithm selection' problem
 and
 the \ac{HPO},
-by searching for the best algorithm and also its hyper-parameters for a given dataset.
+by searching for both the best algorithm and its hyper-parameters for a given dataset.
 %
 Other frameworks
 (e.g., Auto-Keras~\cite{DBLP:conf/kdd/JinSH19})
@@ -230,7 +230,7 @@ FLAML~\cite{DBLP:conf/kdd/0001W0Q22} has outperformed the above-mentioned approa
 %
 Newer \ac{AutoML} frameworks also focus on end-to-end automation,
 such as~\cite{FranciaGP23} and~\cite{DBLP:conf/pakdd/FranciaGG24}
-which formalised and introduced \ac{AutoML} for end-to-end pipelines.
+where \ac{AutoML} for end-to-end pipelines was introduced and formalised.
 
 Other recent frameworks address end-to-end machine learning pipelines through \ac{LLM}-driven and multi-agent approaches.
 %
@@ -254,9 +254,7 @@ enabling both domain knowledge integration and error-driven learning.
 %
 The semantic memory enhances the \ac{LLM}'s parametric knowledge with domain-specific information
 from external knowledge that is not constructed by humans but rather by the summarisation agent
-% (compresses relevant knowledge into concise paragraphs serving as queryable indices)
 and the condensation agent.
-% (transforms this knowledge into precise and streamlined guidance).
 %
 Similarly,
 AutoML-Agent~\cite{DBLP:conf/icml/TriratJH25} adopts a coordinated multi-agent strategy to automate the full pipeline,
@@ -264,8 +262,8 @@ from data processing and model selection to deployment,
 by decomposing the task into specialised roles.
 
 Despite these advances,
-current approaches still exhibit key limitations,
-in particular a lack of transparent optimisation processes and insufficient integration of constraints and domain semantics from data scientists,
+current approaches still exhibit key limitations, 
+particularly opaque optimisation processes and limited integration of constraints and domain semantics provided by data scientists,
 motivating the need for more traceable and data-centric \ac{AutoML} solutions.
 %
 A detailed comparison of older contributions can be found in \cite{DBLP:conf/icml/TriratJH25}.
@@ -293,7 +291,7 @@ while resulting pipeline-generation processes are often neither well documented 
 %
 Unlike prior \ac{LLM}-based methods,
 it introduces \emph{constrained generation} to improve robustness and enforce well-defined rules,
-while preserving full end-to-end automation and integrating \emph{human-centered design}.
+while preserving full end-to-end automation and integrating \emph{human-centred design}.
 %
 It also supports \emph{inspectable pipeline construction},
 \emph{pipeline validation},
@@ -706,7 +704,7 @@ allowing data scientists to understand and audit automated \ac{ML} processes.
 
 \Cref{fig:layered-architecture} shows the proposed architecture for specification-driven \ac{AutoML}.
 %
-The system consumes as input:
+The system takes as input:
 \begin{inlinelist}
   \item a dataset,
   \item a \textbf{specification}, % compliant with \cref{sec:specification-language},
@@ -758,8 +756,8 @@ parsable by software components,
 and
 amenable to \ac{LLM}-based generation and revision.
 %
-This kind of specification is inspired by SKI-Lang~\cite{skilang}
-where a YAML-like language is used to encode knowledge to be injected into a neural predictor.
+This specification style is inspired by SKI-Lang~\cite{skilang}, 
+which uses a YAML-like language to encode knowledge injected into a neural predictor.
 %
 The file comprises four main sections:
 \texttt{pipeline},
@@ -835,8 +833,8 @@ and candidate algorithms.
 The planner resolves these requirements before execution,
 so that downstream components receive only pipelines that are structurally valid with respect to the specification.
 
-A pipeline can still be seen as a finite sequence of step--candidate pairs:
-where each step denotes a phase of the workflow
+A pipeline can still be seen as a finite sequence of step--candidate pairs,
+where each step denotes a phase of the workflow,
 and each candidate denotes the concrete algorithm or operation selected for that phase.
 %
 However,
@@ -848,7 +846,7 @@ which steps may appear,
 in which order,
 and with which candidate implementations.
 %
-Hyper-parameter optimisation is then delegated to pipeline executor agent.
+Hyper-parameter optimisation is then delegated to the pipeline executor agent.
 
 \subsubsection{Finding admissible pipelines via \acs{CSP}.}
 
@@ -859,7 +857,7 @@ It then leverages a \ac{CSP} solver
 -- currently, the Z3 theorem prover~\cite{DBLP:conf/tacas/MouraB08} --
 to compute admissible pipelines efficiently.
 
-Additional implementation details on the \ac{CSP} encoding are available in the project repository,
+Additional implementation details on the \ac{CSP} encoding are available in the project repository;
 here we provide only an informal sketch of its main components and constraints.
 %
 For each possible step,
@@ -954,7 +952,7 @@ which generates and runs the corresponding code.
 
 \subsection{Pipeline executor}
 \label{subsec:pipeline-execution}
-The pipeline executor is responsible for synthesizing and executing pipelines.
+The pipeline executor is responsible for synthesising and executing pipelines.
 
 \subsubsection{Code generation.}
 
@@ -966,7 +964,7 @@ The pipeline executor is responsible for synthesizing and executing pipelines.
 Code generation aims to bridge the gap between the symbolic representation of a pipeline
 and a concrete training procedure that can be executed on actual data.
 %
-Given an admissible pipeline
+Given an admissible pipeline,
 the executor agent produces a Python script implementing exactly the candidate algorithms in the prescribed order.
 %
 The generated script is parametric with respect to the hyper-parameters
@@ -1012,10 +1010,10 @@ so that the pipeline can be re-executed multiple times with different hyper-para
   \centering
   \includegraphics[width=.9\linewidth]{figures/executor-state-machine.png}
   \caption{
-    State machine governing the behavior of executor agents.
+    State machine governing the behaviour of executor agents.
     Starting from an admissible pipeline for the dataset at hand,
     the agent iteratively generates Python code,
-    validates its compliance w.r.t. the pipeline,
+    validates its compliance with respect to the pipeline,
     executes it on the training set
     \textendash{} multiple times, exploring different hyper-parameter assignments \textendash{},
     and finally produces a textual explanation of the outcome.
@@ -1025,7 +1023,7 @@ so that the pipeline can be re-executed multiple times with different hyper-para
 \end{figure}
 
 \Cref{fig:executor-state-machine} depicts the state machine governing the behaviour of executor agents,
-focussing on the control loop of an executor agent, 
+focusing on the control loop of an executor agent, 
 not the whole multi-agent architecture.
 %
 The figure highlights that code generation is not treated as a single-shot translation problem,
@@ -1052,7 +1050,7 @@ The compact dataset description is computed from deterministic metadata and summ
 such as column names, inferred types, cardinalities, missingness, and small samples; 
 \acp{LLM} are used only to interpret semantic predicates when needed.
 %
-Such information is used by executor agents to build the prompt context for some underlying \ac{LLM},
+This information is used by executor agents to build the prompt context for some underlying \ac{LLM},
 which is then asked to produce Python code,
 with a fixed interface and well-defined responsibility.
 %
@@ -1083,19 +1081,15 @@ This validation can be formulated as a combination of
 \begin{inlinelist}
   \item a judgment problem in which a \ac{LLM} is asked to compare
   the admissible pipeline and the generated code,
-  and determine whether the latter faithfully implements the former\footnotemark;
+  and to determine whether the latter faithfully implements the former;\footnote{In particular, 
+  	the \ac{LLM}-as-a-judge approach is employed, 
+	to check that all necessary candidates appear in the code, 
+	and that no extraneous candidate is present.}
   and
   \item a matching problem in which the generated code is matched against a number of regular expressions,
   to ensure that it matches the desired syntax,
   and that all necessary hyper-parameters are mentioned.
 \end{inlinelist}
-%
-\footnotetext{
-  In particular,
-  the \ac{LLM}-as-a-judge approach is employed,
-  to check that all necessary candidates appear in the code,
-  and that no extraneous candidate is present.
-}
 %
 Whenever any of these checks fail,
 the feedback is injected back into the conversational context,
@@ -1277,9 +1271,7 @@ Examples of generated explanations are available in the project repository.
 
 All execution artefacts are tracked in the data catalog,
 currently implemented using \texttt{MLflow}~\cite{zaharia2018accelerating},
-in a hierarchical way\footnotemark.
-%
-\footnotetext{
+in a hierarchical way.\footnote{
   \texttt{MLflow} acts as a model/pipeline registry that treats \ac{AI} models as tracked assets with governed access, auditing, and lineage.
 }
 %
@@ -1296,10 +1288,8 @@ possibly including metadata such as the date-time of execution.
 At the second level,
 there is one entry for each admissible pipeline selected by the planner.
 %
-Pipelines come with metadata involving their description
-(steps and candidates),
-as well as
-their generated code and explanation.
+Each pipeline is associated with metadata describing its steps and candidates, 
+together with its generated code and explanation.
 %
 At the third level,
 there is one entry for each run of each pipeline script,
@@ -1320,7 +1310,7 @@ and the runtime trace that produced it.
 %
 Second,
 it provides the evaluator agent with a structured metadata organisation,
-in order to simplify the identification of the best model,
+aimed at simplifying the identification of the best model,
 as described in the next subsection.
 
 \subsection{Evaluator}
@@ -1332,7 +1322,7 @@ among those actually generated and executed by the executor agents.
 %
 This selection is empirical:
 the chosen solution is the one that performs best
-w.r.t. the runs completed for the current \ac{AutoML} problem instance%,
+with respect to the runs completed for the current \ac{AutoML} problem instance%,
 % rather than with respect to the entire space of theoretically admissible pipelines.
 ---in compliance with budget limitations.
 
@@ -1349,14 +1339,14 @@ The particular performance metric to be optimised is specified as a launch param
 
 We empirically evaluate the implementation of \ourapproach{},
 both in \emph{absolute} terms
--- by assessing the predictive performance achieved by \ourapproach{} on a collection of well-known benchmark datasets --,
+\textendash{} by assessing the predictive performance achieved by \ourapproach{} on a collection of well-known benchmark datasets \textendash{},
 and in \emph{relative} terms%
 \textemdash{}by comparing the performance of \ourapproach{} against a state-of-the-art \ac{AutoML} system
 (HAMLET~\cite{FranciaGP23}).
 
 In particular,
 \ourapproach{} consists of a Python system,
-exploiting 
+using 
 \texttt{LangChain}~\cite{Mavroudis2024}\footnote{\url{https://www.langchain.com}} 
 and 
 \texttt{LangGraph}\footnote{\url{https://www.langchain.com/langgraph}} for agent orchestration,
@@ -1367,7 +1357,7 @@ and our implementations of the pipeline planner, pipeline executor, and evaluato
 in compliance with the architecture from \cref{sec:agentic-architecture-for-specification-driven-automl}.
 %
 The project repository\footnote{\label{url:repo}\url{https://github.com/Mala1180/age-ml}}
-provides the source code of \ourapproach{}, reproduction instructions, scripts, prompts, configuration files, and implementation details under an open-source license.
+provides the source code of \ourapproach{}, reproduction instructions, scripts, prompts, configuration files, and implementation details under an open-source licence.
 
 \paragraph{Experimental setup.}
 \label{subsec:experimental-design}
@@ -1381,7 +1371,9 @@ and a total time budget of 2 hours per run.
 All executions are fully tracked using a data catalog (based on MLflow in the implementation),
 enabling artefact-level reproducibility and post-hoc analysis of both predictive outcomes and explanation artefacts.
 Balanced accuracy is used for classification tasks and RMSE for regression tasks.
-Although several examples focus on classification for brevity, \ourapproach{} is not restricted to classifiers: in practice, any estimator following the scikit-learn fitting interface can be used as a candidate, and our experiments cover classification and regression as common and easily interpretable use cases.
+Although several examples focus on classification for brevity, \ourapproach{} is not restricted to classifiers: 
+in practice, any estimator following the \texttt{scikit-learn} fitting interface can be used as a candidate, 
+and our experiments cover classification and regression as common and easily interpretable use cases.
 
 \paragraph{Datasets.}
 \label{subsubsec:datasets}
@@ -1449,7 +1441,7 @@ with varying dimensionality and feature types.
 %
 The experimental evaluation relies on \acp{LLM} to support
 \begin{inlinelist}
-    \item semantic constraints' translation,
+    \item translation of semantic constraints,
     \item code generation,
     \item validation, and
     \item explanation
@@ -1569,13 +1561,9 @@ For the baseline,
 we use the performance of HAMLET~\cite{FranciaGP23} or Kaggle notebooks (where HAMLET is not available).
 %
 In particular,
-for \textit{Ames Housing},
-we consider Gus Martins' results%
-\footnote{\url{https://www.kaggle.com/code/gusthema/house-prices-prediction-using-tfdf}},
-for Auto MPG we use Ertu\u{g}rul Demir's work%
-\footnote{\url{https://www.kaggle.com/code/datafan07/auto-mpg-eda-feature-engineering-and-regressions/notebook}},
-for California Housing we report Ahmed Mahmoud's notebook%
-\footnote{\url{https://www.kaggle.com/code/ahmedmahmoud16/california-housing-prices}}.
+for \textit{Ames Housing} we consider Gus Martins' results,\footnote{\url{https://www.kaggle.com/code/gusthema/house-prices-prediction-using-tfdf}}
+for Auto MPG we use Ertu\u{g}rul Demir's work,\footnote{\url{https://www.kaggle.com/code/datafan07/auto-mpg-eda-feature-engineering-and-regressions/notebook}}
+for California Housing we report Ahmed Mahmoud's notebook.\footnote{\url{https://www.kaggle.com/code/ahmedmahmoud16/california-housing-prices}}
 
 Both models generate competitive pipelines under a constrained computational budget and without task-specific tuning.
 %
@@ -1690,7 +1678,7 @@ and
 
 
 Future work will explore several directions to enhance the system's capabilities and applicability,
-including (in chornological order of execution):
+including (in chronological order of execution):
 %
 \begin{inlinelist}
 \item agent-assisted authoring of modular, reusable, and priority-aware specifications from natural-language sources;
@@ -1712,7 +1700,7 @@ through the project ``A DJ for Machine Ethics: the Dialogue Jiminy'' (O24/189899
 
 Experiments have been enabled by our friend and colleague Dr.\ Gianluca Aguzzi
 (currently employed at the Università di Bologna),
-who kindly provided us with access to his credits for \acp{LLM} usage on Google AI studio,
+who kindly provided us with access to his credits for \acp{LLM} usage on Google AI Studio,
 as provided by his Gemma Academic Program Award 2025.
 %Experiments have been enabled by our friend and colleague Dr.\ Gianluca Aguzzi
 %(currently employed at the Università di Bologna),
