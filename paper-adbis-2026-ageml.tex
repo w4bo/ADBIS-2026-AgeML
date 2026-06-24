@@ -37,7 +37,7 @@ Department of Computer Science, Faculty of Science, Technology and Medicine, Uni
 Data-Centric \ac{AI} focuses on improving data quality and curation as the main driver of machine learning performance.
 %
 Although \ac{AutoML} has reduced the cost of model selection and hyper-parameter tuning,
-most systems remain model-centric and poorly aligned with \ac{MLOps} requirements such as controllability, traceability, and explainability: automated choices about preprocessing, pipeline structure, and validation are often opaque and difficult to revise, despite their strong influence on model behaviour.
+most systems remain model-centric and poorly aligned with \ac{MLOps} requirements such as controllability, traceability, and process-level explainability: automated choices about preprocessing, pipeline structure, and validation are often opaque and difficult to revise, despite their strong influence on model behaviour.
 %
 We propose \ourapproach{}, a specification-driven, \textit{agentic} architecture for Data-Centric AI.
 %
@@ -47,7 +47,7 @@ From the specification, a search space for pipeline generation is algorithmicall
 %
 Then, \acp{LLM} operate within a controlled agent loop to interpret specifications, generate and validate pipelines, and produce structured explanations for them.
 %
-Results show improved transparency, iterative pipeline refinement, and stronger integration with \ac{MLOps} practices such as experiment tracking and reproducibility.
+Results show improved traceability of pipeline generation, iterative pipeline refinement, and stronger integration with \ac{MLOps} practices such as experiment tracking and reproducibility.
 %
 Finally, we discuss limitations and future directions for \ourapproach{}.
 
@@ -153,11 +153,13 @@ delegates the design and implementation of \ac{ML} pipelines to a \ac{MAS}
 where agents interleave symbolic reasoning, intuitive reasoning, text generation
 (as provided by \acp{LLM}),
 and execution of generated code
-to automatise and explain \ac{ML} operations.
+to automatise and document \ac{ML} pipeline construction.
 %
 Crucially,
 \ourapproach{} enables structured human knowledge injection during pipeline creation,
 via an \emph{ad-hoc} specification language.
+%
+In this work, explainability refers to the traceability and natural-language documentation of the pipeline-generation process, rather than to post-hoc explanation of individual model predictions.
 %
 Domain experts can constrain search spaces,
 define preferred preprocessing strategies,
@@ -165,7 +167,7 @@ or
 embed domain rules directly into their specification file.
 %
 This paradigm combines automated optimisation of AutoML with guided expertise,
-producing pipelines that are not only performant but also inspectable, explainable, adaptable,
+producing pipelines that are not only performant but also inspectable, well-documented, adaptable,
 and aligned with domain requirements.
 
 
@@ -282,7 +284,7 @@ by decomposing the task into specialised roles.
 Despite these advances,
 current approaches still exhibit key limitations,
 in particular a lack of transparent optimisation processes and insufficient integration of constraints and domain semantics from data scientists,
-motivating the need for more explainable and data-centric \ac{AutoML} solutions.
+motivating the need for more traceable and data-centric \ac{AutoML} solutions.
 %
 A detailed comparison of older contributions can be found in \cite{DBLP:conf/icml/TriratJH25}.
 
@@ -301,7 +303,7 @@ but they typically lack explicit constraints, reducing reliability and reproduci
 %
 Moreover, data scientists usually provide only the initial task specification,
 with limited involvement in later optimisation and refinement stages,
-while resulting pipelines are often neither interpretable nor searchable.
+while resulting pipeline-generation processes are often neither well documented nor searchable.
 
 % In this context, 
 \ourapproach{} combines the strengths of both paradigms.
@@ -310,7 +312,7 @@ Unlike prior \ac{LLM}-based methods,
 it introduces \emph{constrained generation} to improve robustness and enforce well-defined rules,
 while preserving full end-to-end automation and integrating \emph{human-centered design}.
 %
-It also supports \emph{interpretable pipelines},
+It also supports \emph{inspectable pipeline construction},
 \emph{pipeline validation},
 and \emph{searchability} through the data catalog.
 %
@@ -1669,7 +1671,7 @@ but also as a key enabler of effective search.
 \label{sec:conclusion}
 
 This paper presents \ourapproach{}:
-an agentic \ac{AutoML} approach focused on explainable, data-centric process automation from an \ac{MLOps} perspective.
+an agentic \ac{AutoML} approach focused on process-level explainability and data-centric process automation from an \ac{MLOps} perspective.
 %
 \ourapproach{} enables practitioners to guide pipeline exploration through a high-level specification language designed to express custom constraints and \ac{ML} best practices.
 %
@@ -1677,7 +1679,7 @@ Given time and cost budgets,
 the system explores the space of admissible pipelines defined by the specification to identify high-performing solutions for the target task.
 %
 Experiments show that \ourapproach{} can generate competitive pipelines across heterogeneous datasets,
-while providing meaningful explanations and a transparent optimisation process.
+while providing traceable pipeline-generation rationale and a transparent optimisation process.
 
 The main contributions of this work are:
 %
