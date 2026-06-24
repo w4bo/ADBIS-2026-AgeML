@@ -1537,6 +1537,8 @@ the results obtained with \textit{Gemini 3.1 Flash Lite} and \textit{Gemini 2.5 
 respectively,
 across six classification and three regression datasets.
 %
+Balanced accuracy is used for classification tasks, where higher is better, whereas RMSE is used for regression tasks, where lower is better. \ourapproach{} / Best Score denotes the best score obtained by \ourapproach{} on the dataset, Baseline reports the comparison system, \texttt{Actual P.} denotes the number of pipelines successfully generated, validated, and executed within the budget, token columns report aggregate \ac{LLM} usage, and putative cost is estimated from token usage.
+%
 %For the baseline,
 %we report the performance of HAMLET~\cite{FranciaGP23} for classification
 %-- except for \textit{MNIST\_784},
@@ -1585,11 +1587,7 @@ particularly on more complex datasets.
 From an efficiency perspective,
 the two models exhibit distinct computational profiles.
 %
-\textit{Gemini 3.1 Flash Lite} shows a more balanced distribution between \ac{LLM} inference and ML training time,
-while \textit{Gemini 2.5 Flash} tends to spend a significantly larger fraction of time in inference
-(e.g., more than 70\% of the total time on \textit{Adult} and \textit{California Housing}).
-%
-This suggests that the former achieves a more effective integration between the agentic loop and the underlying \ac{AutoML} components.
+\textit{Gemini 3.1 Flash Lite} reaches the pipeline budget more consistently while producing fewer output tokens than \textit{Gemini 2.5 Flash} in our runs.
 %
 % \cref{fig:gemini-time-breakdown} provides a detailed breakdown of the runtime for both models across datasets,
 % highlighting the differences in their computational profiles.
