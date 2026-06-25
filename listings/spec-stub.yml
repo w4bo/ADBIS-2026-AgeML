@@ -1,8 +1,0 @@
-pipeline:
-  # steps, candidates, and their parameters are defined here
-ordering:
-  # ordering constraints are defined here
-constraints:
-  # if-forbid-require constraints are defined here
-budgets:
-  # time/workers/pipelines budgets are defined here
