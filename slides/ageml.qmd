@@ -37,38 +37,42 @@ often determine whether an ML workflow is robust.
 - Efficient and end-to-end variants include FLAML and HAMLET
   [@DBLP:conf/kdd/0001W0Q22; @FranciaGP23]
 
+::: {.fragment}
 **Agentic AI** gives generation and adaptation
 
 - Uses LLM-backed agents for planning, code generation, validation, and repair
   - Recent examples include DS-Agent, MLZero, and AutoML-Agent
   [@DBLP:conf/icml/GuoD0C0024; @DBLP:journals/corr/abs-2505-13941; @DBLP:conf/icml/TriratJH25]
 - Needs specifications and guardrails to stay auditable
+:::
 
+::: {.fragment}
 **Data scientists** augment knowledge to drive selection and optimization
 
 - End-to-end AutoML [@FranciaGP23; @DBLP:conf/pakdd/FranciaGG24] and LLM-driven agents
 [@DBLP:conf/icml/TriratJH25], but controllability and traceability remain open problems.
+:::
 
-# AGE-ML in One Slide
+## AGE-ML in One Slide
 
-![AGE-ML](figures/agentic-automl-research-line-1.png){.center-img}
+![](figures/agentic-automl-research-line-1.png){.center-img}
 
 Given external domain knowledge (if any), LLM-powered agents distill human-readable specifications describing assumptions and constraints
 
 - If no knowledge is provided, we start with classic ML specification
 - Specification is written in YAML
 
-# AGE-ML in One Slide
+## AGE-ML in One Slide
 
-![AGE-ML](figures/agentic-automl-research-line-2.png){.center-img}
+![](figures/agentic-automl-research-line-2.png){.center-img}
 
 Data scientists (and experts) can read, revise, and manually augment the specification 
 
 - The search space is not just optimized by algorithms, it is **shaped** by experts.
 
-# AGE-ML in One Slide
+## AGE-ML in One Slide
 
-![AGE-ML](figures/agentic-automl-research-line-3.png){.center-img}
+![](figures/agentic-automl-research-line-3.png){.center-img}
 
 Planner and executor agents generate, validate, repair, and run pipelines under the constraints imposed by the specification.
 
@@ -115,7 +119,7 @@ Best model under the budget
 
 # Feature Comparison
 
-| Feature | HAMLET [@FranciaGP23] | FLAML [@DBLP:conf/kdd/0001W0Q22] | DS-Agent [@DBLP:conf/icml/GuoD0C0024] | AutoML-Agent [@DBLP:conf/icml/TriratJH25] | MLZero [@DBLP:journals/corr/abs-2505-13941] | **AGE-ML** |
+| Feature | HAMLET [@FranciaGP23] | FLAML [@DBLP:conf/kdd/0001W0Q22] | DS-Agent [@DBLP:conf/icml/GuoD0C0024] | AutoML-Agent [@DBLP:conf/icml/TriratJH25] | MLZero [@DBLP:journals/corr/abs-2505-13941] | AGE-ML |
 |---|---:|---:|---:|---:|---:|---:|
 | End-to-end pipeline | **Yes** | No | **Yes** | **Yes** | **Yes** | **Yes** |
 | Human-centered design | **Yes** | No | No | No | No | **Yes** |
@@ -136,139 +140,73 @@ automation, interpretable pipelines, cold-start capabilities, and auditable
 execution traces.
 :::
 
+# Evaluation and Results
 
+:::: {.columns}
 
-# Evaluation Setup
+::: {.column width="50%"}
 
-| Task | Datasets | Metric |
-|---|---:|---|
-| Classification | Wilt, Texture, Madelon, HAR, Adult, MNIST_784 | Balanced accuracy |
-| Regression | Ames Housing, California Housing, Auto MPG | RMSE |
+**Evaluation setup**
 
-| Budget item | Value |
-|---|---:|
-| Pipelines | 30 |
-| Parallel workers | 8 |
-| Generation attempts per pipeline | 10 |
-| Total runtime per run | 2 hours |
+- *Datasets*: 6 (*Classification*) + 3 (*Regression*)
+- *Metrics*: balanced accuracy for classification; RMSE for regression
+- *Budget*: 30 pipelines, 10 generation attempts per pipeline, 2 hours per run
+- *Baselines*: HAMLET for classification (closest approach for domain knowledge injection); Kaggle notebooks for regression
 
-**Baseline construction**
+**Results at a glance**
 
-| Dataset group | Baseline source |
-|---|---|
-| Classification datasets | HAMLET, a state-of-the-art AutoML system |
-| Ames Housing | Published Kaggle notebook by Gus Martins |
-| California Housing | Published Kaggle notebook by Ahmed Mahmoud |
-| Auto MPG | Published Kaggle notebook by Ertugrul Demir |
-
-::: {.notes}
-Keep this short. The goal is to make the results credible without spending the
-talk inside experimental setup. Clarify that regression baselines come from
-published notebooks because HAMLET is not available for those cases in the
-paper's comparison setup.
+- Gemini 3.1 Flash Lite beats the baseline on **5 / 9 datasets**
+- Gemini 2.5 Flash beats the baseline on **4 / 9 datasets**
 :::
+::: {.column width="50%"}
 
-# Results at a Glance
+**Detailed results**
 
-| Model | Beats baseline on | Pattern |
-|---|---:|---|
-| Gemini 3.1 Flash Lite | 5 / 9 datasets | More valid pipelines, lower output tokens |
-| Gemini 2.5 Flash | 4 / 9 datasets | Competitive, but fewer valid pipelines on harder cases |
-
-**Strongest signals**
-
-- HAR and Adult improve for both models
-- California Housing and Auto MPG improve for both models
-- Ames Housing remains challenging
-
-::: {.notes}
-This is the slide to say "competitive under constraints" rather than claiming
-universal dominance. The model comparison also supports the paper's argument:
-validity and executability are central bottlenecks.
+|Task| Dataset | Gemini 3.1 FL | Baseline | Gemini 2.5 F |
+|---|---|---:|---:|---:|
+|Classification| Wilt | **0.983** | 0.975 | 0.966 |
+|| Texture | 0.992 | **0.997** | 0.995 |
+|| Madelon | 0.863 | **0.875** | 0.863 |
+|| HAR | **0.987** | 0.959 | *0.981* |
+|| Adult | **0.822** | 0.805 | *0.813* |
+|| MNIST_784 | **0.972** | **0.972** | 0.966 |
+|Regression| California Housing | **67,675** | 69,838 | *69,331* |
+|| Ames Housing | 30,189 | **29,660.363** | 31,970 |
+|| Auto MPG | **2.148** | 2.508 | *2.283* |
 :::
+::::
 
-# Detailed Results
-
-| Dataset | Gemini 3.1 FL | Baseline | Gemini 2.5 F |
-|---|---:|---:|---:|
-| Wilt | **0.983** | 0.975 | 0.966 |
-| Texture | 0.992 | 0.997 | 0.995 |
-| Madelon | 0.863 | 0.875 | 0.863 |
-| HAR | **0.987** | 0.959 | **0.981** |
-| Adult | **0.822** | 0.805 | **0.813** |
-| MNIST_784 | 0.971 | 0.972 | 0.966 |
-| California Housing | **67,675.641** | 69,838.844 | **69,331.032** |
-| Ames Housing | 30,189.152 | 29,660.363 | 31,970.630 |
-| Auto MPG | **2.148** | 2.508 | **2.283** |
-
-Classification uses balanced accuracy, so higher is better. Regression uses
-RMSE, so lower is better.
-
-::: {.notes}
-If time is tight, skip row-by-row discussion. Point out where the bold numbers
-are and connect back to coordinated preprocessing and valid pipeline generation.
+:::{.fragment}
+**AGE-ML is competitive with state-of-the-art approaches while enabling human knowledge injection and traceable execution.**
 :::
 
 # What We Learn
 
+We need inspectable loop where human knowledge shapes what automation is allowed to do rather than a larger AutoML black box.
+
 1. **Specification narrows automation without removing flexibility.**
-
-2. **Symbolic planning keeps the search space inspectable.**
-
+2. **Symbolic planning keeps the search space inspectable and coherent.**
 3. **The validation loop matters as much as the LLM.**
-
 4. **The catalog turns generated ML work into governed ML work.**
-
-::: {.notes}
-This is the synthesis slide. It converts the paper's components into takeaways.
-:::
 
 # Limitations and Next Steps
 
+
 **Current limitations**
 
-- One coherent specification is assumed
+- One coherent specification is assumed, but specification evolve over time and must be revised
 - LLM generation can fail under strict time and retry budgets
 - Results may vary across repeated runs
 
 **Future work**
 
-- Agent-assisted specification authoring
-- Modular and reusable specification fragments
-- Human editing with selective re-execution
-- Better budget sensitivity analysis and prompt compression
-- Direct evaluation of data cleaning and bias mitigation
-
-::: {.notes}
-Be candid here. ADBIS audiences usually appreciate clear scoping and a
-roadmap grounded in engineering realities.
-:::
-
-# Make AutoML Inspectable
-
-::: {.r-fit-text}
-Not magic.
-
-Not manual.
-
-**A governed loop between data, constraints, agents, and evidence.**
-:::
-
-::: {.notes}
-Catchy ending: "The future of AutoML is not a larger black box. It is an
-inspectable loop where human knowledge shapes what automation is allowed to do."
-:::
+- Support specification evolution and revision
+- Enable feedbacks on pipeline execution and optimization
+- Suggest specification extensions and refinements after pipeline execution
 
 # Thank You
 
-**Questions?**
-
-Repository: <https://github.com/Mala1180/age-ml>
-
-::: {.r-fit-text}
-**Let agents explore. Let specifications decide.**
-:::
-
+![](figures/agentic-automl-research-line.png){.center-img}
 
 # Specification as Control Surface
 
