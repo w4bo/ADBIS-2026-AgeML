@@ -13,7 +13,7 @@ format:
 
 # Data-Centric AI: Main Point
 
-Data-Centric AI shifts attention from only tuning models to improving the data and preprocessing choices that shape model behavior [@zha2025data].
+Data-Centric AI shifts attention from tuning models to improving the data choices that shape model behavior [@zha2025data].
 
 **For practitioners, that means:**
 
@@ -21,13 +21,14 @@ Data-Centric AI shifts attention from only tuning models to improving the data a
 - Domain assumptions should be explicit, reusable, and inspectable
 - Automation should reduce routine work without hiding critical decisions
 
-::: {.notes}
-Keep this as the first conceptual anchor: the paper starts from the data-centric
-view. Human knowledge is valuable because preprocessing and validation decisions
-often determine whether an ML workflow is robust.
-:::
+Which role should **agents** and **generative AI** play in this process?
 
-# Background: AutoML and Agents
+- Vibe code is a reality
+- What about vibe data analysis?
+  - Help data scientists improve their data pipelines by also injecting domain knowledge and constraints
+- What about the traceability of the generated pipelines and their results?
+
+# AutoML, Agents, and Data Scientists
 
 **AutoML** gives algorithmic search
 
@@ -78,7 +79,7 @@ Planner and executor agents generate, validate, repair, and run pipelines under 
 
 - Agents can synthesize and adapt code, but they work inside an explicit search space rather than freely inventing the workflow.
 - AGE-ML returns trained pipelines together with code, metrics, artifacts, and natural-language explanations for audit and reuse.
-- The output is not only a score or a model. It is a governed ML process with traceable evidence
+- The output is not only a score or a model: it is a governed ML process with traceable evidence
 
 # Specification in, governed pipelines out.
 
@@ -117,35 +118,43 @@ Best model under the budget
 :::
 :::
 
+# The importance of validation
+
+![Executor state machine](figures/executor-state-machine.png){.center-img}
+
+Generated code must pass two gates:
+
+- **Semantic validation:** implements exactly the intended pipeline.
+- **Runtime validation:** trains and evaluates under the execution budget.
+
+Failures become feedback for bounded repair attempts.
+
+::: {.notes}
+The important point is that code generation is not single-shot. Generation,
+checking, execution, and explanation are one loop, bounded by the specification
+and the budget.
+:::
+
 # Feature Comparison
 
 | Feature | HAMLET [@FranciaGP23] | FLAML [@DBLP:conf/kdd/0001W0Q22] | DS-Agent [@DBLP:conf/icml/GuoD0C0024] | AutoML-Agent [@DBLP:conf/icml/TriratJH25] | MLZero [@DBLP:journals/corr/abs-2505-13941] | AGE-ML |
 |---|---:|---:|---:|---:|---:|---:|
-| End-to-end pipeline | **Yes** | No | **Yes** | **Yes** | **Yes** | **Yes** |
-| Human-centered design | **Yes** | No | No | No | No | **Yes** |
-| Constrained generation | **Yes** | **Yes** | No | No | No | **Yes** |
-| Pipeline validation | **Yes** | No | **Yes** | **Yes** | **Yes** | **Yes** |
-| Interpretable pipeline | No | No | **Yes** | **Yes** | **Yes** | **Yes** |
-| Zero-data cold start | **Yes** | **Yes** | No | No | No | **Yes** |
-| MLOps oriented | No | No | No | No | No | **Yes** |
+| End-to-end pipeline | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ |
+| Human-centered design | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Constrained generation | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
+| Pipeline validation | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ |
+| Interpretable pipeline | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ |
+| Zero-data cold start | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
+| MLOps oriented | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
 
 AGE-ML is positioned as the approach that combines **end-to-end automation**,
-**explicit constraints**, **pipeline validation**, and **MLOps-oriented
-traceability**.
-
-::: {.notes}
-The point is not that every other system lacks value. The comparison highlights
-the particular combination AGE-ML targets: constrained generation with LLM-backed
-automation, interpretable pipelines, cold-start capabilities, and auditable
-execution traces.
-:::
+**explicit constraints**, **pipeline validation**, and **MLOps-oriented traceability**.
 
 # Evaluation and Results
 
 :::: {.columns}
 
 ::: {.column width="50%"}
-
 **Evaluation setup**
 
 - *Datasets*: 6 (*Classification*) + 3 (*Regression*)
@@ -190,7 +199,6 @@ We need inspectable loop where human knowledge shapes what automation is allowed
 4. **The catalog turns generated ML work into governed ML work.**
 
 # Limitations and Next Steps
-
 
 **Current limitations**
 
@@ -255,23 +263,6 @@ This gives MLOps-style provenance for agent-generated ML work.
 ::: {.notes}
 This is where the system becomes more than a benchmark runner. The audience
 should see that AGE-ML tries to make agentic automation auditable.
-:::
-
-# Execution: The Agentic Loop
-
-![Executor state machine](figures/executor-state-machine.png){.center-img}
-
-Generated code must pass two gates:
-
-- **Semantic validation:** implements exactly the intended pipeline
-- **Runtime validation:** trains and evaluates under the execution budget
-
-Failures become feedback for bounded repair attempts.
-
-::: {.notes}
-The important point is that code generation is not single-shot. Generation,
-checking, execution, and explanation are one loop, bounded by the specification
-and the budget.
 :::
 
 # References

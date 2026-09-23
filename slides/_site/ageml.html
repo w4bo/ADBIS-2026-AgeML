@@ -119,7 +119,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="ageml_files/libs/revealjs/dist/theme/quarto-5cf5c31a1a36109737486746e3755e55.css">
+  <link rel="stylesheet" href="ageml_files/libs/revealjs/dist/theme/quarto-16bc8fc46cf16bb45dbb7941de0fb807.css">
   <link href="ageml_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="ageml_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="ageml_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -258,6 +258,7 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
       }</style></aside>
 </section>
 
+<section>
 <section id="background-automl-and-agents" class="title-slide slide level1 center">
 <h1>Background: AutoML and Agents</h1>
 <p><strong>AutoML</strong> gives algorithmic search</p>
@@ -268,6 +269,7 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 </ul></li>
 <li>Efficient and end-to-end variants include FLAML and HAMLET <span class="citation" data-cites="DBLP:conf/kdd/0001W0Q22 FranciaGP23">(<a href="#/references" role="doc-biblioref" onclick="">Wang et al. 2022</a>; <a href="#/references" role="doc-biblioref" onclick="">Francia et al. 2023</a>)</span></li>
 </ul>
+<div class="fragment">
 <p><strong>Agentic AI</strong> gives generation and adaptation</p>
 <ul>
 <li>Uses LLM-backed agents for planning, code generation, validation, and repair
@@ -276,42 +278,41 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 </ul></li>
 <li>Needs specifications and guardrails to stay auditable</li>
 </ul>
+</div>
+<div class="fragment">
 <p><strong>Data scientists</strong> augment knowledge to drive selection and optimization</p>
 <ul>
 <li>End-to-end AutoML <span class="citation" data-cites="FranciaGP23 DBLP:conf/pakdd/FranciaGG24">(<a href="#/references" role="doc-biblioref" onclick="">Francia et al. 2023</a>, <a href="#/references" role="doc-biblioref" onclick="">2024</a>)</span> and LLM-driven agents <span class="citation" data-cites="DBLP:conf/icml/TriratJH25">(<a href="#/references" role="doc-biblioref" onclick="">Trirat et al. 2025</a>)</span>, but controllability and traceability remain open problems.</li>
 </ul>
+</div>
 </section>
+<section id="age-ml-in-one-slide" class="slide level2">
+<h2>AGE-ML in One Slide</h2>
 
-<section id="age-ml-in-one-slide" class="title-slide slide level1 center">
-<h1>AGE-ML in One Slide</h1>
-
-<img data-src="figures/agentic-automl-research-line-1.png" class="center-img r-stretch quarto-figure-center"><p class="caption">AGE-ML</p><p>Given external domain knowledge (if any), LLM-powered agents distill human-readable specifications describing assumptions and constraints</p>
+<img data-src="figures/agentic-automl-research-line-1.png" class="center-img r-stretch"><p>Given external domain knowledge (if any), LLM-powered agents distill human-readable specifications describing assumptions and constraints</p>
 <ul>
 <li>If no knowledge is provided, we start with classic ML specification</li>
 <li>Specification is written in YAML</li>
 </ul>
 </section>
+<section id="age-ml-in-one-slide-1" class="slide level2">
+<h2>AGE-ML in One Slide</h2>
 
-<section id="age-ml-in-one-slide-1" class="title-slide slide level1 center">
-<h1>AGE-ML in One Slide</h1>
-
-<img data-src="figures/agentic-automl-research-line-2.png" class="center-img r-stretch quarto-figure-center"><p class="caption">AGE-ML</p><p>Data scientists (and experts) can read, revise, and manually augment the specification</p>
+<img data-src="figures/agentic-automl-research-line-2.png" class="center-img r-stretch"><p>Data scientists (and experts) can read, revise, and manually augment the specification</p>
 <ul>
 <li>The search space is not just optimized by algorithms, it is <strong>shaped</strong> by experts.</li>
 </ul>
 </section>
+<section id="age-ml-in-one-slide-2" class="slide level2">
+<h2>AGE-ML in One Slide</h2>
 
-<section id="age-ml-in-one-slide-2" class="title-slide slide level1 center">
-<h1>AGE-ML in One Slide</h1>
-
-<img data-src="figures/agentic-automl-research-line-3.png" class="center-img r-stretch quarto-figure-center"><p class="caption">AGE-ML</p><p>Planner and executor agents generate, validate, repair, and run pipelines under the constraints imposed by the specification.</p>
+<img data-src="figures/agentic-automl-research-line-3.png" class="center-img r-stretch"><p>Planner and executor agents generate, validate, repair, and run pipelines under the constraints imposed by the specification.</p>
 <ul>
 <li>Agents can synthesize and adapt code, but they work inside an explicit search space rather than freely inventing the workflow.</li>
 <li>AGE-ML returns trained pipelines together with code, metrics, artifacts, and natural-language explanations for audit and reuse.</li>
 <li>The output is not only a score or a model. It is a governed ML process with traceable evidence</li>
 </ul>
-</section>
-
+</section></section>
 <section id="specification-in-governed-pipelines-out." class="title-slide slide level1 center">
 <h1>Specification in, governed pipelines out.</h1>
 
@@ -357,7 +358,7 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 <th style="text-align: right;">DS-Agent <span class="citation" data-cites="DBLP:conf/icml/GuoD0C0024">(<a href="#/references" role="doc-biblioref" onclick="">Guo et al. 2024</a>)</span></th>
 <th style="text-align: right;">AutoML-Agent <span class="citation" data-cites="DBLP:conf/icml/TriratJH25">(<a href="#/references" role="doc-biblioref" onclick="">Trirat et al. 2025</a>)</span></th>
 <th style="text-align: right;">MLZero <span class="citation" data-cites="DBLP:journals/corr/abs-2505-13941">(<a href="#/references" role="doc-biblioref" onclick="">Fang et al. 2025</a>)</span></th>
-<th style="text-align: right;"><strong>AGE-ML</strong></th>
+<th style="text-align: right;">AGE-ML</th>
 </tr>
 </thead>
 <tbody>
@@ -442,156 +443,28 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
       }</style></aside>
 </section>
 
-<section id="evaluation-setup" class="title-slide slide level1 center">
-<h1>Evaluation Setup</h1>
+<section id="evaluation-and-results" class="title-slide slide level1 center">
+<h1>Evaluation and Results</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Evaluation setup</strong></p>
+<ul>
+<li><em>Datasets</em>: 6 (<em>Classification</em>) + 3 (<em>Regression</em>)</li>
+<li><em>Metrics</em>: balanced accuracy for classification; RMSE for regression</li>
+<li><em>Budget</em>: 30 pipelines, 10 generation attempts per pipeline, 2 hours per run</li>
+<li><em>Baselines</em>: HAMLET for classification (closest approach for domain knowledge injection); Kaggle notebooks for regression</li>
+</ul>
+<p><strong>Results at a glance</strong></p>
+<ul>
+<li>Gemini 3.1 Flash Lite beats the baseline on <strong>5 / 9 datasets</strong></li>
+<li>Gemini 2.5 Flash beats the baseline on <strong>4 / 9 datasets</strong></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>Detailed results</strong></p>
 <table class="caption-top">
-<colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Task</th>
-<th style="text-align: right;">Datasets</th>
-<th>Metric</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Classification</td>
-<td style="text-align: right;">Wilt, Texture, Madelon, HAR, Adult, MNIST_784</td>
-<td>Balanced accuracy</td>
-</tr>
-<tr class="even">
-<td>Regression</td>
-<td style="text-align: right;">Ames Housing, California Housing, Auto MPG</td>
-<td>RMSE</td>
-</tr>
-</tbody>
-</table>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Budget item</th>
-<th style="text-align: right;">Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Pipelines</td>
-<td style="text-align: right;">30</td>
-</tr>
-<tr class="even">
-<td>Parallel workers</td>
-<td style="text-align: right;">8</td>
-</tr>
-<tr class="odd">
-<td>Generation attempts per pipeline</td>
-<td style="text-align: right;">10</td>
-</tr>
-<tr class="even">
-<td>Total runtime per run</td>
-<td style="text-align: right;">2 hours</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Baseline construction</strong></p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Dataset group</th>
-<th>Baseline source</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Classification datasets</td>
-<td>HAMLET, a state-of-the-art AutoML system</td>
-</tr>
-<tr class="even">
-<td>Ames Housing</td>
-<td>Published Kaggle notebook by Gus Martins</td>
-</tr>
-<tr class="odd">
-<td>California Housing</td>
-<td>Published Kaggle notebook by Ahmed Mahmoud</td>
-</tr>
-<tr class="even">
-<td>Auto MPG</td>
-<td>Published Kaggle notebook by Ertugrul Demir</td>
-</tr>
-</tbody>
-</table>
-<aside class="notes">
-<p>Keep this short. The goal is to make the results credible without spending the talk inside experimental setup. Clarify that regression baselines come from published notebooks because HAMLET is not available for those cases in the paper’s comparison setup.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-
-<section id="results-at-a-glance" class="title-slide slide level1 center">
-<h1>Results at a Glance</h1>
-<table class="caption-top">
-<colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Model</th>
-<th style="text-align: right;">Beats baseline on</th>
-<th>Pattern</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Gemini 3.1 Flash Lite</td>
-<td style="text-align: right;">5 / 9 datasets</td>
-<td>More valid pipelines, lower output tokens</td>
-</tr>
-<tr class="even">
-<td>Gemini 2.5 Flash</td>
-<td style="text-align: right;">4 / 9 datasets</td>
-<td>Competitive, but fewer valid pipelines on harder cases</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Strongest signals</strong></p>
-<ul>
-<li>HAR and Adult improve for both models</li>
-<li>California Housing and Auto MPG improve for both models</li>
-<li>Ames Housing remains challenging</li>
-</ul>
-<aside class="notes">
-<p>This is the slide to say “competitive under constraints” rather than claiming universal dominance. The model comparison also supports the paper’s argument: validity and executability are central bottlenecks.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-
-<section id="detailed-results" class="title-slide slide level1 center">
-<h1>Detailed Results</h1>
-<table class="caption-top">
-<thead>
-<tr class="header">
 <th>Dataset</th>
 <th style="text-align: right;">Gemini 3.1 FL</th>
 <th style="text-align: right;">Baseline</th>
@@ -600,161 +473,107 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 </thead>
 <tbody>
 <tr class="odd">
+<td>Classification</td>
 <td>Wilt</td>
 <td style="text-align: right;"><strong>0.983</strong></td>
 <td style="text-align: right;">0.975</td>
 <td style="text-align: right;">0.966</td>
 </tr>
 <tr class="even">
+<td></td>
 <td>Texture</td>
 <td style="text-align: right;">0.992</td>
-<td style="text-align: right;">0.997</td>
+<td style="text-align: right;"><strong>0.997</strong></td>
 <td style="text-align: right;">0.995</td>
 </tr>
 <tr class="odd">
+<td></td>
 <td>Madelon</td>
 <td style="text-align: right;">0.863</td>
-<td style="text-align: right;">0.875</td>
+<td style="text-align: right;"><strong>0.875</strong></td>
 <td style="text-align: right;">0.863</td>
 </tr>
 <tr class="even">
+<td></td>
 <td>HAR</td>
 <td style="text-align: right;"><strong>0.987</strong></td>
 <td style="text-align: right;">0.959</td>
-<td style="text-align: right;"><strong>0.981</strong></td>
+<td style="text-align: right;"><em>0.981</em></td>
 </tr>
 <tr class="odd">
+<td></td>
 <td>Adult</td>
 <td style="text-align: right;"><strong>0.822</strong></td>
 <td style="text-align: right;">0.805</td>
-<td style="text-align: right;"><strong>0.813</strong></td>
+<td style="text-align: right;"><em>0.813</em></td>
 </tr>
 <tr class="even">
+<td></td>
 <td>MNIST_784</td>
-<td style="text-align: right;">0.971</td>
-<td style="text-align: right;">0.972</td>
+<td style="text-align: right;"><strong>0.972</strong></td>
+<td style="text-align: right;"><strong>0.972</strong></td>
 <td style="text-align: right;">0.966</td>
 </tr>
 <tr class="odd">
+<td>Regression</td>
 <td>California Housing</td>
-<td style="text-align: right;"><strong>67,675.641</strong></td>
-<td style="text-align: right;">69,838.844</td>
-<td style="text-align: right;"><strong>69,331.032</strong></td>
+<td style="text-align: right;"><strong>67,675</strong></td>
+<td style="text-align: right;">69,838</td>
+<td style="text-align: right;"><em>69,331</em></td>
 </tr>
 <tr class="even">
+<td></td>
 <td>Ames Housing</td>
-<td style="text-align: right;">30,189.152</td>
-<td style="text-align: right;">29,660.363</td>
-<td style="text-align: right;">31,970.630</td>
+<td style="text-align: right;">30,189</td>
+<td style="text-align: right;"><strong>29,660.363</strong></td>
+<td style="text-align: right;">31,970</td>
 </tr>
 <tr class="odd">
+<td></td>
 <td>Auto MPG</td>
 <td style="text-align: right;"><strong>2.148</strong></td>
 <td style="text-align: right;">2.508</td>
-<td style="text-align: right;"><strong>2.283</strong></td>
+<td style="text-align: right;"><em>2.283</em></td>
 </tr>
 </tbody>
 </table>
-<p>Classification uses balanced accuracy, so higher is better. Regression uses RMSE, so lower is better.</p>
-<aside class="notes">
-<p>If time is tight, skip row-by-row discussion. Point out where the bold numbers are and connect back to coordinated preprocessing and valid pipeline generation.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+</div></div>
+<div class="fragment">
+<p><strong>AGE-ML is competitive with state-of-the-art approaches while enabling human knowledge injection and traceable execution.</strong></p>
+</div>
 </section>
 
 <section id="what-we-learn" class="title-slide slide level1 center">
 <h1>What We Learn</h1>
+<p>We need inspectable loop where human knowledge shapes what automation is allowed to do rather than a larger AutoML black box.</p>
 <ol type="1">
-<li><p><strong>Specification narrows automation without removing flexibility.</strong></p></li>
-<li><p><strong>Symbolic planning keeps the search space inspectable.</strong></p></li>
-<li><p><strong>The validation loop matters as much as the LLM.</strong></p></li>
-<li><p><strong>The catalog turns generated ML work into governed ML work.</strong></p></li>
+<li><strong>Specification narrows automation without removing flexibility.</strong></li>
+<li><strong>Symbolic planning keeps the search space inspectable and coherent.</strong></li>
+<li><strong>The validation loop matters as much as the LLM.</strong></li>
+<li><strong>The catalog turns generated ML work into governed ML work.</strong></li>
 </ol>
-<aside class="notes">
-<p>This is the synthesis slide. It converts the paper’s components into takeaways.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 
 <section id="limitations-and-next-steps" class="title-slide slide level1 center">
 <h1>Limitations and Next Steps</h1>
 <p><strong>Current limitations</strong></p>
 <ul>
-<li>One coherent specification is assumed</li>
+<li>One coherent specification is assumed, but specification evolve over time and must be revised</li>
 <li>LLM generation can fail under strict time and retry budgets</li>
 <li>Results may vary across repeated runs</li>
 </ul>
 <p><strong>Future work</strong></p>
 <ul>
-<li>Agent-assisted specification authoring</li>
-<li>Modular and reusable specification fragments</li>
-<li>Human editing with selective re-execution</li>
-<li>Better budget sensitivity analysis and prompt compression</li>
-<li>Direct evaluation of data cleaning and bias mitigation</li>
+<li>Support specification evolution and revision</li>
+<li>Enable feedbacks on pipeline execution and optimization</li>
+<li>Suggest specification extensions and refinements after pipeline execution</li>
 </ul>
-<aside class="notes">
-<p>Be candid here. ADBIS audiences usually appreciate clear scoping and a roadmap grounded in engineering realities.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-
-<section id="make-automl-inspectable" class="title-slide slide level1 center">
-<h1>Make AutoML Inspectable</h1>
-<div class="r-fit-text">
-<p>Not magic.</p>
-<p>Not manual.</p>
-<p><strong>A governed loop between data, constraints, agents, and evidence.</strong></p>
-</div>
-<aside class="notes">
-<p>Catchy ending: “The future of AutoML is not a larger black box. It is an inspectable loop where human knowledge shapes what automation is allowed to do.”</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 
 <section id="thank-you" class="title-slide slide level1 center">
 <h1>Thank You</h1>
-<p><strong>Questions?</strong></p>
-<p>Repository: <a href="https://github.com/Mala1180/age-ml" class="uri">https://github.com/Mala1180/age-ml</a></p>
-<div class="r-fit-text">
-<p><strong>Let agents explore. Let specifications decide.</strong></p>
-</div>
-</section>
+
+<img data-src="figures/agentic-automl-research-line.png" class="center-img r-stretch"></section>
 
 <section id="specification-as-control-surface" class="title-slide slide level1 center">
 <h1>Specification as Control Surface</h1>
