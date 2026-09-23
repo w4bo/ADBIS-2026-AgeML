@@ -236,31 +236,27 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 </section>
 <section id="data-centric-ai-main-point" class="title-slide slide level1 center">
 <h1>Data-Centric AI: Main Point</h1>
-<p>Data-Centric AI shifts attention from only tuning models to improving the data and preprocessing choices that shape model behavior <span class="citation" data-cites="zha2025data">(<a href="#/references" role="doc-biblioref" onclick="">Zha et al. 2025</a>)</span>.</p>
+<p>Data-Centric AI shifts attention from tuning models to improving the data choices that shape model behavior <span class="citation" data-cites="zha2025data">(<a href="#/references" role="doc-biblioref" onclick="">Zha et al. 2025</a>)</span>.</p>
 <p><strong>For practitioners, that means:</strong></p>
 <ul>
 <li>Data properties should influence pipeline structure</li>
 <li>Domain assumptions should be explicit, reusable, and inspectable</li>
 <li>Automation should reduce routine work without hiding critical decisions</li>
 </ul>
-<aside class="notes">
-<p>Keep this as the first conceptual anchor: the paper starts from the data-centric view. Human knowledge is valuable because preprocessing and validation decisions often determine whether an ML workflow is robust.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<p>Which role should <strong>agents</strong> and <strong>generative AI</strong> play in this process?</p>
+<ul>
+<li>Vibe code is a reality</li>
+<li>What about vibe data analysis?
+<ul>
+<li>Help data scientists improve their data pipelines by also injecting domain knowledge and constraints</li>
+</ul></li>
+<li>What about the traceability of the generated pipelines and their results?</li>
+</ul>
 </section>
 
 <section>
-<section id="background-automl-and-agents" class="title-slide slide level1 center">
-<h1>Background: AutoML and Agents</h1>
+<section id="automl-agents-and-data-scientists" class="title-slide slide level1 center">
+<h1>AutoML, Agents, and Data Scientists</h1>
 <p><strong>AutoML</strong> gives algorithmic search</p>
 <ul>
 <li>Automates (only) model selection and hyperparameter optimization <span class="citation" data-cites="he2021automl">(<a href="#/references" role="doc-biblioref" onclick="">He et al. 2021</a>)</span>
@@ -310,7 +306,7 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 <ul>
 <li>Agents can synthesize and adapt code, but they work inside an explicit search space rather than freely inventing the workflow.</li>
 <li>AGE-ML returns trained pipelines together with code, metrics, artifacts, and natural-language explanations for audit and reuse.</li>
-<li>The output is not only a score or a model. It is a governed ML process with traceable evidence</li>
+<li>The output is not only a score or a model: it is a governed ML process with traceable evidence</li>
 </ul>
 </section></section>
 <section id="specification-in-governed-pipelines-out." class="title-slide slide level1 center">
@@ -336,6 +332,30 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 <p>Best model under the budget</p>
 </div>
 </div></div>
+</section>
+
+<section id="the-importance-of-validation" class="title-slide slide level1 center">
+<h1>The importance of validation</h1>
+
+<img data-src="figures/executor-state-machine.png" class="center-img r-stretch quarto-figure-center"><p class="caption">Executor state machine</p><p>Generated code must pass two gates:</p>
+<ul>
+<li><strong>Semantic validation:</strong> implements exactly the intended pipeline.</li>
+<li><strong>Runtime validation:</strong> trains and evaluates under the execution budget.</li>
+</ul>
+<p>Failures become feedback for bounded repair attempts.</p>
+<aside class="notes">
+<p>The important point is that code generation is not single-shot. Generation, checking, execution, and explanation are one loop, bounded by the specification and the budget.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 
 <section id="feature-comparison" class="title-slide slide level1 center">
@@ -364,83 +384,70 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 <tbody>
 <tr class="odd">
 <td>End-to-end pipeline</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
 </tr>
 <tr class="even">
 <td>Human-centered design</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">✅</td>
 </tr>
 <tr class="odd">
 <td>Constrained generation</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">✅</td>
 </tr>
 <tr class="even">
 <td>Pipeline validation</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
 </tr>
 <tr class="odd">
 <td>Interpretable pipeline</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
 </tr>
 <tr class="even">
 <td>Zero-data cold start</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">✅</td>
 </tr>
 <tr class="odd">
 <td>MLOps oriented</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">✅</td>
 </tr>
 </tbody>
 </table>
 <p>AGE-ML is positioned as the approach that combines <strong>end-to-end automation</strong>, <strong>explicit constraints</strong>, <strong>pipeline validation</strong>, and <strong>MLOps-oriented traceability</strong>.</p>
-<aside class="notes">
-<p>The point is not that every other system lacks value. The comparison highlights the particular combination AGE-ML targets: constrained generation with LLM-backed automation, interpretable pipelines, cold-start capabilities, and auditable execution traces.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 
 <section id="evaluation-and-results" class="title-slide slide level1 center">
@@ -626,30 +633,6 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 <p>This gives MLOps-style provenance for agent-generated ML work.</p>
 <aside class="notes">
 <p>This is where the system becomes more than a benchmark runner. The audience should see that AGE-ML tries to make agentic automation auditable.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-
-<section id="execution-the-agentic-loop" class="title-slide slide level1 center">
-<h1>Execution: The Agentic Loop</h1>
-
-<img data-src="figures/executor-state-machine.png" class="center-img r-stretch quarto-figure-center"><p class="caption">Executor state machine</p><p>Generated code must pass two gates:</p>
-<ul>
-<li><strong>Semantic validation:</strong> implements exactly the intended pipeline</li>
-<li><strong>Runtime validation:</strong> trains and evaluates under the execution budget</li>
-</ul>
-<p>Failures become feedback for bounded repair attempts.</p>
-<aside class="notes">
-<p>The important point is that code generation is not single-shot. Generation, checking, execution, and explanation are one loop, bounded by the specification and the budget.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
