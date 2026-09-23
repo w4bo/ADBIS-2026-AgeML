@@ -1,3 +1,19 @@
+## [1.0.1](https://github.com/w4bo/ADBIS-2026-AgeML/compare/1.0.0...1.0.1) (2026-09-23)
+
+### Dependency updates
+
+* **deps:** update node.js to 24.20 ([#14](https://github.com/w4bo/ADBIS-2026-AgeML/issues/14)) ([fdbaa58](https://github.com/w4bo/ADBIS-2026-AgeML/commit/fdbaa5874bb2a9cfe0c5a4c1a6e678f4812b0b7a))
+* **deps:** update node.js to 24.21 ([#16](https://github.com/w4bo/ADBIS-2026-AgeML/issues/16)) ([dc8eddd](https://github.com/w4bo/ADBIS-2026-AgeML/commit/dc8eddd25a492f3bbb10d7b09019bdb854fc6552))
+* **deps:** update w4bo/quarto-slides docker tag to v1.0.31 ([#15](https://github.com/w4bo/ADBIS-2026-AgeML/issues/15)) ([0f07bf0](https://github.com/w4bo/ADBIS-2026-AgeML/commit/0f07bf0538ce8d3920bdd5f7b4c85840e796ee78))
+
+### Bug Fixes
+
+* update slides ([3788576](https://github.com/w4bo/ADBIS-2026-AgeML/commit/3788576bcf5c412fd4e945d5d4e6a5162c2b5fbc))
+
+### Build and continuous integration
+
+* **deps:** update dependency ubuntu to v26 ([#18](https://github.com/w4bo/ADBIS-2026-AgeML/issues/18)) ([8cf0a60](https://github.com/w4bo/ADBIS-2026-AgeML/commit/8cf0a60b89d86faaba65c0ae54a7f0a6f0fce83c))
+
 ## 1.0.0 (2026-08-26)
 
 ### ⚠ BREAKING CHANGES
