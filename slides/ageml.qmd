@@ -183,8 +183,6 @@ Experiment setup
 
 ![](figures/agentic-automl-research-line.png){.center-img}
 
-**Agents generate pipelines. Specifications keep them accountable.**
-
 # Specification as Control Surface
 
 ```yaml
@@ -244,14 +242,8 @@ AGE-ML is positioned as the approach that combines **end-to-end automation**,
 - *Budget*: 30 pipelines, 10 generation attempts per pipeline, 2 hours per run
 - *Baselines*: HAMLET for classification (closest approach for domain knowledge injection); Kaggle notebooks for regression
 
-**Results at a glance**
-
-- AG-ML w/ Gemini 3.1 Flash Lite beats the baseline on **5 / 9 datasets**
-- AG-ML w/ Gemini 2.5 Flash beats the baseline on **4 / 9 datasets**
 :::
 ::: {.column width="50%"}
-
-**Detailed results**
 
 |Task| Dataset | Gemini 3.1 FL | Baseline | Gemini 2.5 F |
 |---|---|---:|---:|---:|
