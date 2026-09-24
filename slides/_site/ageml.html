@@ -234,33 +234,30 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 </div>
 
 </section>
-<section id="data-centric-ai-main-point" class="title-slide slide level1 center">
-<h1>Data-Centric AI: Main Point</h1>
-<p>Data-Centric AI shifts attention from only tuning models to improving the data and preprocessing choices that shape model behavior <span class="citation" data-cites="zha2025data">(<a href="#/references" role="doc-biblioref" onclick="">Zha et al. 2025</a>)</span>.</p>
-<p><strong>For practitioners, that means:</strong></p>
+<section id="automating-data-centric-ai-in-the-agentic-era" class="title-slide slide level1 center">
+<h1>Automating Data-Centric AI in the agentic era</h1>
+<p>Data-Centric AI shifts attention from tuning models to improving the data choices that shape model behavior <span class="citation" data-cites="zha2025data">(<a href="#/references" role="doc-biblioref" onclick="">Zha et al. 2025</a>)</span>.</p>
+<div class="fragment">
+<p>Which role should <strong>agents</strong> and <strong>generative AI</strong> play in this process?</p>
 <ul>
-<li>Data properties should influence pipeline structure</li>
-<li>Domain assumptions should be explicit, reusable, and inspectable</li>
-<li>Automation should reduce routine work without hiding critical decisions</li>
+<li>Vibe coding is a reality: Agents are powerful end-to-end pipeline generators.</li>
+<li>However, DC-AI requires domain and quality assumptions to be reusable, inspectable, and traceable</li>
+<li>… and automation should reduce routine work without hiding critical decisions</li>
 </ul>
-<aside class="notes">
-<p>Keep this as the first conceptual anchor: the paper starts from the data-centric view. Human knowledge is valuable because preprocessing and validation decisions often determine whether an ML workflow is robust.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+</div>
+<div class="fragment">
+<p>What about vibe data analysis?</p>
+<ul>
+<li>Help data scientists improve their data pipelines by also injecting domain knowledge and constraints</li>
+<li>… unconstrained generation is hard to trust</li>
+</ul>
+<p><strong>Idea</strong>: augment the generation process with specifications and constraints to make generated pipelines inspectable and accountable.</p>
+</div>
 </section>
 
 <section>
-<section id="background-automl-and-agents" class="title-slide slide level1 center">
-<h1>Background: AutoML and Agents</h1>
+<section id="automl-agents-and-data-scientists" class="title-slide slide level1 center">
+<h1>AutoML, Agents, and Data Scientists</h1>
 <p><strong>AutoML</strong> gives algorithmic search</p>
 <ul>
 <li>Automates (only) model selection and hyperparameter optimization <span class="citation" data-cites="he2021automl">(<a href="#/references" role="doc-biblioref" onclick="">He et al. 2021</a>)</span>
@@ -286,35 +283,37 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 </ul>
 </div>
 </section>
-<section id="age-ml-in-one-slide" class="slide level2">
-<h2>AGE-ML in One Slide</h2>
+<section id="age-ml-specifications-define-the-search-space" class="slide level2">
+<h2>AGE-ML: Specifications Define the Search Space</h2>
 
-<img data-src="figures/agentic-automl-research-line-1.png" class="center-img r-stretch"><p>Given external domain knowledge (if any), LLM-powered agents distill human-readable specifications describing assumptions and constraints</p>
+<img data-src="figures/agentic-automl-research-line-1.png" class="center-img r-stretch"><p><em>“Knowing that gender and location are sensitive attributes, predict the outcome and verify the results should not depend on them”</em></p>
 <ul>
-<li>If no knowledge is provided, we start with classic ML specification</li>
-<li>Specification is written in YAML</li>
+<li>A standard specification is provided, including classic ML steps (written in YAML)</li>
+<li>LLM-powered agents distill human-readable specifications describing assumptions and constraints.
+<ul>
+<li>E.g., possible solutions are: <em>feature depletion</em>, <em>data augmentation</em> or <em>pseudonymization</em>, <em>fairness-aware models</em>, or <em>post-hoc metrics</em>.</li>
+</ul></li>
 </ul>
 </section>
-<section id="age-ml-in-one-slide-1" class="slide level2">
-<h2>AGE-ML in One Slide</h2>
+<section id="age-ml-specifications-keep-experts-in-the-loop" class="slide level2">
+<h2>AGE-ML: Specifications Keep Experts in the Loop</h2>
 
-<img data-src="figures/agentic-automl-research-line-2.png" class="center-img r-stretch"><p>Data scientists (and experts) can read, revise, and manually augment the specification</p>
+<img data-src="figures/agentic-automl-research-line-2.png" class="center-img r-stretch"><p><em>“Wait! I know that this dataset is unbalanced and this might introduce bias. Make sure the model is robust to this.”</em></p>
 <ul>
-<li>The search space is not just optimized by algorithms, it is <strong>shaped</strong> by experts.</li>
+<li>E.g. prefer some algorithms over others, or require mandatory specific preprocessing steps.</li>
 </ul>
 </section>
-<section id="age-ml-in-one-slide-2" class="slide level2">
-<h2>AGE-ML in One Slide</h2>
+<section id="age-ml-agents-work-inside-the-specification" class="slide level2">
+<h2>AGE-ML: Agents Work Inside the Specification</h2>
 
-<img data-src="figures/agentic-automl-research-line-3.png" class="center-img r-stretch"><p>Planner and executor agents generate, validate, repair, and run pipelines under the constraints imposed by the specification.</p>
+<img data-src="figures/agentic-automl-research-line-3.png" class="center-img r-stretch"><p>Planner and executor agents generate, validate, and run pipelines under the constraints imposed by the specification.</p>
 <ul>
-<li>Agents can synthesize and adapt code, but they work inside an explicit search space rather than freely inventing the workflow.</li>
-<li>AGE-ML returns trained pipelines together with code, metrics, artifacts, and natural-language explanations for audit and reuse.</li>
-<li>The output is not only a score or a model. It is a governed ML process with traceable evidence</li>
+<li>Agents synthesize and adapt code inside an explicit search space and returnsa governed ML process with traceable evidence.</li>
+<li>AGE-ML returns pipelines together with metrics, artifacts, and natural-language decription for audit and reuse.</li>
 </ul>
 </section></section>
-<section id="specification-in-governed-pipelines-out." class="title-slide slide level1 center">
-<h1>Specification in, governed pipelines out.</h1>
+<section id="specification-in-governed-pipelines-out" class="title-slide slide level1 center">
+<h1>Specification In, Governed Pipelines Out</h1>
 
 <img data-src="figures/agents-io.png" class="center-img r-stretch quarto-figure-center"><p class="caption">Agentic architecture</p><div class="columns">
 <div class="column" style="width:25%;">
@@ -328,7 +327,7 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 </div><div class="column" style="width:25%;">
 <div class="fragment">
 <p><strong>Catalog</strong></p>
-<p>Collect scripts, metrics, artifacts, traces</p>
+<p>Collect metrics, artifacts, traces</p>
 </div>
 </div><div class="column" style="width:25%;">
 <div class="fragment">
@@ -336,6 +335,119 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 <p>Best model under the budget</p>
 </div>
 </div></div>
+</section>
+
+<section id="generated-code-must-prove-itself" class="title-slide slide level1 center">
+<h1>Generated Code Must Prove Itself</h1>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p>Generated code must pass two gates:</p>
+<ul>
+<li><strong>Semantic validation:</strong> implements the pipelines that do not violate the specification and conflicting constraints (e.g., feature depletion and post-hoc metrics on depleted features).</li>
+<li><strong>Runtime validation:</strong> trains/evaluates under execution budget.</li>
+</ul>
+<p>Failures become feedback for bounded repair attempts.</p>
+</div><div class="column" style="width:55%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figures/executor-state-machine.png" class="center-img"></p>
+<figcaption>Executor state machine</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="every-decision-becomes-audit-evidence" class="title-slide slide level1 center">
+<h1>Every Decision Becomes Audit Evidence</h1>
+
+<img data-src="figures/hierarchy1.png" class="center-img r-stretch quarto-figure-center"><p class="caption">Logging hierarchy</p></section>
+
+<section id="every-decision-becomes-audit-evidence-1" class="title-slide slide level1 center">
+<h1>Every Decision Becomes Audit Evidence</h1>
+
+<img data-src="figures/hierarchy2.png" class="center-img r-stretch quarto-figure-center"><p class="caption">Logging hierarchy</p></section>
+
+<section id="every-decision-becomes-audit-evidence-2" class="title-slide slide level1 center">
+<h1>Every Decision Becomes Audit Evidence</h1>
+
+<img data-src="figures/hierarchy3.png" class="center-img r-stretch quarto-figure-center"><p class="caption">Logging hierarchy</p></section>
+
+<section id="what-we-learn" class="title-slide slide level1 center">
+<h1>What We Learn</h1>
+<p>Agents generate pipelines. Specifications keep them accountable.</p>
+<ol type="1">
+<li><strong>Specifications define the admissible search space.</strong></li>
+<li><strong>Validation makes generated code prove it implements the intended pipeline.</strong></li>
+<li><strong>Traceability turns every decision into audit evidence.</strong></li>
+<li><strong>Results are competitive.</strong></li>
+</ol>
+<p>Experiment setup</p>
+<ul>
+<li><em>Datasets</em>: 6 (<em>Classification</em>) + 3 (<em>Regression</em>)</li>
+<li><em>Budget</em>: 30 pipelines, 10 generation attempts per pipeline, 2 hours per run</li>
+<li><em>Baselines</em>: HAMLET / FLAML (AutoML) / Kaggle notebooks</li>
+<li>AGE-ML (w/ Gemini 3.1 Flash Lite) beats the competitors on 67% of the datasets</li>
+</ul>
+</section>
+
+<section id="limitations-and-future-work" class="title-slide slide level1 center">
+<h1>Limitations and Future Work</h1>
+<p><strong>Current limitations</strong></p>
+<ul>
+<li>One coherent specification is assumed, but specifications evolve over time and must be revised</li>
+<li>LLM generation can fail under strict time and retry budgets</li>
+</ul>
+<p><strong>Future work</strong></p>
+<ul>
+<li>Support specification evolution and revision</li>
+<li>Enable iterative feedback on pipeline execution and optimization</li>
+<li>Suggest specification extensions and refinements after pipeline execution</li>
+</ul>
+</section>
+
+<section id="thank-you" class="title-slide slide level1 center">
+<h1>Thank You</h1>
+
+<img data-src="figures/agentic-automl-research-line.png" class="center-img r-stretch"><p><strong>Agents generate pipelines. Specifications keep them accountable.</strong></p>
+</section>
+
+<section id="specification-as-control-surface" class="title-slide slide level1 center">
+<h1>Specification as Control Surface</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource yaml number-lines"><code class="sourceCode yaml"><span id="cb1-1"><a href="" aria-label="1"></a><span class="fu">pipeline</span><span class="kw">:</span></span>
+<span id="cb1-2"><a href="" aria-label="2"></a><span class="at">  </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb1-3"><a href="" aria-label="3"></a><span class="at">    </span><span class="fu">normalization</span><span class="kw">:</span></span>
+<span id="cb1-4"><a href="" aria-label="4"></a><span class="at">      </span><span class="fu">candidates</span><span class="kw">:</span></span>
+<span id="cb1-5"><a href="" aria-label="5"></a><span class="at">        </span><span class="fu">min-max</span><span class="kw">:</span></span>
+<span id="cb1-6"><a href="" aria-label="6"></a><span class="at">          </span><span class="fu">params</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">feature_range</span><span class="kw">:</span><span class="at"> </span><span class="kw">[[</span><span class="dv">0</span><span class="kw">,</span><span class="at"> </span><span class="dv">1</span><span class="kw">]]}</span></span>
+<span id="cb1-7"><a href="" aria-label="7"></a><span class="at">    </span><span class="fu">classification</span><span class="kw">:</span></span>
+<span id="cb1-8"><a href="" aria-label="8"></a><span class="at">      </span><span class="fu">mandatory</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb1-9"><a href="" aria-label="9"></a><span class="at">      </span><span class="fu">candidates</span><span class="kw">:</span></span>
+<span id="cb1-10"><a href="" aria-label="10"></a><span class="at">        </span><span class="fu">knn</span><span class="kw">:</span></span>
+<span id="cb1-11"><a href="" aria-label="11"></a><span class="at">          </span><span class="fu">params</span><span class="kw">:</span></span>
+<span id="cb1-12"><a href="" aria-label="12"></a><span class="at">            </span><span class="fu">n_neighbors</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">5</span><span class="kw">,</span><span class="at"> </span><span class="dv">11</span><span class="kw">]</span></span>
+<span id="cb1-13"><a href="" aria-label="13"></a><span class="at">            </span><span class="fu">weights</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">uniform</span><span class="kw">,</span><span class="at"> distance</span><span class="kw">]</span></span>
+<span id="cb1-14"><a href="" aria-label="14"></a><span class="fu">ordering</span><span class="kw">:</span></span>
+<span id="cb1-15"><a href="" aria-label="15"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">sequence</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">imputation</span><span class="kw">,</span><span class="at"> normalization</span><span class="kw">,</span><span class="at"> features</span><span class="kw">]</span></span>
+<span id="cb1-16"><a href="" aria-label="16"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">before</span><span class="kw">:</span><span class="at"> features</span><span class="kw">,</span><span class="at"> </span><span class="fu">after</span><span class="kw">:</span><span class="at"> classification</span><span class="kw">}</span></span>
+<span id="cb1-17"><a href="" aria-label="17"></a><span class="fu">constraints</span><span class="kw">:</span></span>
+<span id="cb1-18"><a href="" aria-label="18"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">if</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">step</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">classification</span><span class="kw">:</span><span class="at"> knn</span><span class="kw">}}</span></span>
+<span id="cb1-19"><a href="" aria-label="19"></a><span class="at">    </span><span class="fu">require</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">normalization</span><span class="kw">,</span><span class="at"> features</span><span class="kw">]</span></span>
+<span id="cb1-20"><a href="" aria-label="20"></a><span class="fu">budgets</span><span class="kw">:</span></span>
+<span id="cb1-21"><a href="" aria-label="21"></a><span class="at">  </span><span class="fu">pipelines</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
+<span id="cb1-22"><a href="" aria-label="22"></a><span class="at">  </span><span class="fu">generation_attempts</span><span class="kw">:</span><span class="at"> </span><span class="dv">10</span></span></code></pre></div>
+<aside class="notes">
+<p>Do not dwell on syntax. Emphasize readability: YAML-like, parsable, and suitable for both human editing and agent-assisted generation or revision.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 
 <section id="feature-comparison" class="title-slide slide level1 center">
@@ -364,87 +476,74 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 <tbody>
 <tr class="odd">
 <td>End-to-end pipeline</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
 </tr>
 <tr class="even">
-<td>Human-centered design</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
+<td>Domain-knowledge injection</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">✅</td>
 </tr>
 <tr class="odd">
 <td>Constrained generation</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">✅</td>
 </tr>
 <tr class="even">
 <td>Pipeline validation</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
 </tr>
 <tr class="odd">
 <td>Interpretable pipeline</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
 </tr>
 <tr class="even">
 <td>Zero-data cold start</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;"><strong>Yes</strong></td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">✅</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">✅</td>
 </tr>
 <tr class="odd">
 <td>MLOps oriented</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;">No</td>
-<td style="text-align: right;"><strong>Yes</strong></td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">❌</td>
+<td style="text-align: right;">✅</td>
 </tr>
 </tbody>
 </table>
 <p>AGE-ML is positioned as the approach that combines <strong>end-to-end automation</strong>, <strong>explicit constraints</strong>, <strong>pipeline validation</strong>, and <strong>MLOps-oriented traceability</strong>.</p>
-<aside class="notes">
-<p>The point is not that every other system lacks value. The comparison highlights the particular combination AGE-ML targets: constrained generation with LLM-backed automation, interpretable pipelines, cold-start capabilities, and auditable execution traces.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 
-<section id="evaluation-and-results" class="title-slide slide level1 center">
-<h1>Evaluation and Results</h1>
+<section id="competitive-performance-with-a-governed-process" class="title-slide slide level1 center">
+<h1>Competitive Performance with a Governed Process</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Evaluation setup</strong></p>
@@ -456,8 +555,8 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 </ul>
 <p><strong>Results at a glance</strong></p>
 <ul>
-<li>Gemini 3.1 Flash Lite beats the baseline on <strong>5 / 9 datasets</strong></li>
-<li>Gemini 2.5 Flash beats the baseline on <strong>4 / 9 datasets</strong></li>
+<li>AG-ML w/ Gemini 3.1 Flash Lite beats the baseline on <strong>5 / 9 datasets</strong></li>
+<li>AG-ML w/ Gemini 2.5 Flash beats the baseline on <strong>4 / 9 datasets</strong></li>
 </ul>
 </div><div class="column" style="width:50%;">
 <p><strong>Detailed results</strong></p>
@@ -538,129 +637,6 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 </tbody>
 </table>
 </div></div>
-<div class="fragment">
-<p><strong>AGE-ML is competitive with state-of-the-art approaches while enabling human knowledge injection and traceable execution.</strong></p>
-</div>
-</section>
-
-<section id="what-we-learn" class="title-slide slide level1 center">
-<h1>What We Learn</h1>
-<p>We need inspectable loop where human knowledge shapes what automation is allowed to do rather than a larger AutoML black box.</p>
-<ol type="1">
-<li><strong>Specification narrows automation without removing flexibility.</strong></li>
-<li><strong>Symbolic planning keeps the search space inspectable and coherent.</strong></li>
-<li><strong>The validation loop matters as much as the LLM.</strong></li>
-<li><strong>The catalog turns generated ML work into governed ML work.</strong></li>
-</ol>
-</section>
-
-<section id="limitations-and-next-steps" class="title-slide slide level1 center">
-<h1>Limitations and Next Steps</h1>
-<p><strong>Current limitations</strong></p>
-<ul>
-<li>One coherent specification is assumed, but specification evolve over time and must be revised</li>
-<li>LLM generation can fail under strict time and retry budgets</li>
-<li>Results may vary across repeated runs</li>
-</ul>
-<p><strong>Future work</strong></p>
-<ul>
-<li>Support specification evolution and revision</li>
-<li>Enable feedbacks on pipeline execution and optimization</li>
-<li>Suggest specification extensions and refinements after pipeline execution</li>
-</ul>
-</section>
-
-<section id="thank-you" class="title-slide slide level1 center">
-<h1>Thank You</h1>
-
-<img data-src="figures/agentic-automl-research-line.png" class="center-img r-stretch"></section>
-
-<section id="specification-as-control-surface" class="title-slide slide level1 center">
-<h1>Specification as Control Surface</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource yaml number-lines"><code class="sourceCode yaml"><span id="cb1-1"><a href="" aria-label="1"></a><span class="fu">pipeline</span><span class="kw">:</span></span>
-<span id="cb1-2"><a href="" aria-label="2"></a><span class="at">  </span><span class="fu">steps</span><span class="kw">:</span></span>
-<span id="cb1-3"><a href="" aria-label="3"></a><span class="at">    </span><span class="fu">normalization</span><span class="kw">:</span></span>
-<span id="cb1-4"><a href="" aria-label="4"></a><span class="at">      </span><span class="fu">candidates</span><span class="kw">:</span></span>
-<span id="cb1-5"><a href="" aria-label="5"></a><span class="at">        </span><span class="fu">min-max</span><span class="kw">:</span></span>
-<span id="cb1-6"><a href="" aria-label="6"></a><span class="at">          </span><span class="fu">params</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">feature_range</span><span class="kw">:</span><span class="at"> </span><span class="kw">[[</span><span class="dv">0</span><span class="kw">,</span><span class="at"> </span><span class="dv">1</span><span class="kw">]]}</span></span>
-<span id="cb1-7"><a href="" aria-label="7"></a><span class="at">    </span><span class="fu">classification</span><span class="kw">:</span></span>
-<span id="cb1-8"><a href="" aria-label="8"></a><span class="at">      </span><span class="fu">mandatory</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb1-9"><a href="" aria-label="9"></a><span class="at">      </span><span class="fu">candidates</span><span class="kw">:</span></span>
-<span id="cb1-10"><a href="" aria-label="10"></a><span class="at">        </span><span class="fu">knn</span><span class="kw">:</span></span>
-<span id="cb1-11"><a href="" aria-label="11"></a><span class="at">          </span><span class="fu">params</span><span class="kw">:</span></span>
-<span id="cb1-12"><a href="" aria-label="12"></a><span class="at">            </span><span class="fu">n_neighbors</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">5</span><span class="kw">,</span><span class="at"> </span><span class="dv">11</span><span class="kw">]</span></span>
-<span id="cb1-13"><a href="" aria-label="13"></a><span class="at">            </span><span class="fu">weights</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">uniform</span><span class="kw">,</span><span class="at"> distance</span><span class="kw">]</span></span>
-<span id="cb1-14"><a href="" aria-label="14"></a><span class="fu">ordering</span><span class="kw">:</span></span>
-<span id="cb1-15"><a href="" aria-label="15"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">sequence</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">imputation</span><span class="kw">,</span><span class="at"> normalization</span><span class="kw">,</span><span class="at"> features</span><span class="kw">]</span></span>
-<span id="cb1-16"><a href="" aria-label="16"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">before</span><span class="kw">:</span><span class="at"> features</span><span class="kw">,</span><span class="at"> </span><span class="fu">after</span><span class="kw">:</span><span class="at"> classification</span><span class="kw">}</span></span>
-<span id="cb1-17"><a href="" aria-label="17"></a><span class="fu">constraints</span><span class="kw">:</span></span>
-<span id="cb1-18"><a href="" aria-label="18"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">if</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">step</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">classification</span><span class="kw">:</span><span class="at"> knn</span><span class="kw">}}</span></span>
-<span id="cb1-19"><a href="" aria-label="19"></a><span class="at">    </span><span class="fu">require</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">normalization</span><span class="kw">,</span><span class="at"> features</span><span class="kw">]</span></span>
-<span id="cb1-20"><a href="" aria-label="20"></a><span class="fu">budgets</span><span class="kw">:</span></span>
-<span id="cb1-21"><a href="" aria-label="21"></a><span class="at">  </span><span class="fu">pipelines</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
-<span id="cb1-22"><a href="" aria-label="22"></a><span class="at">  </span><span class="fu">generation_attempts</span><span class="kw">:</span><span class="at"> </span><span class="dv">10</span></span></code></pre></div>
-<aside class="notes">
-<p>Do not dwell on syntax. Emphasize readability: YAML-like, parsable, and suitable for both human editing and agent-assisted generation or revision.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-
-<section id="traceability-is-a-first-class-result" class="title-slide slide level1 center">
-<h1>Traceability Is a First-Class Result</h1>
-
-<img data-src="figures/hierarchy.png" class="center-img r-stretch quarto-figure-center"><p class="caption">Logging hierarchy</p><p>Every experiment records:</p>
-<ul>
-<li>The specification and dataset context</li>
-<li>Each admissible pipeline selected by the planner</li>
-<li>Generated scripts, hyperparameters, metrics, artifacts, and explanations</li>
-</ul>
-<p>This gives MLOps-style provenance for agent-generated ML work.</p>
-<aside class="notes">
-<p>This is where the system becomes more than a benchmark runner. The audience should see that AGE-ML tries to make agentic automation auditable.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-
-<section id="execution-the-agentic-loop" class="title-slide slide level1 center">
-<h1>Execution: The Agentic Loop</h1>
-
-<img data-src="figures/executor-state-machine.png" class="center-img r-stretch quarto-figure-center"><p class="caption">Executor state machine</p><p>Generated code must pass two gates:</p>
-<ul>
-<li><strong>Semantic validation:</strong> implements exactly the intended pipeline</li>
-<li><strong>Runtime validation:</strong> trains and evaluates under the execution budget</li>
-</ul>
-<p>Failures become feedback for bounded repair attempts.</p>
-<aside class="notes">
-<p>The important point is that code generation is not single-shot. Generation, checking, execution, and explanation are one loop, bounded by the specification and the budget.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 
 <section id="references" class="title-slide slide level1 smaller scrollable">

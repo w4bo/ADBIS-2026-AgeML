@@ -11,22 +11,26 @@ format:
     incremental: false
 ---
 
-# Data-Centric AI: Main Point
+# Automating Data-Centric AI in the agentic era
 
 Data-Centric AI shifts attention from tuning models to improving the data choices that shape model behavior [@zha2025data].
 
-**For practitioners, that means:**
-
-- Data properties should influence pipeline structure
-- Domain assumptions should be explicit, reusable, and inspectable
-- Automation should reduce routine work without hiding critical decisions
-
+::: {.fragment}
 Which role should **agents** and **generative AI** play in this process?
 
-- Vibe code is a reality
-- What about vibe data analysis?
-  - Help data scientists improve their data pipelines by also injecting domain knowledge and constraints
-- What about the traceability of the generated pipelines and their results?
+- Vibe coding is a reality: Agents are powerful end-to-end pipeline generators. 
+- However, DC-AI requires domain and quality assumptions to be reusable, inspectable, and traceable
+- ... and automation should reduce routine work without hiding critical decisions
+:::
+
+::: {.fragment}
+What about vibe data analysis?
+
+- Help data scientists improve their data pipelines by also injecting domain knowledge and constraints
+- ... unconstrained generation is hard to trust
+
+**Idea**: augment the generation process with specifications and constraints to make generated pipelines inspectable and accountable.
+:::
 
 # AutoML, Agents, and Data Scientists
 
@@ -54,34 +58,34 @@ Which role should **agents** and **generative AI** play in this process?
 [@DBLP:conf/icml/TriratJH25], but controllability and traceability remain open problems.
 :::
 
-## AGE-ML in One Slide
+## AGE-ML: Specifications Define the Search Space
 
 ![](figures/agentic-automl-research-line-1.png){.center-img}
 
-Given external domain knowledge (if any), LLM-powered agents distill human-readable specifications describing assumptions and constraints
+*"Knowing that gender and location are sensitive attributes, predict the outcome and verify the results should not depend on them"*
 
-- If no knowledge is provided, we start with classic ML specification
-- Specification is written in YAML
+- A standard specification is provided, including classic ML steps (written in YAML)
+- LLM-powered agents distill human-readable specifications describing assumptions and constraints.
+  - E.g., possible solutions are: *feature depletion*, *data augmentation* or *pseudonymization*, *fairness-aware models*, or *post-hoc metrics*.
 
-## AGE-ML in One Slide
+## AGE-ML: Specifications Keep Experts in the Loop
 
 ![](figures/agentic-automl-research-line-2.png){.center-img}
 
-Data scientists (and experts) can read, revise, and manually augment the specification 
+*"Wait! I know that this dataset is unbalanced and this might introduce bias. Make sure the model is robust to this."*
 
-- The search space is not just optimized by algorithms, it is **shaped** by experts.
+- E.g. prefer some algorithms over others, or require mandatory specific preprocessing steps.
 
-## AGE-ML in One Slide
+## AGE-ML: Agents Work Inside the Specification
 
 ![](figures/agentic-automl-research-line-3.png){.center-img}
 
-Planner and executor agents generate, validate, repair, and run pipelines under the constraints imposed by the specification.
+Planner and executor agents generate, validate, and run pipelines under the constraints imposed by the specification.
 
-- Agents can synthesize and adapt code, but they work inside an explicit search space rather than freely inventing the workflow.
-- AGE-ML returns trained pipelines together with code, metrics, artifacts, and natural-language explanations for audit and reuse.
-- The output is not only a score or a model: it is a governed ML process with traceable evidence
+- Agents synthesize and adapt code inside an explicit search space and returnsa governed ML process with traceable evidence. 
+- AGE-ML returns pipelines together with metrics, artifacts, and natural-language decription for audit and reuse.
 
-# Specification in, governed pipelines out.
+# Specification In, Governed Pipelines Out
 
 ![Agentic architecture](figures/agents-io.png){.center-img}
 
@@ -89,8 +93,7 @@ Planner and executor agents generate, validate, repair, and run pipelines under 
 ::: {.column width="25%"}
 **Planner**
 
-Specification to admissible pipelines (admissibility as a finite-domain **constraint satisfaction
-problem**, **Z3** to compute admissible pipelines).
+Specification to admissible pipelines (admissibility as a finite-domain **constraint satisfaction problem**, **Z3** to compute admissible pipelines).
 :::
 
 ::: {.column width="25%"}
@@ -105,7 +108,7 @@ From pipelines to code, runs, and explanations
 :::{.fragment}
 **Catalog**
 
-Collect scripts, metrics, artifacts, traces
+Collect metrics, artifacts, traces
 :::
 :::
 
@@ -118,103 +121,69 @@ Best model under the budget
 :::
 :::
 
-# The importance of validation
-
-![Executor state machine](figures/executor-state-machine.png){.center-img}
-
-Generated code must pass two gates:
-
-- **Semantic validation:** implements exactly the intended pipeline.
-- **Runtime validation:** trains and evaluates under the execution budget.
-
-Failures become feedback for bounded repair attempts.
-
-::: {.notes}
-The important point is that code generation is not single-shot. Generation,
-checking, execution, and explanation are one loop, bounded by the specification
-and the budget.
-:::
-
-# Feature Comparison
-
-| Feature | HAMLET [@FranciaGP23] | FLAML [@DBLP:conf/kdd/0001W0Q22] | DS-Agent [@DBLP:conf/icml/GuoD0C0024] | AutoML-Agent [@DBLP:conf/icml/TriratJH25] | MLZero [@DBLP:journals/corr/abs-2505-13941] | AGE-ML |
-|---|---:|---:|---:|---:|---:|---:|
-| End-to-end pipeline | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ |
-| Human-centered design | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ |
-| Constrained generation | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
-| Pipeline validation | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ |
-| Interpretable pipeline | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ |
-| Zero-data cold start | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
-| MLOps oriented | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
-
-AGE-ML is positioned as the approach that combines **end-to-end automation**,
-**explicit constraints**, **pipeline validation**, and **MLOps-oriented traceability**.
-
-# Evaluation and Results
+# Generated Code Must Prove Itself
 
 :::: {.columns}
+::: {.column width="45%"}
+Generated code must pass two gates:
 
-::: {.column width="50%"}
-**Evaluation setup**
+- **Semantic validation:** implements the pipelines that do not violate the specification and conflicting constraints (e.g., feature depletion and post-hoc metrics on depleted features).
+- **Runtime validation:** trains/evaluates under execution budget.
 
-- *Datasets*: 6 (*Classification*) + 3 (*Regression*)
-- *Metrics*: balanced accuracy for classification; RMSE for regression
-- *Budget*: 30 pipelines, 10 generation attempts per pipeline, 2 hours per run
-- *Baselines*: HAMLET for classification (closest approach for domain knowledge injection); Kaggle notebooks for regression
-
-**Results at a glance**
-
-- Gemini 3.1 Flash Lite beats the baseline on **5 / 9 datasets**
-- Gemini 2.5 Flash beats the baseline on **4 / 9 datasets**
+Failures become feedback for bounded repair attempts.
 :::
-::: {.column width="50%"}
 
-**Detailed results**
-
-|Task| Dataset | Gemini 3.1 FL | Baseline | Gemini 2.5 F |
-|---|---|---:|---:|---:|
-|Classification| Wilt | **0.983** | 0.975 | 0.966 |
-|| Texture | 0.992 | **0.997** | 0.995 |
-|| Madelon | 0.863 | **0.875** | 0.863 |
-|| HAR | **0.987** | 0.959 | *0.981* |
-|| Adult | **0.822** | 0.805 | *0.813* |
-|| MNIST_784 | **0.972** | **0.972** | 0.966 |
-|Regression| California Housing | **67,675** | 69,838 | *69,331* |
-|| Ames Housing | 30,189 | **29,660.363** | 31,970 |
-|| Auto MPG | **2.148** | 2.508 | *2.283* |
+::: {.column width="55%"}
+![Executor state machine](figures/executor-state-machine.png){.center-img}
 :::
 ::::
 
-:::{.fragment}
-**AGE-ML is competitive with state-of-the-art approaches while enabling human knowledge injection and traceable execution.**
-:::
+# Every Decision Becomes Audit Evidence
+
+![Logging hierarchy](figures/hierarchy1.png){.center-img}
+
+# Every Decision Becomes Audit Evidence
+
+![Logging hierarchy](figures/hierarchy2.png){.center-img}
+
+# Every Decision Becomes Audit Evidence
+
+![Logging hierarchy](figures/hierarchy3.png){.center-img}
 
 # What We Learn
 
-We need inspectable loop where human knowledge shapes what automation is allowed to do rather than a larger AutoML black box.
+Agents generate pipelines. Specifications keep them accountable.
 
-1. **Specification narrows automation without removing flexibility.**
-2. **Symbolic planning keeps the search space inspectable and coherent.**
-3. **The validation loop matters as much as the LLM.**
-4. **The catalog turns generated ML work into governed ML work.**
+1. **Specifications define the admissible search space.**
+2. **Validation makes generated code prove it implements the intended pipeline.**
+3. **Traceability turns every decision into audit evidence.**
+4. **Results are competitive.**
 
-# Limitations and Next Steps
+Experiment setup
+
+- *Datasets*: 6 (*Classification*) + 3 (*Regression*)
+- *Budget*: 30 pipelines, 10 generation attempts per pipeline, 2 hours per run
+- *Baselines*: HAMLET / FLAML (AutoML) / Kaggle notebooks
+- AGE-ML (w/ Gemini 3.1 Flash Lite) beats the competitors on 67% of the datasets
+
+# Limitations and Future Work
 
 **Current limitations**
 
-- One coherent specification is assumed, but specification evolve over time and must be revised
+- One coherent specification is assumed, but specifications evolve over time and must be revised
 - LLM generation can fail under strict time and retry budgets
-- Results may vary across repeated runs
 
 **Future work**
 
 - Support specification evolution and revision
-- Enable feedbacks on pipeline execution and optimization
+- Enable iterative feedback on pipeline execution and optimization
 - Suggest specification extensions and refinements after pipeline execution
 
 # Thank You
 
 ![](figures/agentic-automl-research-line.png){.center-img}
+
+**Agents generate pipelines. Specifications keep them accountable.**
 
 # Specification as Control Surface
 
@@ -248,21 +217,54 @@ Do not dwell on syntax. Emphasize readability: YAML-like, parsable, and suitable
 for both human editing and agent-assisted generation or revision.
 :::
 
-# Traceability Is a First-Class Result
+# Feature Comparison
 
-![Logging hierarchy](figures/hierarchy.png){.center-img}
+| Feature | HAMLET [@FranciaGP23] | FLAML [@DBLP:conf/kdd/0001W0Q22] | DS-Agent [@DBLP:conf/icml/GuoD0C0024] | AutoML-Agent [@DBLP:conf/icml/TriratJH25] | MLZero [@DBLP:journals/corr/abs-2505-13941] | AGE-ML |
+|---|---:|---:|---:|---:|---:|---:|
+| End-to-end pipeline | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ |
+| Domain-knowledge injection | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Constrained generation | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
+| Pipeline validation | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ |
+| Interpretable pipeline | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ |
+| Zero-data cold start | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
+| MLOps oriented | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
 
-Every experiment records:
+AGE-ML is positioned as the approach that combines **end-to-end automation**,
+**explicit constraints**, **pipeline validation**, and **MLOps-oriented traceability**.
 
-- The specification and dataset context
-- Each admissible pipeline selected by the planner
-- Generated scripts, hyperparameters, metrics, artifacts, and explanations
+# Competitive Performance with a Governed Process
 
-This gives MLOps-style provenance for agent-generated ML work.
+:::: {.columns}
 
-::: {.notes}
-This is where the system becomes more than a benchmark runner. The audience
-should see that AGE-ML tries to make agentic automation auditable.
+::: {.column width="50%"}
+**Evaluation setup**
+
+- *Datasets*: 6 (*Classification*) + 3 (*Regression*)
+- *Metrics*: balanced accuracy for classification; RMSE for regression
+- *Budget*: 30 pipelines, 10 generation attempts per pipeline, 2 hours per run
+- *Baselines*: HAMLET for classification (closest approach for domain knowledge injection); Kaggle notebooks for regression
+
+**Results at a glance**
+
+- AG-ML w/ Gemini 3.1 Flash Lite beats the baseline on **5 / 9 datasets**
+- AG-ML w/ Gemini 2.5 Flash beats the baseline on **4 / 9 datasets**
 :::
+::: {.column width="50%"}
+
+**Detailed results**
+
+|Task| Dataset | Gemini 3.1 FL | Baseline | Gemini 2.5 F |
+|---|---|---:|---:|---:|
+|Classification| Wilt | **0.983** | 0.975 | 0.966 |
+|| Texture | 0.992 | **0.997** | 0.995 |
+|| Madelon | 0.863 | **0.875** | 0.863 |
+|| HAR | **0.987** | 0.959 | *0.981* |
+|| Adult | **0.822** | 0.805 | *0.813* |
+|| MNIST_784 | **0.972** | **0.972** | 0.966 |
+|Regression| California Housing | **67,675** | 69,838 | *69,331* |
+|| Ames Housing | 30,189 | **29,660.363** | 31,970 |
+|| Auto MPG | **2.148** | 2.508 | *2.283* |
+:::
+::::
 
 # References
