@@ -37,25 +37,23 @@ What about vibe data analysis?
 **AutoML** gives algorithmic search
 
 - Automates (only) model selection and hyperparameter optimization [@he2021automl]
-  - Classic systems include TPOT, Auto-WEKA, and Auto-Sklearn
-  [@olson2016tpot; @DBLP:conf/kdd/ThorntonHHL13; @DBLP:journals/jmlr/FeurerEFLH22]
-- Efficient and end-to-end variants include FLAML and HAMLET
-  [@DBLP:conf/kdd/0001W0Q22; @FranciaGP23]
-
+  - Classic systems include TPOT, Auto-WEKA, Auto-Sklearn, FLAML [@olson2016tpot; @DBLP:conf/kdd/ThorntonHHL13; @DBLP:journals/jmlr/FeurerEFLH22; @DBLP:conf/kdd/0001W0Q22]
+  - *Missing domnain knowledge injection* and *inspectability*
 ::: {.fragment}
 **Agentic AI** gives generation and adaptation
 
 - Uses LLM-backed agents for planning, code generation, validation, and repair
   - Recent examples include DS-Agent, MLZero, and AutoML-Agent
   [@DBLP:conf/icml/GuoD0C0024; @DBLP:journals/corr/abs-2505-13941; @DBLP:conf/icml/TriratJH25]
-- Needs specifications and guardrails to stay auditable
+- *Missing specifications, validation, and guardrails* to stay auditable
 :::
 
 ::: {.fragment}
 **Data scientists** augment knowledge to drive selection and optimization
 
-- End-to-end AutoML [@FranciaGP23; @DBLP:conf/pakdd/FranciaGG24] and LLM-driven agents
-[@DBLP:conf/icml/TriratJH25], but controllability and traceability remain open problems.
+- End-to-end AutoML [@FranciaGP23; @DBLP:conf/pakdd/FranciaGG24] and LLM-driven agents [@DBLP:conf/icml/TriratJH25]
+- Open to doman-knowledge injection *but validation and inspectability remain open problems*.
+
 :::
 
 ## AGE-ML: Specifications Define the Search Space
@@ -64,15 +62,15 @@ What about vibe data analysis?
 
 *"Knowing that gender and location are sensitive attributes, predict the outcome and verify the results should not depend on them"*
 
-- A standard specification is provided, including classic ML steps (written in YAML)
-- LLM-powered agents distill human-readable specifications describing assumptions and constraints.
+- LLM-powered agents distill human-readable specifications (written in YAML) describing assumptions and constraints.
   - E.g., possible solutions are: *feature depletion*, *data augmentation* or *pseudonymization*, *fairness-aware models*, or *post-hoc metrics*.
+- A warm-start standard specification is provided, including classic ML steps
 
 ## AGE-ML: Specifications Keep Experts in the Loop
 
 ![](figures/agentic-automl-research-line-2.png){.center-img}
 
-*"Wait! I know that this dataset is unbalanced and this might introduce bias. Make sure the model is robust to this."*
+*"Wait! I know that this dataset is unbalanced and this might introduce bias. Make sure the solution is robust to this."*
 
 - E.g. prefer some algorithms over others, or require mandatory specific preprocessing steps.
 
@@ -82,7 +80,7 @@ What about vibe data analysis?
 
 Planner and executor agents generate, validate, and run pipelines under the constraints imposed by the specification.
 
-- Agents synthesize and adapt code inside an explicit search space and returnsa governed ML process with traceable evidence. 
+- Agents synthesize and adapt (Python) code inside an explicit search space and return a governed ML process. 
 - AGE-ML returns pipelines together with metrics, artifacts, and natural-language decription for audit and reuse.
 
 # Specification In, Governed Pipelines Out
@@ -125,10 +123,11 @@ Best model under the budget
 
 :::: {.columns}
 ::: {.column width="45%"}
-Generated code must pass two gates:
+Generated code must pass the following gates:
 
-- **Semantic validation:** implements the pipelines that do not violate the specification and conflicting constraints (e.g., feature depletion and post-hoc metrics on depleted features).
-- **Runtime validation:** trains/evaluates under execution budget.
+- **Structure validation:** verifies that the code is syntactically correct and follows the expected specification.
+- **Semantic validation:** implements pipelines that do not violate the specification and conflicting constraints (e.g., feature depletion and post-hoc metrics on depleted features).
+- **Runtime validation:** intercept runtime errors (e.g., a feature is breaking typing assumptions).
 
 Failures become feedback for bounded repair attempts.
 :::
@@ -150,34 +149,34 @@ Failures become feedback for bounded repair attempts.
 
 ![Logging hierarchy](figures/hierarchy3.png){.center-img}
 
-# What We Learn
-
-Agents generate pipelines. Specifications keep them accountable.
+# What We Learn: agents generate pipelines, specifications keep them accountable.
 
 1. **Specifications define the admissible search space.**
+    - The specification acts as a control surface.
+    - Data scientists are kept into the loop.
 2. **Validation makes generated code prove it implements the intended pipeline.**
+    - Generated code might be wrong.
+    - Validation is structured in three layers: structure, semantics, and runtime.
 3. **Traceability turns every decision into audit evidence.**
-4. **Results are competitive.**
-
-Experiment setup
-
-- *Datasets*: 6 (*Classification*) + 3 (*Regression*)
-- *Budget*: 30 pipelines, 10 generation attempts per pipeline, 2 hours per run
-- *Baselines*: HAMLET / FLAML (AutoML) / Kaggle notebooks
-- AGE-ML (w/ Gemini 3.1 Flash Lite) beats the competitors on 67% of the datasets
+    - Although the best result is returned, the entire process is logged and inspectable.
+    - As in CRISP-DM, different solutions can highlight different aspects of the problem.
+4. **Results are competitive** while keeping the process auditable and inspectable.
+  - *Datasets*: 6 (*Classification*) + 3 (*Regression*)
+  - *Budget*: 30 pipelines, 10 generation attempts per pipeline, 2 hours per run
+  - *Competitors*: HAMLET / FLAML (AutoML) / Kaggle notebooks
+  - *AGE-ML* (w/ Gemini 3.1 Flash Lite) *beats the competitors on 67%* of the datasets
 
 # Limitations and Future Work
 
-**Current limitations**
-
-- One coherent specification is assumed, but specifications evolve over time and must be revised
-- LLM generation can fail under strict time and retry budgets
-
-**Future work**
-
-- Support specification evolution and revision
-- Enable iterative feedback on pipeline execution and optimization
-- Suggest specification extensions and refinements after pipeline execution
+- One coherent specification is assumed, but specifications evolve over time and must be revised.
+  - Should we consider different specifications for different problems/datasets?
+  - A unified specification seems a good solution but could bring to a combinatorial explosion of admissible pipelines.
+- LLM generation can fail under strict time and retry budgets.
+  - Still the budget is limited, depending on the task and dataset size, different budgeting is needed.
+- Enable iterative feedback on pipeline execution and optimization.
+  - AGE-ML can return insights as the search progresses, requiring users to steer the exploration while running.
+- Suggest specification extensions and refinements after pipeline execution.
+  - Promising pipelines can be used to suggest new constraints and assumptions to refine the specification.
 
 # Thank You
 
