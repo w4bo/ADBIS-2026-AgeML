@@ -262,24 +262,20 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 <ul>
 <li>Automates (only) model selection and hyperparameter optimization <span class="citation" data-cites="he2021automl">(<a href="#/references" role="doc-biblioref" onclick="">He et al. 2021</a>)</span>
 <ul>
-<li>Classic systems include TPOT, Auto-WEKA, and Auto-Sklearn <span class="citation" data-cites="olson2016tpot DBLP:conf/kdd/ThorntonHHL13 DBLP:journals/jmlr/FeurerEFLH22">(<a href="#/references" role="doc-biblioref" onclick="">Olson and Moore 2019</a>; <a href="#/references" role="doc-biblioref" onclick="">Thornton et al. 2013</a>; <a href="#/references" role="doc-biblioref" onclick="">Feurer et al. 2022</a>)</span></li>
+<li>Classic systems include TPOT, Auto-WEKA, Auto-Sklearn, FLAML <span class="citation" data-cites="olson2016tpot DBLP:conf/kdd/ThorntonHHL13 DBLP:journals/jmlr/FeurerEFLH22 DBLP:conf/kdd/0001W0Q22">(<a href="#/references" role="doc-biblioref" onclick="">Olson and Moore 2019</a>; <a href="#/references" role="doc-biblioref" onclick="">Thornton et al. 2013</a>; <a href="#/references" role="doc-biblioref" onclick="">Feurer et al. 2022</a>; <a href="#/references" role="doc-biblioref" onclick="">Wang et al. 2022</a>)</span></li>
+<li><em>Missing domnain knowledge injection</em> and <em>inspectability</em> ::: {.fragment} <strong>Agentic AI</strong> gives generation and adaptation</li>
 </ul></li>
-<li>Efficient and end-to-end variants include FLAML and HAMLET <span class="citation" data-cites="DBLP:conf/kdd/0001W0Q22 FranciaGP23">(<a href="#/references" role="doc-biblioref" onclick="">Wang et al. 2022</a>; <a href="#/references" role="doc-biblioref" onclick="">Francia et al. 2023</a>)</span></li>
-</ul>
-<div class="fragment">
-<p><strong>Agentic AI</strong> gives generation and adaptation</p>
-<ul>
 <li>Uses LLM-backed agents for planning, code generation, validation, and repair
 <ul>
 <li>Recent examples include DS-Agent, MLZero, and AutoML-Agent <span class="citation" data-cites="DBLP:conf/icml/GuoD0C0024 DBLP:journals/corr/abs-2505-13941 DBLP:conf/icml/TriratJH25">(<a href="#/references" role="doc-biblioref" onclick="">Guo et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Fang et al. 2025</a>; <a href="#/references" role="doc-biblioref" onclick="">Trirat et al. 2025</a>)</span></li>
 </ul></li>
-<li>Needs specifications and guardrails to stay auditable</li>
+<li><em>Missing specifications, validation, and guardrails</em> to stay auditable :::</li>
 </ul>
-</div>
 <div class="fragment">
 <p><strong>Data scientists</strong> augment knowledge to drive selection and optimization</p>
 <ul>
-<li>End-to-end AutoML <span class="citation" data-cites="FranciaGP23 DBLP:conf/pakdd/FranciaGG24">(<a href="#/references" role="doc-biblioref" onclick="">Francia et al. 2023</a>, <a href="#/references" role="doc-biblioref" onclick="">2024</a>)</span> and LLM-driven agents <span class="citation" data-cites="DBLP:conf/icml/TriratJH25">(<a href="#/references" role="doc-biblioref" onclick="">Trirat et al. 2025</a>)</span>, but controllability and traceability remain open problems.</li>
+<li>End-to-end AutoML <span class="citation" data-cites="FranciaGP23 DBLP:conf/pakdd/FranciaGG24">(<a href="#/references" role="doc-biblioref" onclick="">Francia et al. 2023</a>, <a href="#/references" role="doc-biblioref" onclick="">2024</a>)</span> and LLM-driven agents <span class="citation" data-cites="DBLP:conf/icml/TriratJH25">(<a href="#/references" role="doc-biblioref" onclick="">Trirat et al. 2025</a>)</span></li>
+<li>Open to doman-knowledge injection <em>but validation and inspectability remain open problems</em>.</li>
 </ul>
 </div>
 </section>
@@ -288,17 +284,17 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 
 <img data-src="figures/agentic-automl-research-line-1.png" class="center-img r-stretch"><p><em>“Knowing that gender and location are sensitive attributes, predict the outcome and verify the results should not depend on them”</em></p>
 <ul>
-<li>A standard specification is provided, including classic ML steps (written in YAML)</li>
-<li>LLM-powered agents distill human-readable specifications describing assumptions and constraints.
+<li>LLM-powered agents distill human-readable specifications (written in YAML) describing assumptions and constraints.
 <ul>
 <li>E.g., possible solutions are: <em>feature depletion</em>, <em>data augmentation</em> or <em>pseudonymization</em>, <em>fairness-aware models</em>, or <em>post-hoc metrics</em>.</li>
 </ul></li>
+<li>A warm-start standard specification is provided, including classic ML steps</li>
 </ul>
 </section>
 <section id="age-ml-specifications-keep-experts-in-the-loop" class="slide level2">
 <h2>AGE-ML: Specifications Keep Experts in the Loop</h2>
 
-<img data-src="figures/agentic-automl-research-line-2.png" class="center-img r-stretch"><p><em>“Wait! I know that this dataset is unbalanced and this might introduce bias. Make sure the model is robust to this.”</em></p>
+<img data-src="figures/agentic-automl-research-line-2.png" class="center-img r-stretch"><p><em>“Wait! I know that this dataset is unbalanced and this might introduce bias. Make sure the solution is robust to this.”</em></p>
 <ul>
 <li>E.g. prefer some algorithms over others, or require mandatory specific preprocessing steps.</li>
 </ul>
@@ -308,7 +304,7 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 
 <img data-src="figures/agentic-automl-research-line-3.png" class="center-img r-stretch"><p>Planner and executor agents generate, validate, and run pipelines under the constraints imposed by the specification.</p>
 <ul>
-<li>Agents synthesize and adapt code inside an explicit search space and returnsa governed ML process with traceable evidence.</li>
+<li>Agents synthesize and adapt (Python) code inside an explicit search space and return a governed ML process.</li>
 <li>AGE-ML returns pipelines together with metrics, artifacts, and natural-language decription for audit and reuse.</li>
 </ul>
 </section></section>
@@ -341,10 +337,11 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 <h1>Generated Code Must Prove Itself</h1>
 <div class="columns">
 <div class="column" style="width:45%;">
-<p>Generated code must pass two gates:</p>
+<p>Generated code must pass the following gates:</p>
 <ul>
-<li><strong>Semantic validation:</strong> implements the pipelines that do not violate the specification and conflicting constraints (e.g., feature depletion and post-hoc metrics on depleted features).</li>
-<li><strong>Runtime validation:</strong> trains/evaluates under execution budget.</li>
+<li><strong>Structure validation:</strong> verifies that the code is syntactically correct and follows the expected specification.</li>
+<li><strong>Semantic validation:</strong> implements pipelines that do not violate the specification and conflicting constraints (e.g., feature depletion and post-hoc metrics on depleted features).</li>
+<li><strong>Runtime validation:</strong> intercept runtime errors (e.g., a feature is breaking typing assumptions).</li>
 </ul>
 <p>Failures become feedback for bounded repair attempts.</p>
 </div><div class="column" style="width:55%;">
@@ -372,36 +369,54 @@ Mattia Matteini<span class="math inline">\(^1\)</span>, Matteo Magnini<span clas
 
 <img data-src="figures/hierarchy3.png" class="center-img r-stretch quarto-figure-center"><p class="caption">Logging hierarchy</p></section>
 
-<section id="what-we-learn" class="title-slide slide level1 center">
-<h1>What We Learn</h1>
-<p>Agents generate pipelines. Specifications keep them accountable.</p>
+<section id="what-we-learn-agents-generate-pipelines-specifications-keep-them-accountable." class="title-slide slide level1 center">
+<h1>What We Learn: agents generate pipelines, specifications keep them accountable.</h1>
 <ol type="1">
-<li><strong>Specifications define the admissible search space.</strong></li>
-<li><strong>Validation makes generated code prove it implements the intended pipeline.</strong></li>
-<li><strong>Traceability turns every decision into audit evidence.</strong></li>
-<li><strong>Results are competitive.</strong></li>
+<li><strong>Specifications define the admissible search space.</strong>
+<ul>
+<li>The specification acts as a control surface.</li>
+<li>Data scientists are kept into the loop.</li>
+</ul></li>
+<li><strong>Validation makes generated code prove it implements the intended pipeline.</strong>
+<ul>
+<li>Generated code might be wrong.</li>
+<li>Validation is structured in three layers: structure, semantics, and runtime.</li>
+</ul></li>
+<li><strong>Traceability turns every decision into audit evidence.</strong>
+<ul>
+<li>Although the best result is returned, the entire process is logged and inspectable.</li>
+<li>As in CRISP-DM, different solutions can highlight different aspects of the problem.</li>
+</ul></li>
+<li><strong>Results are competitive</strong> while keeping the process auditable and inspectable.</li>
 </ol>
-<p>Experiment setup</p>
 <ul>
 <li><em>Datasets</em>: 6 (<em>Classification</em>) + 3 (<em>Regression</em>)</li>
 <li><em>Budget</em>: 30 pipelines, 10 generation attempts per pipeline, 2 hours per run</li>
-<li><em>Baselines</em>: HAMLET / FLAML (AutoML) / Kaggle notebooks</li>
-<li>AGE-ML (w/ Gemini 3.1 Flash Lite) beats the competitors on 67% of the datasets</li>
+<li><em>Competitors</em>: HAMLET / FLAML (AutoML) / Kaggle notebooks</li>
+<li><em>AGE-ML</em> (w/ Gemini 3.1 Flash Lite) <em>beats the competitors on 67%</em> of the datasets</li>
 </ul>
 </section>
 
 <section id="limitations-and-future-work" class="title-slide slide level1 center">
 <h1>Limitations and Future Work</h1>
-<p><strong>Current limitations</strong></p>
 <ul>
-<li>One coherent specification is assumed, but specifications evolve over time and must be revised</li>
-<li>LLM generation can fail under strict time and retry budgets</li>
-</ul>
-<p><strong>Future work</strong></p>
+<li>One coherent specification is assumed, but specifications evolve over time and must be revised.
 <ul>
-<li>Support specification evolution and revision</li>
-<li>Enable iterative feedback on pipeline execution and optimization</li>
-<li>Suggest specification extensions and refinements after pipeline execution</li>
+<li>Should we consider different specifications for different problems/datasets?</li>
+<li>A unified specification seems a good solution but could bring to a combinatorial explosion of admissible pipelines.</li>
+</ul></li>
+<li>LLM generation can fail under strict time and retry budgets.
+<ul>
+<li>Still the budget is limited, depending on the task and dataset size, different budgeting is needed.</li>
+</ul></li>
+<li>Enable iterative feedback on pipeline execution and optimization.
+<ul>
+<li>AGE-ML can return insights as the search progresses, requiring users to steer the exploration while running.</li>
+</ul></li>
+<li>Suggest specification extensions and refinements after pipeline execution.
+<ul>
+<li>Promising pipelines can be used to suggest new constraints and assumptions to refine the specification.</li>
+</ul></li>
 </ul>
 </section>
 
