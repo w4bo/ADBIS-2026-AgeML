@@ -18,16 +18,16 @@ Data-Centric AI shifts attention from tuning models to improving the data choice
 ::: {.fragment}
 Which role should **agents** and **generative AI** play in this process?
 
-- Vibe coding is a reality: Agents are powerful end-to-end pipeline generators. 
-- However, DC-AI requires domain and quality assumptions to be reusable, inspectable, and traceable
-- ... and automation should reduce routine work without hiding critical decisions
+- *Vibe coding is a reality*: Agents are powerful (black box) code generators 
+- However, DC-AI requires domain and quality assumptions to be inspectable, reusable, and traceable
+- ... automation should reduce routine work without hiding critical decisions
 :::
 
 ::: {.fragment}
 What about vibe data analysis?
 
-- Help data scientists improve their data pipelines by also injecting domain knowledge and constraints
-- ... unconstrained generation is hard to trust
+- Help data scientists improve their data-driven tasks by also injecting domain knowledge and constraints
+- ... still, unconstrained generation is hard to trust and can bring to biased results
 
 **Idea**: augment the generation process with specifications and constraints to make generated pipelines inspectable and accountable.
 :::
@@ -39,17 +39,19 @@ What about vibe data analysis?
 - Automates (only) model selection and hyperparameter optimization [@he2021automl]
   - Classic systems include TPOT, Auto-WEKA, Auto-Sklearn, FLAML [@olson2016tpot; @DBLP:conf/kdd/ThorntonHHL13; @DBLP:journals/jmlr/FeurerEFLH22; @DBLP:conf/kdd/0001W0Q22]
   - *Missing domnain knowledge injection* and *inspectability*
+
 ::: {.fragment}
 **Agentic AI** gives generation and adaptation
 
 - Uses LLM-backed agents for planning, code generation, validation, and repair
-  - Recent examples include DS-Agent, MLZero, and AutoML-Agent
+  - Single LLM agents can generate pipelines, but they are not constrained and can hallucinate.
+  - More complex approaches include DS-Agent, MLZero, and AutoML-Agent
   [@DBLP:conf/icml/GuoD0C0024; @DBLP:journals/corr/abs-2505-13941; @DBLP:conf/icml/TriratJH25]
 - *Missing specifications, validation, and guardrails* to stay auditable
 :::
 
 ::: {.fragment}
-**Data scientists** augment knowledge to drive selection and optimization
+**Data scientists** augment knowledge to drive selection and optimization, how can we keep them in the loop?
 
 - End-to-end AutoML [@FranciaGP23; @DBLP:conf/pakdd/FranciaGG24] and LLM-driven agents [@DBLP:conf/icml/TriratJH25]
 - Open to doman-knowledge injection *but validation and inspectability remain open problems*.
@@ -60,11 +62,11 @@ What about vibe data analysis?
 
 ![](figures/agentic-automl-research-line-1.png){.center-img}
 
-*"Knowing that gender and location are sensitive attributes, predict the outcome and verify the results should not depend on them"*
+*"Knowing that gender and location are sensitive attributes, predict the dataset outcome and verify the results should not depend on them"*
 
-- LLM-powered agents distill human-readable specifications (written in YAML) describing assumptions and constraints.
+- A warm-start standard **specification** (written in YAML) is provided, including classic ML steps
+- LLM-powered agents **distill and inject additional** assumptions and constraints.
   - E.g., possible solutions are: *feature depletion*, *data augmentation* or *pseudonymization*, *fairness-aware models*, or *post-hoc metrics*.
-- A warm-start standard specification is provided, including classic ML steps
 
 ## AGE-ML: Specifications Keep Experts in the Loop
 
@@ -78,10 +80,10 @@ What about vibe data analysis?
 
 ![](figures/agentic-automl-research-line-3.png){.center-img}
 
-Planner and executor agents generate, validate, and run pipelines under the constraints imposed by the specification.
+**Planner**, **executor**, and **validator** agents generate, validate, and run pipelines under the constraints imposed by the specification.
 
 - Agents synthesize and adapt (Python) code inside an explicit search space and return a governed ML process. 
-- AGE-ML returns pipelines together with metrics, artifacts, and natural-language decription for audit and reuse.
+- AGE-ML returns pipelines together with **metrics**, **artifacts**, and **natural-language description** for audit and reuse.
 
 # Specification In, Governed Pipelines Out
 
@@ -114,12 +116,12 @@ Collect metrics, artifacts, traces
 :::{.fragment}
 **Evaluator**
 
-Best model under the budget
+Return the best model under the budget, but all the process is logged and searchable through the catalog
 :::
 :::
 :::
 
-# Generated Code Must Prove Itself
+# Validation: Generated Code Must Prove Itself
 
 :::: {.columns}
 ::: {.column width="45%"}
@@ -137,7 +139,7 @@ Failures become feedback for bounded repair attempts.
 :::
 ::::
 
-# Every Decision Becomes Audit Evidence
+# Data Catalog: Every Decision Becomes Audit Evidence
 
 ![Logging hierarchy](figures/hierarchy1.png){.center-img}
 
@@ -155,28 +157,41 @@ Failures become feedback for bounded repair attempts.
     - The specification acts as a control surface.
     - Data scientists are kept into the loop.
 2. **Validation makes generated code prove it implements the intended pipeline.**
-    - Generated code might be wrong.
+    - Generated code might be wrong for different reasons (e.g., incorrect parameters, logical errors).
     - Validation is structured in three layers: structure, semantics, and runtime.
 3. **Traceability turns every decision into audit evidence.**
-    - Although the best result is returned, the entire process is logged and inspectable.
     - As in CRISP-DM, different solutions can highlight different aspects of the problem.
+    - Although the best result is returned, the entire process is logged and inspectable.
 4. **Results are competitive** while keeping the process auditable and inspectable.
-  - *Datasets*: 6 (*Classification*) + 3 (*Regression*)
-  - *Budget*: 30 pipelines, 10 generation attempts per pipeline, 2 hours per run
-  - *Competitors*: HAMLET / FLAML (AutoML) / Kaggle notebooks
-  - *AGE-ML* (w/ Gemini 3.1 Flash Lite) *beats the competitors on 67%* of the datasets
+    - *Datasets*: 6 (*Classification*) + 3 (*Regression*)
+    - *Budget*: 30 pipelines, 10 generation attempts per pipeline, 2 hours per run
+    - *Competitors*: HAMLET (end-to-end pipeline optimization) / FLAML (AutoML) / Kaggle notebooks (shared knowledge)
+    - *AGE-ML* (w/ Gemini 3.1 Flash Lite) *beats the competitors on 67%* of the datasets
 
 # Limitations and Future Work
 
+**Should we consider different specifications for different problems/datasets?**
+
 - One coherent specification is assumed, but specifications evolve over time and must be revised.
-  - Should we consider different specifications for different problems/datasets?
-  - A unified specification seems a good solution but could bring to a combinatorial explosion of admissible pipelines.
+- A unified specification seems a good solution but could bring to a combinatorial explosion of admissible pipelines.
+
+**How do we tune the budget?**
+
 - LLM generation can fail under strict time and retry budgets.
-  - Still the budget is limited, depending on the task and dataset size, different budgeting is needed.
-- Enable iterative feedback on pipeline execution and optimization.
-  - AGE-ML can return insights as the search progresses, requiring users to steer the exploration while running.
+- Still the budget is limited, depending on the task and dataset size, different budgeting is needed.
+
+**How can we improve user role?**
+
+- AGE-ML can return insights as the search progresses, users should steer the exploration while running.
+
+**How can we improve user knowledge?**
+
+- Promising pipelines can be used to suggest new constraints and assumptions to refine the specification.
 - Suggest specification extensions and refinements after pipeline execution.
-  - Promising pipelines can be used to suggest new constraints and assumptions to refine the specification.
+
+**Results are promising but user impact is limitedly evaluated.**
+
+- AB testing to understand the effectiveness of AGE-ML with respect to vibe-coding applications.
 
 # Thank You
 
