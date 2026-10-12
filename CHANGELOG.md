@@ -1,3 +1,13 @@
+## [1.0.4](https://github.com/w4bo/ADBIS-2026-AgeML/compare/1.0.3...1.0.4) (2026-10-12)
+
+### Bug Fixes
+
+* Comment out preview command in publish script ([de47b30](https://github.com/w4bo/ADBIS-2026-AgeML/commit/de47b3092bcbdcbd7be40b8f1fca3c8009997cf3))
+
+### General maintenance
+
+* updatet the slides ([5dbc9c0](https://github.com/w4bo/ADBIS-2026-AgeML/commit/5dbc9c0553544b01cad84e3a91594968868119bb))
+
 ## [1.0.3](https://github.com/w4bo/ADBIS-2026-AgeML/compare/1.0.2...1.0.3) (2026-09-25)
 
 ### Bug Fixes
